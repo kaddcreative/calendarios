@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · @namainteriores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,UklGRuomAABXRUJQVlA4IN4mAACQ0gCdASr0AfQBPlEmkEajoiGhIXBpkHAKCWdu+/xItgeAfU35u8uW4f4r8hdGGebuvyheqXzAP0W/YX/D9mbzIfuF+2nvlemX/aeoh/euoz9ADy6fZw/sP/O/c/2sdWW7X90H/E/IntK/j03txL/1vRT+bfmr9p63f8L/oeGPzc1CPx3+o/57gGwB/nP9c/1/5w+/v9x/0vRX+M9QD9duKuoEfo/1df73/4f7j8vfbd+kf6v/1/7D4B/57/dP+v64n/09uf7b//b3X/22//4oqWNXbbNNiATsS9flFyo8EcAnU89PyxiLO2X1NKsYgE7K15e9DjvHz7xF1JKSCvy16OV5GJURZUzibYTfXwYxUzkksQQ9hX1POzMrCRnf1oy+8IXGaT1Td7Ly1x96nYiPhDTcEs6ngDkkAPLGIJBi+9Z0ZKQEWyBPQ0KL/mwWIeGW/LfvzRf85PGJHy0QIXGbbI+Lrpma7TO7mRTsypI9Si0NEMCuVzEUBbn6kA+z6VqqrdXZZF1lTxnpiZKhNDA7DhJeS8ogAEi5BD2YHRdEj7R/gywXItkhevMIDoWJbGH6ws6FlimHDizPlAPwI3uyD0aVZ7ETh7gVnlUle8aAbPVajIIwc9s2Oz+aGGSzA3jfICgZae7/pvZaKk04s0dVO6IukHxChkhu7hhMkXY8LP793uoyIY7vHvet+bSD4XP0zHZURQtukb5W2aRVt8mam99f6CRdmu9V7e1L0IgpgvX6iCUU89Gr9LvlY8IvUG+2E6PJi+oFX3CrLHf1cIi1Z5besG4lEgC82vQcbDUY1/0pDcgoM2vAJ5Y5Rn2f61sLXrJrrtv05PVUTTJabOpzfr49R+sqPCDqOiiU/LeHQYNREwY8LdBFwl0WXTgKXw1RQGS/qf6OXNKMq3BKYoj6ylY/tqD5f/2T2WPfB2/mdbdoT/zWCZy38D48FaPiEyHVMyk5UvPIB5ABPTsRcqUmcqOu44bnog74Shqv2dleoZQi+YFXNfYSnhCykA40lKK47B0LcP4F9xWWq40xHjYdCypmNGHjGPC0U42RVG2qohdkzr45G7BCJ4ssltleF2YfB8Y5F5cGinDRc1mHrEjWUJkx+V4s/7Lz6YtuGaeCSvKYiBHHUHj3lWdSIbEBTrPZ+wDB41/kV7YKIxlvvfViEZmx3CityxUfDMchusdWQga5UCHsnTEfwf8FiTFjXUHAQntLIOcmsC7Cgw+536bbSbN3zkBCzSSPRuBt+z3TOKIBP2bwDfyZjp56KVien5YxAIe4IVmuOMSBu4kX9PFFJYzV7kH+fV+6HiWSNVjZjxM9UV4sC8u4w/5q9sHC62JZ6XEAJOp82JWywVYZf9QQvq/qJuGzMyaNrm71qceKGVepMP0dSJoi5eS2wCiC0QLN8Tz0/LF2RB53Jjda0O7C3IPrFQ3gMC/mLyz30UxR+heDiikdXLt2D6DTh7WQpAL07WaaOS6YxgL4Uvtel7Xp9QyvZdAdRZfG4cdtjjPWFAnZcecJrFkArOgT92K19yQNmVMT5739PM21g5MrAGZayB41lyzeEaiFJJQW0eBxwLMZ7MEqiIqVEWV/HN/wFxNmL6ddlPw+6TJGTHXf9FcJ7/gMEMxxVKSuofJnsp4WUSmsa1DI+80Oxe5vQ10hdtSH5hyxACofHGfY8FLEVCvI2stIZma9Dukk/BqsbrmVPJeG4VHYV3k4WIseuWvzO4xtNdS0qXbmE/nyIu0ocnbtLROsRiwM8X9QqbChKQno4pC24WYrBBHr6JegHcJmeDbLuC8KJH5q3lOkjtOQoGLyPlCDus1sX5xQfxhINwqvccTgkuhjfA13uKrMGGHKBiwU9NF5fyR31jqep5HqiGh9Dr01LHv/2dUSo4dtc2A6kGSBAobOJCrm76bAC6xBv3n0pkVzhq5e4FOjEUYtEaqyCm6F3maMyAVbHESvBhiATpmP/7JE5sPv4J2Xkzp5gdssdiRXnOB1eGQhnbIYnL+4OjJ/CCuqqjk8dJf+Bu7ZoEOX7DIh7tojncEtkT6+RAWUfowXwo4lzaRpe1F3ZuyQBF0ZWD3QeetHKlh4omHB5qhsdEn/IeU0dH1G1vsY6ZpxLAqfTvg4r6VyDBaUobyKFRh4EUVO1RMQCEOZECnpheHIKYqGjLNc90o2xUOhupRWUEekQ0SY/KljYi1W0YiZ6hL7rbuUa49Y3oAnZU9HUcFdNpkJnu89PvpEmj1siljYgE7Lnfnqeen5YtgAAP79lsoQQSMe3ByW5FzCkxdHVLbVE2LZ5wCVYXFJYdPwwLrkbF7zNFAErqSXVrhaIhebvaK7q7aq6VR1Ixdl4mpVz8JBVL3XOgqpeooMHtWviv/Pk8V5yYo1r5yRf+hgCP04b8ZBsrvNMxlOkpvntCVHKg6wEiJIrj3XIyKMw+5l+HlKt1ViSYsQREDNdyARqQ+p5D9oT2UaZTb5QaxLq7tfIwU+tGVW85uQSUlyMra2Jej3YCVlsSqhQFSGtiKvLdWyrut6yFHnN0iSF9JHV1FT+J/53J3B+a8UDdqMu2ez56Q0XV6Sh+KZfdVhR3R3rWWzWsbKllYZd1Ghr0AaLRer99XKrp3Axhy+7Bd5BGMVKvNsvzR0Xb4tL+zE24A1R1LVqzTmKWFSswWxUM91t15pdzZt4j78dCWIIFb2cw21BHdT2fkHSatqgZ6qvcMJmpkt91bmIVtRoFY1PWzcd3wIXbfr/2py8TlIPPpBCLlYsITz4v3n1N2wGg8DLQR52tXHeBj6x0/NxLmQHkbej2N8Y3xRaLn+Xk0iAd2q5NlNPHJ6d67xmHWX+kroqmaft89u8VfY2Qf8Qz20frV1SJr+FMcNUU5Ly7xGwN15eDMe4iyVxoGlJPiZRar7dVibvb7LryxP1l9xe8lQQlpWwz6iHawuAX6awV99NU8HwacPNMHOG0mnnKLZCKHUCIiDpeVa374IBLyaEpHXLHRga10pGyLARy+qWA3LwnbDiFHPB/iUGuQrMCONoUbBqKhujz1dKdvEihs1q09NHlkWYt1E1Ojy2MBh6d7jQIPwhQHUNlK/yzH6yr33kVChnbLiqigXtDvu/l01D6EcW/tbu9COoeP+1lZ8OWu3W/AKBDfKZSE/LGUqMVXMLqQOdx9CLnRNfb55mA1VdIMwoMHIbgEch81q8gpESmgfjo+mFQLC8Dlv1gP0iUEVablmZ/OCpqE6H893vTx4HJR635qXqUoSp+mltiC/AfDHGTz1Wu6Ae/9YdVVVvuKAyL9Gr3r/UB2sl5MlMLzKWmrIEQJs0OsgHr9OpGbE0vjLP3+w8zhi0d0JgvPKTPwIJOi3WA/+LygcOtQ6v2+Ybad02IETXu9OBWM/AhK/pnsy3Kz138OTmQAXgp6Eqo8i2dTw7BYOEMve40MeEmqxttq0JQOBniV38JHJeSQnSCU02BU4paJItHWZ+hCtLbepbdt8WwEjDG8ORpSQ4QX10SjM4gIEiXsHgVYuHC6hyjdFOJKOBQopDvuVMM+JqykQiOGtq3HyMNoeKMsViFQ/fUo4ULGnVnRLu/4h4wZlRSr8Tid8YK/L7HlCpyHkO3MxJBG8Hm8eur8V+WHl2nBNsqgQVOibIP7VKdyQvuiHNyJ3NUbNyZr24r7zMnp2rtidsug7EoIOeeaCeUrfL0rhJx2wPic1H+dj+0pIXbcz7Ywn7NkE/aZfkvTswTx2/pvwX4P8qvviIahlsxO5Ugp222BWsUzAdvVKiVmcy83sfIfpdWhx5ukWotMUxw9mF9i0cdtKJX7OHoDD3PAaQNBqFbgYF5gtejXQiT2C77aj/I3TYO4BpViCrd1xHI0THiodgEMS55moSJZp049/QSEsJJ0FsW5PDdhmAJQyf9HZd2FKeKPPdKlcqW3IMxrxEGF+0d8necERyYL/Kmex6+Qslm7+Q0+7c0puLL5tL6DKNYfDUeNq9EwbboEGYrJ5Ezgoi77DTGYQdvhj0wPfFXbOGLuvWFd4J8aYjseqS256/4pVo/EV8gEvUsoQKHv+1qgCag0z33JHdNnySQZ141Q8pH0EqDSW1zSecG6yV8/ND3Yexsw8r5MUT03PaGLBIvcAGJQMWDEJ4M+nooxK7KUtKR7UcGiOFwvqzXGCf2VeUqvtJbp0/sqvw3Zs/dqsdbB2VcZg0Ts4R9Dtv5bh0grjD2gfcd52dEtL/Os0o7lV+Jfek27vxOE1GopBHsFKqgG02I6jtlZYewkaXmU7WC6Nxl2lTct0Cr7M65GbnwUlOy6KIdi8e5B9Fwa9OMGZdb9WH+Xh3o5ETnfrVzXf5SXv5uuSCPssXTkSWKxeXrE5ekMOhE2+J/zNnVHrXGHqlMh81tjw1FTSAMrbzC2XcWQq5DBLfEEViF7S9hi3jlx89FiGNkl/z7JtHguLSc9P7+VRv/4Tu4jvbvKPGM/8eKtslwCKlEQ6H1bjfE8jHeH57Ru04GL0cFo5nRJL/wfcBQ7TkgWZY63T5Ituo7HREOps+MHzy6MJBpdDa0RN+EA6jofNwPJh2un6PaSQnElfrXkx9jmJhDtwg76Y6vvkvxjrPmj4C58ZNo3Tl2OzRkObSXXyHZnxTorlRMoRp3OowNtREcMCeezS4wuHKifggpKAuRFV+AjSa+LGOTs3W/WRbuQNYsR/izgNIRltvSbHK5mSYIus/m7wd5PVK66fzfUsgSvgcu7ZRvuSXbmmEYN++JTsitXKtVa2fWeADNtOBVesnyeGI5OmdSGwGUnyMxjz7ZZZeV7MDw7TIpfqPVt12iYm9Ag73Sl/eVOrkXBoI2PaT5CbNM+dXxYys7Wjm6Ee+gc8HaSIELlMoQisozU8KeedCof4XzeHzan7KooC6nRMoR7ilpz+4e/ClZuppdAGrg6ku5stjFlojaJMOutR533KFbZo1wsoXKJMGoBWAjQ6gNGwaaWf8Wly1cOpMklcDp1kJGtDrRxh5XDbZxr8b9c2ijfFG2K8LbBzMlNQchy2kxilNHhJYkzZXqNKsk4epCrj4lz3+tEn51OtX3FUkCmENQoNVmonA41FAE/18DQajVYnQRBe0MF/cxMWjtyfqy4BStPfFnxxHtwsIyX98j0nqLWdF+CyW0dM0MkAyfS3Cb0mL8cfTRHlu0OZVDyKixG8n29DGtXBGaSxfVxmr0PCL6YFrEoNTb1QDHBI0yfKx+V7UnglbqOxgz+CDbQ9MbJc4sUL4J1CF0JCSDsevi+cN0ADVUeua+gYTz6QbKnPhSTDuY8TqysEJjiiv8sV7RHPcb+H8YfZNQjNCrJ8KQznHOGKBQ/7qEobhF8MJL3BanqK8YmrLeDpiOB2ikBZPdDgu4g7m38kOAy5b2AktvpA+xKAF4aXOUeF0tDcCd2F2DhDONwpjnJ3+7RTsbHlSp6XcIZ+DnXMeavMw+j3EvtC+YfWYWguMY5fyzi4JftCP6U8Vlyf4kBb+Q6/tSRfJKO5JAHqDcQZMyhdpqtDIfBbrfZRUsxlGlz9LpHUaa8EPr/4TBcXEQGMYWX2ZTcnonshObicpcmDkFNL+PhUf444zGbnPTbeLvRSAHak0jIlhET4MrAv/gFw6tLLBm4hWiSY5SxkN1qZ7/cAJ2A+nDm30iK1i+fxc+Iu4B7l5X3j3aUM0V0jw7axDSUBFcwGo7uKvJIbH0zW1klDhJcgtjmVqzaK6n3Q1Q8uP+w4TTRHAW0RDKfWa0Gm1GU8HzWEM5yj+eqqaPKjYkd7lF/JFiC+n0Va+fuJbO59XUk6uVGegj7IkONWjAduye1DKQ+IfCP4l7t+16eCrc2wO0AkfkPGdfn77X9HD5wsi07mRUE+muBvvGm/6waIMwQKb1tF08ty96afxxkYwhlzDSQpRAzbqZAIj1eSFZGtJTxuwKlCNvQB40Yq4ft58+dDkXPbNr+/50riYl9kks5ARNwBM+1758UWoyaX+OSgN1iUkxh2gXHzLf+8x+U5+gWaqNjQikgGLODU+XKeIB97EwcH1Y8vRRn65Wh6tm20mlIj/3r+tS3egYuugMOX7UfvWHqitHVzPJVqW1Ud5y+0YeEn3GpTAnoPr/Bh2udLO7JESeKCWlof1V0mDlwXeeYY2aXto8kybEclBLJyHn1sRcoEwJBWMcWZx/Da0gMC14mJGX7OuPXy2AF9DKNfj3t698hlbn84J7epwvldBX46B11i6GthMIa/qcrdxDOwGpiOlHJcy3LxNuG8pLD5IQIuDi2lIXlS62GOAHRLzrBq6ntn0fAbp9GMj4JmgLmHmg+YCttY9/tmwIKOLqu4+XBeEu7rEaxba8Kvkyy5hu/zlFTVZY2zHJSdtCqx5f13AA0RaCLHMABp+wEb6xnqaPrPjXlC1eomXZPAUYEdj6Coi3laIOqZkAG25LywbD1CWN+RCKnXYLfTzCmr3RNDk9meG9SvTcRJ89mEwcPHFykARyKylWT+9Hv3I/ur+HmNagv9zwijgKcmu9e1+sp1RCEYO36E3yow1e/XICObD8BhQsiTShUvD2T+zQzLaYgX166/QqjvoX5Tya+QkerC/e0Ts2A3Ku3lF7/1XFkoiFvSDcUfXM/M5CapScUAiRRCJO8wMg0G8Zgqoav902HgQYE7GkVC88YgV/TqIbXbucEsDr439gS5/T7CxyIcHFdJkJNYW2QXB/3qZLDGZy9woCJe+Y/Mi9G38SJ3LR3nRg1f0fkgjIl3WcCIINTJzhjZYL3Jh6LmLBEnfUSzIodipGufPlmpHzfoGfdKtQ1d+9eT1Rpm+36KqLecJ6RKir3iwvipMYq7ObRu+4KDG22433vtWDwE+MCLQYghkzLzYUDRu/sxKwUlGvbV7GCKEAqZykoSDIqefcty6fyVhNgTSe7uLkvcV/o94VSq0xuiTnJiln8DCAe5EsYhM3qau4G1eRBduG92KdIKCLR2v9PIQ/rLjtuYDT9VC4NVKQ69p3uHZiUpRa5S/EJ8SSzefLPjfGrf5/wWjYbJ2j5642OJLhSlpoCCH6MttAc9ppSbfebPNceKjsVXlqBUst5QOTkBQ5LslKcSr/ekG4T6M4Z3xVeSS+O3rgAw9g4erjgA2Vn5hbGNgXDceq6j/E/FEe9nsX4JLFVEL4XOdJhABS3xMYUKHkXvowdkanYLBbvQZhiI3dQiNn5SYJNSGH7N6lYQXfWMnFAj2o+zjL3Eo4G4AGpone3QmMACtFkJvaQSQGywjz8ncmTBRtn1qBxDZ0w/kpyAZ8yMfpOtPGAIfwYYI9Kft0rfu09ci9/q/YwI9gXTGcXE//8vJSzndYhLDLnr1DmeAdFYpbjYCzXBQm2cCizXrkOS4jukh4g51QC+PWNKf2QVacGrH4EBsa/PZ98YeyYgtX+JgjLtHJ+WaqfYGG6XIAS9bES4E2tYUNtYny1NzmsB0945hADJ1ldjP/y6iZ35ne+3hTnAvGwuG+sYA25Cu9wvZ+Df9cCC3qoJmdWxAscfZuF644LSSJ54UWakKXwYQvNTFUtKABrOqwCoWqTOyseS3iU39l2tAlijiU+pHaX63NjDmr2TTT1349hvh23zicmM8ERa/1QCULbhnu3nGVv/fhiNn8TQu869+a39mhaJnqRo4ZW9AvzGZxWxsbXE4mP65rUlXMU+mjV9N9tw5HACf1dwp0pYpDXZmA8G4V/DY7uYZlL04imgRdtgRcXVQZ0Lh1DSYMeQE9eQqcoBFtcHnNtKistC1xTenyisOHaO6wViaWpbc1WNTRWWypQGH+K+ul3qrONbNuo2sIHOvYTb5A+WuDh64GZ8mJjEfI83eTYuhToDM6JUP1k5eRH1VK+iw2uWaN/BFvXsrYUdNCEbWTGxSQ1mTMDhFs5cxTN2HljAS6cUQSDf/igUEPzX8x7IiQUqqLWeSfOTpHWLnXLK8Udw/Of3mCjyQINX/ozZ2EEOmgiQhW2wZy47qaeEQVK7ZZL6vPcl8VGOvhgM2GpkN4zXLptAiiwEOwJOn0cb4+7j8qozX3zOy5nfU+L4JeICEkopTF3dOc0fLYfekx577A41VVV+qG9cVcZqFQ/bOPOeh1Y1/F1gUCT0+OFlafc3mu8AmcEAWXM8jYyzA2s0bvF9j3+56EceWu+zE7+JJ7svCrxBMXpP1EP/61SNpZ4l3NXD+hto516QEv6nYabcd21Jw3h9cDjuAOxw8IkVO/xGDwa1bLTzXBr8KmDCoRI66D1tVxd1fkqSq/fl8WD/h3kn0wn8FKO3alSD9VMaYljVUboobZs+Q0wOJKjz/XamFZQoUi4aCIN2oiLhuTagV8Ne3l9WlwREkLpQdL9IXDc+H6z9bLMw9+8VtzzWvMi21JidJfy3u2PLeAkcf9MB+MifJZSjxkPF+ybSRKCZZ/m56qKTe+FRsJ+OkymOfimf5xOvWq5MAWRRjjH1yf4r5rX7IriOpgEn5MMlX5f2FgjgzwaJoAM+wDGFG0sOWfwDJJYs/zvioQbnv52dqnL/+F7rRv/nc8RFqWJS/k0BUYVGtsdqZYhifBeplbbL/0njAK9S90oPAw/83uR7vPoWsfxMJ7+QUTg9fH+I7aam+eTRRSWojzGcSQ8f9YLAgWxUfNC/5S+M9/i032X6aI1QYuIUktX0yn0r6mGWYKdauhfmjVN7pfwc0yEnENrKk7NEhMmqmuPEEIMwyn88ZYvW6sOwH7dFQ/pk0Njaf0vr+/WtouFVFTTBzPwEveOOPoKrtJ6HB78vD/XZQcON69trL/b1y7/DPGxxqFZ8eGHLChhtzWOX9NrH5rLxNel+kACkGmCFbcb/r84ntd+D1rHDdxLFFv11Vr5jBFnRfii4/hmf4kREauoFvZA2q39N9xTwsQP+sJ17m2Cs7X+3ZVKhVJ5MjMnhxzPIOiX34h81OtISqiDBD7zVCJIbA+Rzat9jzByT4Ow/ymXNPllXqsAMA3uYwqGCX/E5EEbcWQdOwUjpD5np5rGnJdGm0+DfrhPKpVkEQuJ91duYoVdY5UNiP7WAhh+F0MljTpxkvlo9FHbTsHI9mwqvQsvaMTsP1ItttdQ2vT09s1mD3tzbxTfBDQarB3EDeVQfevz+z7sZH2V3hExDKJoLnux3k0+7nsmjYAx1w6pr+sVjjvRcO5wrmJtCdzuWqEEg+U+JvBjfbjX+f+Ym8+reBTJsv4JrDyey9T4CjXwON14W+JLUrgj3DKEKf1Eg/Q6mYonX8/QhC57l4D9JFHTX+hNkAK/+zIc2KpSU4gYqH/gZRqm21slBuU4wvpltF/f+mM5XCiOvTR2qZvho7/fYaZP5VX36YtZxE5UFpu6Br13sWE31Lye4ec0xTOK42VWcM8NfS5xVI85pxw4nX1aHR1QJEl+ZGRJDd1XhGV4hvTl4CmQm4SZAnWrm10vDfbkSkFJwPFG7gxaXEbZJ4HyBzuvLWvp9dvBey0qcLSXZ2oxT5Kene1Dpv9sy80coVlsSLJHvUZDEmpcfYOZezqTjur8oZ9N0lOTHnHL2n++miiZ1J6kMGL2sSHPitocm8/psxl4ti78ZEX2OEvR9Xa1D1P1KXXJSesz6MJ1pMwbd4r3KTiV9sBxW9OlF8hp2NuXuqx7orf5uzyhZHyzfthUfUA3yd8TSRe7rEhQCa7iy1zOHlaBs/ihlxKcG/B1Id9gC2YcHut/uO/yWEFyBKayL1f4/7uVEECjfDUzIkJCq7e6irv1nsMiRtojkhBf2LCsndJbBa1g7GvkeN7FzYNQ0gUy9NuLCpPTMkV/X22i9YhRoiULTcnFy8kAnLdqN5SPo946bmJJbL9g96dv9Q+XQBbScLclDEhHUEyLHsSOSLFrJYAECbIsQr1RIExb3Ig2jfx5ENfH8DW4L/1ErFsaeWcvpR7HdTQ24RalU4T7FaTBF2Sl+XkwCKp71vH+5F1Kc36+LeLekFn18HFq2saPX6fmbFjVPYqBGBkK3fKNHsHbPL+v3d7KFtuBy/OXqdfB2iQ8fvM6VUiGPP0HrAgncAX4jv8c/sIRkU86H2lJrmVeodSRIlQbblDJT4nYZkp0/goE2O6Ho0XPLbuMZCyOZTcAd54Bxr7XRX7WKUH59YfG74+cQTFje1+IOWLyh5eKl2Mp3h72E04zIJgXT6Eu2x/afAn1DuSYRjUKz5H7FW5lF1ZCPYMnxluOsia8x+tdKR4COFm5Q9YsolLYIHi6rhyedUdH7QbViBd5ppEAzWuF2m5H6DQKTlN4M5FDaapc3ehDoGVAqbh1fQHQx+29Lg4TjZPut/KI3Nf/5km1EHCJUnxXID3XlGgKDcceK1elhqdR/fRvlAwGfJJQCoCz3KC5PBz1HYdVH4MU7CDc18VW0G7gHkfJqAw8est83KA7oHbwm1GTnVzVxmUU+1uV/Ixqeb0T+C/r7faGtc1Dk0tAXdzyjYy+reu0JGiPX9PvCrDhSYaEmWOMxr5+68e6jA9GZ6bHv1nAY+nG90i+MLymSATV4wuXSPdo2JxpoCCoZmhQvwDUnDH2lgRsNIBTs2ezclcSsND7AKtMK2/KysI4am6QrCX+c6ymvjsExYaKETeHAyI8ybSS1YuzVVfFXoerQVG64Y8uUnrdlyhoVzrP9ms0MI6j2CuJv7lVXQverkQV8YVc2FlcJBN2UyX560Z7aXfsMTmfkAVwXTrwHaSTdY3Lfrpv16jjwdHpHVCC2toDGjvNfZRB6JbZCokUg9HMJg+SaMDVfW9u/2XOIRmp7WfgrTKmH5BrDRbGmvyBA7QClVpbyB/bS7v2TuWAVK91Ez9RNoSA7cGzGN3oa585lsMkU2G/cc5/cm8iz4LjO5aJPvjT6ydSKck5XMkaZAN3gxeDdfKD4b7LdxxwCQR3hbkBU1/zpDYhFIEjLRy9HiqPfEDlin7KuN4MafjLtiqiF3JpsTNTfAJ9FvJCiHH+RrqJIqQPb/SfLXQS68VGi1mkRubhX2+sy/Sn9espB6F6fW2iYZiYibOAFhhdxaOAEmHSgiuXZwYqa1rG3sgVHBdvnljpvbXY3saBBe55lGcCrMDaU+92nZvHubQh1xRvAAHjp8D6EMImPKfbeaQ8L5pU817l+iKZrI+aXF45E8I5jSPqFfwELX3A90t+vve1HUCYYaDczCTMJeZaMp+vBdVZp6O+Zq0kdkPTrg7VKrGp0wdsAX4V0Rr8FrUSh9H5Ane/lwpSpEP4I9JqE6eVCYNHz3iHX/rPXJcywEkCNeE0OQtftFe+6r9AayPWH2F7vNEhYmDaEzN24l2Y/4BPEs9IkVmhaXXJioKQtQeHfF4in9F5Wqfi5+smg5eBkS6tahPyl/TREyxcEWpBCyewcyPAjQvQyn6Dc9mv49zRGRIrGQhIZKZIB8Umh51Fjo8jjTtFEEzK6N8itUWepFMy+l3Rf4/ZbT1HzPxSlXghPk7cpHXUyniE75/vVV6iPca8aJsHO2g/C6NwGiTBnhroQPeUSv6brgsfe58FTglcPutwwoAAA22ni16PYaH1+MWW8+V9zz+hVc1L3kSVC4yp6MnFQePXrwd0VmwjVf9D0OZmko/L177PHJgA6zBtyHiCl/kv6V0xAUKB6VGbb2TnzbdighAyatmGIJ/tSNg00hx2QrMrqOH/SJd+Rbp2mMjbgelONkKmK6Woej+xdIFhHGy2/bdKiAcnUFbFxX0/rBv1MiXPrXyLQkUGqikYxGwfx2H5QoQ3O7IBQYh2qzIo9taDQSlLH0ipjUV27IxzykDQXPSg+vxiXMD7cdLYmlSSu65VSG64KELhKqLyW7etpmYMy1G2bK1UgeHYFyNkhm/WXHhuMNTylPsGjqmyyRwERxDvOslioANidWpKACUyUWXBg72j/4QH+gGEig2u6T1tiI4rZ6c2zO5R1399ZiK+quIaJLp1ShociB/UALnHMlfYRg4WFBfeFZmNz2Fs32V34aopVC8QfjfqAOds1egfCpk4mLRkJK2z1iqbgYDl5JGVmZPlOCA1QI0bYF5+dBtvkYkHoRH52GFzVf7aWW+dZB1u7anGS/Il03+lYR64k0vvU119LF//OVDftKAf+71vUpMnbzJk2deZmVbyx7CJcaZcKqpC6EX7ss1sVTCf8ZUXdXzkwZmfpNmdhUlENEHwWOG96fXoFjO9Pti1uppXUiJdEiamJMqW8MoyrTWL0OzZP8thgzSib0991rmDJ/3HLIjC6mKbEBCdB4Y8aokObCA/ceXitQgRRcrbBn4/CmskTmU71fOl6Gu+b58U+XrL1ONgJSs+74BtfclF9vVTihJZlygBnN+25GohqhDUSfbwurZ0iVN4a176Vp+J61PdVF/sMNurA9trk+qqLBm5hGkjPjmZIquAXwcNti6F9GDn5PwUAEJzZfpmAu92IWTgdmMpkJS6OlSkYquwJi3fO2p1jNDkeH28I5g5w01aucXjIpWI+euVPxNcfmRa2DyXCC5E5+rARrMDIczC76Quw9I6bOG3162FlKIYoP3Ftcj8BXaRir8p1Cvrar6im3/3uFIMuCl6uT03zhG5gEwhULzMVTSrVrZ5cJ6VPz35v4b/Kcd8AGCHD5faZD57bm7YGUKVLsxptlNw4x4cG4cIFUm9aAxvSiKdPhgO3yqLzMdOoPyav6DZg0R1TT2WjsscV/OQ0wp9KoENW3J65YFO0LCRbMC4XBdGisqwGqsBmLeau1Uc9MCG2T8zd+lfWsDc1vhy4n3nv4OE3l0M+HNzzgbqQ1Xjc8Admy6AMvPslpsino6AHQr3h3u/WuiCNhrZsIMhDZG5RN3qaBoJ6KMpIBdVG3LqkHFkxMDJneNwS+5fjf2RNscV3N2K8TOM2XGs7MoDhXkXYxSujuq9VkWTRFpDEeg34DsqH/rZAmcp3ITcqZgDNBVC4QjmJo+LebZXeMRRFmTxvJsZ6far1JTzEWqs4O1YDxvSqoFroDmSLHwiRaIK6u/RPyGJqkwjFWLbrLNtWyiKjlKzT9RyaVd12lH5Ydal7cZ53cggmC1JhemhHOytDNleGSEaJwigbwRCv5pg9Iwv4wEqo4KiWfUl9pTqUySmJP5MxGyNdsVBVuIkxxCrtQeoIWkTtWC7shV8k19kcWuu5gMnHEP0YxiorulfATE1FT8QCncaVeBXDd0iR7BoxAYoPXhwPnLshTvx8rwXjdIAUC0G1LoPCuniKpLgDd7PhHoNlSE1w+1BaTHvVhLy+fSKocMtYrI5xs7xSS5S/AJHIVTiXAFkgJpmgdsNXYRm40PGlG+ZqyoK1DYgM6sAnNmYhJ9AATkganpRZg4DlACEStzt9sAAAAA==" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @namainteriores</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o posicionamento de marca da Namá e o plano editorial completo para os próximos 30 dias. Cada card do calendário é interativo: marque o que já foi produzido e acompanhe o progresso em tempo real. Nos carrosséis, o texto de cada slide já vem pronto pra copiar e colar.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Namá · Anna Maria Botelho</b></span>
+    <span class="chip">Nicho <b>Design de Ambientes · Online</b></span>
+    <span class="chip">Perfil <b>@namainteriores</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<!-- ================= DIAGNÓSTICO ================= -->
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise sem filtro do que o perfil comunica hoje, com base no conteúdo publicado, na bio atual e no briefing enviado por Anna.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>O perfil está parado há um tempo, exatamente como Anna já reconheceu no briefing, e isso se reflete nos números: 83 seguidores e 8 posts pra 7 anos de experiência real em design de ambientes. O problema não está na falta de conteúdo bom, os posts que existem já mostram antes e depois, bastidor de medição e projeto entregue com qualidade. O problema é que a bio não comunica o que Anna mais quer vender agora: um jeito acessível e rápido de resolver o espaço, através de pacotes com preço de entrada baixo. A bio atual pede "solicite uma proposta", uma chamada que soa cara e sob encomenda, exatamente a percepção que ela quer desfazer.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>CTA da bio reforça a objeção que Anna mais quer quebrar:</b> "solicite uma proposta" soa como processo caro e personalizado, quando o diferencial real é ter uma porta de entrada acessível, o pacote "só uma dica".</li>
+      <li><b>Estrutura de pacotes existe só na cabeça de Anna:</b> os três níveis de serviço que ela descreveu em detalhe no briefing (dica rápida, pacote intermediário, projeto completo) não aparecem em nenhum lugar do perfil hoje.</li>
+      <li><b>Nenhum destaque organiza o conteúdo:</b> sem destaque fixo, cada visitante novo depende de rolar o grid inteiro pra entender o que a Namá oferece e quanto custa.</li>
+      <li><b>Diferenciais fortes não aparecem em lugar nenhum:</b> MBA em gestão de escritórios de design, experiência em lojas e visual merchandising, e o dado mais forte de todos (clientes pagando mais do que Anna cobrou porque acharam que o serviço valia mais) não estão comunicados.</li>
+      <li><b>Público de imobiliárias e donos de Airbnb ainda não tem nenhum conteúdo dedicado</b>, apesar de já estar no radar explícito de Anna e da cidade nova ter alta concentração desse perfil de cliente.</li>
+      <li><b>Perfil parado há meses:</b> a pausa reduz o alcance orgânico e faz o Instagram, hoje, não refletir nem de longe os 7 anos de experiência por trás da marca.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Dores visíveis do público</span>
+      <ul>
+        <li>"Tentei fazer sozinha e não ficou como eu imaginei."</li>
+        <li>"Não sei por onde começar a decorar meu espaço novo."</li>
+        <li>"Acho que contratar um designer é caro demais pro meu orçamento."</li>
+        <li>"Moro sozinha ou com meu parceiro pela primeira vez e não sei organizar o espaço."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Dores ocultas do público</span>
+      <ul>
+        <li>Vergonha de não conseguir executar um DIY que parecia simples nas redes.</li>
+        <li>Medo de gastar em móvel errado e se arrepender depois.</li>
+        <li>Sensação de que a casa nova ainda não reflete quem a pessoa se tornou.</li>
+        <li>Ansiedade de tomar decisão estética errada sem ter certeza do próprio gosto.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Desejos emocionais</span>
+      <ul>
+        <li>Sentir que a casa nova finalmente parece sua.</li>
+        <li>Sentir orgulho do próprio espaço, mesmo sem ter feito reforma grande.</li>
+        <li>Sentir bem-estar e conforto no dia a dia, sem gastar além do que pode.</li>
+        <li>Sentir segurança de ter feito a escolha certa.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Desejos práticos</span>
+      <ul>
+        <li>Solução rápida e acessível pro problema específico, sem precisar de projeto completo caro.</li>
+        <li>Aproveitar melhor os móveis que já tem, sem comprar tudo novo.</li>
+        <li>Evitar erro de compra que não cabe ou não combina com o resto.</li>
+        <li>Ter clareza de quanto vai custar antes mesmo de começar a conversa.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Objeções que seguram a decisão de contratar</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item">
+      <div class="o-head"><span>"Contratar um designer deve ser muito caro pro meu orçamento"</span><span class="o-num">01</span></div>
+      <p>A lógica por trás: associa design de interiores a serviço de luxo. Precisa conhecer o pacote de entrada acessível antes de descartar a ideia.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Acho que consigo fazer sozinha com Pinterest e tutorial"</span><span class="o-num">02</span></div>
+      <p>A lógica por trás: acredita que referência visual e boa vontade resolvem o problema. Precisa entender por que o olhar técnico muda o resultado, sem virar aula de como fazer sozinha.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Prefiro alguém presencial, que conhece minha cidade"</span><span class="o-num">03</span></div>
+      <p>A lógica por trás: desconfia que atendimento remoto entenda a realidade do espaço real. Precisa ver como o processo funciona na prática, com medidas e fotos enviadas por ela mesma.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Meu espaço é pequeno e simples, será que vale a pena"</span><span class="o-num">04</span></div>
+      <p>A lógica por trás: acha que design de interiores é só pra espaço grande ou reforma completa. Precisa ver que o pacote de entrada foi pensado exatamente pra esse tipo de espaço.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Investir em design não compensa financeiramente pro meu imóvel de aluguel"</span><span class="o-num">05</span></div>
+      <p>A lógica por trás (donos de Airbnb e imobiliárias): vê design como custo, não como investimento. Precisa entender o retorno real de um ambiente bem resolvido na diária ou na venda.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de mercado</span>
+    <p>A maior parte dos perfis de design de interiores no Instagram segue um de dois caminhos: vende projeto completo caro pra quem já tem orçamento alto, ou vira conteúdo educativo genérico que ensina a pessoa a fazer sozinha, o que a própria Anna já identificou como algo que afasta a contratação. O território que a Namá pode ocupar é raro: pacote de entrada acessível e rápido pra quem está montando a casa pela primeira vez com orçamento moderado, sem abrir mão de técnica de verdade, sustentada por MBA e sete anos de experiência em projetos de todos os portes. Cabo Frio ainda soma um recorte quase inexplorado: imobiliárias e donos de Airbnb pensando em design como ferramenta de valorização de imóvel, não como decoração.</p>
+  </div>
+</section>
+
+<!-- ================= POSICIONAMENTO ================= -->
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de marca</h2></div>
+  <p class="section-intro">Um eixo comercial claro: transformar espaço novo em lar, com uma porta de entrada acessível pra quem nunca imaginou poder contratar um designer.</p>
+
+  <div class="quote-block">"Um espaço que parece seu, sem o preço que você imagina."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card">
+      <h3>Território de marca</h3>
+      <p>Enquanto a maior parte do mercado de design de interiores compete por projeto completo e caro, a Namá ocupa o território da solução acessível e rápida: três formas de trabalhar juntas, desde uma dica pontual até um projeto completo, cada uma com preço e entrega claros desde o início. O nome comercial segue único: <b>Namá</b>, com Anna Maria Botelho como designer e voz da marca, sempre 100% online pra todo o Brasil, sem fechar a porta pro atendimento presencial em Cabo Frio quando fizer sentido.</p>
+    </div>
+    <div class="card">
+      <h3>Arquétipo de marca</h3>
+      <p>Arquétipo principal: <b>a Cuidadora</b>, sustentado pelo foco em bem-estar e conforto no próprio espaço, e pela vivência pessoal de Anna nessa mesma fase de vida. Traço secundário: <b>a Sábia</b>, construído pelo MBA em gestão de escritórios de design e pelos sete anos de experiência em lojas, escritórios e projetos residenciais completos. A comunicação equilibra acolhimento com credibilidade técnica.</p>
+    </div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Bio revisada</div>
+    <pre>🏠 NAMÁ · Anna Maria Botelho
+Transformo espaço novo em lar, sem sair caro do que você imagina
+🎯 Consultoria e projetos 100% online · todo o Brasil
+👇 Veja qual pacote combina com você</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Frase de posicionamento</h3>
+    <p style="font-family:var(--display);font-size:17px;color:var(--ink-0);">"Um espaço que parece seu, sem o preço que você imagina."</p>
+  </div>
+</section>
+
+<!-- ================= LINHA EDITORIAL ================= -->
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares sustentam o conteúdo mensal. Nenhum deles compete com o outro: eles se revezam pra cobrir identificação, quebra da objeção de preço, autoridade técnica e prova social ao longo do mês, sem nunca virar aula de como fazer sozinho.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Desmistificar o preço</h4><p>O núcleo da estratégia comercial: mostrar os três pacotes e a porta de entrada acessível.</p><span class="fun">Fundo de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Antes e depois</h4><p>Transformações reais já entregues, prova visual direta do trabalho da Namá.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Bastidores técnicos</h4><p>MBA, processo de medição e estudo, visual merchandising, sem ensinar o passo a passo completo.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Vida real na casa nova</h4><p>Conexão emocional com quem está perto dos 30 e organizando a própria casa pela primeira vez.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Imobiliárias e Airbnb</h4><p>Design como investimento e retorno financeiro, não decoração, pro público B2B de Cabo Frio.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Prova social</h4><p>Relatos e sinais reais de confiança, como clientes que pagaram mais do que foi cobrado.</p><span class="fun">Fundo de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels</h3><p>Vídeos curtos de cerca de 7 segundos, um take só, sem fala. Gancho em texto na tela, música de fundo, cena do dia a dia ou do processo de trabalho. Quem converte é a legenda embaixo.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Educativo, um raciocínio curto por slide, sempre fechando com convite de salvar ou comentar.</p></div>
+    <div class="card"><h3>Estático</h3><p>Antes e depois, frase de impacto ou dado educativo, tom próximo mas com peso técnico.</p></div>
+    <div class="card"><h3>Stories</h3><p>Bastidor real de medição e estudo, enquete sobre preferência de estilo, caixinha de dúvida sobre orçamento.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do">
+      <h4>Sempre fazer</h4>
+      <ul>
+        <li>Deixar claro qual dos três pacotes está sendo mostrado, quando fizer sentido pro conteúdo.</li>
+        <li>Reforçar que existe uma porta de entrada acessível, sem esperar a pessoa acreditar que só existe projeto completo caro.</li>
+        <li>Assinar todo conteúdo comercial com CTA de WhatsApp.</li>
+        <li>Manter tom próximo e jovem, sem perder o peso técnico do MBA e dos sete anos de experiência.</li>
+      </ul>
+    </div>
+    <div class="rule-dont">
+      <h4>Nunca fazer</h4>
+      <ul>
+        <li>Ensinar o passo a passo completo de um DIY que substitua a contratação. O conteúdo educa sobre o porquê, nunca sobre o como fazer sozinho até o fim.</li>
+        <li>Prometer resultado ou economia garantida em qualquer peça de conteúdo.</li>
+        <li>Fechar a porta pro atendimento presencial em Cabo Frio, mesmo com o foco caminhando pra 100% online.</li>
+        <li>Tratar imobiliária e dono de Airbnb com a mesma linguagem usada pro tutor de casa própria. Cada público fala uma língua diferente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Identificação com a fase de vida, alívio de perceber que não é a única pessoa que não conseguiu fazer sozinha.</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Clareza sobre os pacotes e preços, confiança na técnica por trás de cada solução.</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Segurança pra contratar o pacote certo, urgência de resolver o espaço que incomoda todo dia.</p></div>
+  </div>
+</section>
+
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">3 reels · 2 carrosséis · 2 estáticos por semana. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos carrosséis, o texto de cada slide já vem pronto pra copiar e colar. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com 83 seguidores e um perfil que estava parado, a meta deste ciclo é reposicionar a Namá como uma opção acessível desde o primeiro contato, muito além de só voltar a postar. Publicando os 30 dias completos, com os três pacotes claros e destacados, o perfil passa a gerar contato qualificado tanto de tutor de casa nova quanto de imobiliária e dono de Airbnb.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+150%</div><div class="g-lbl">seguidores em 30 dias sobre a base atual</div></div>
+      <div class="goal-item"><div class="g-num">20+</div><div class="g-lbl">contatos iniciados por WhatsApp</div></div>
+      <div class="goal-item"><div class="g-num">4+</div><div class="g-lbl">pacotes fechados, entre dica rápida, intermediário e completo</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{"id":"d01","day":1,"week":1,"data":"14/09 · seg","formato":"Reel","pilar":"Desmistificar o preço","tema":"Quanto custa REALMENTE uma consultoria de design","objetivo":"Gerar identificação imediata com a objeção central de preço e abrir o mês com o eixo comercial da marca.","gancho":"Você acha que consultoria de design custa mais do que realmente custa.","visual":"Vídeo de 7 segundos, take único, Anna medindo um cômodo com trena, sem falar pra câmera. Gancho em texto grande na tela, música de fundo.","legenda":"Uma das coisas que mais escuto é que design de interiores deve custar uma fortuna, e entendo bem essa impressão porque eu também já pensei isso antes de entender esse mercado por dentro. A verdade é que existe um jeito de resolver um espaço específico sem contratar um projeto completo, com um pacote de entrada bem mais acessível do que a maioria imagina. Comenta aqui embaixo quanto você acha que custaria uma consultoria rápida pro seu espaço.","cta":"Comente sua estimativa"},
+
+{"id":"d02","day":2,"week":1,"data":"15/09 · ter","formato":"Carrossel","pilar":"Desmistificar o preço","tema":"Os 3 jeitos de trabalhar comigo, e qual combina com seu momento","objetivo":"Apresentar a estrutura de pacotes com clareza e gerar salvamento do conteúdo.","gancho":"3 jeitos de trabalhar comigo, do mais rápido ao mais completo.","visual":"7 slides no padrão da marca, dois slides por pacote e um de fechamento, com ícone simples representando cada nível de serviço.","slides":["Você não precisa de um projeto completo pra resolver um espaço específico.","Dica rápida: você manda a demanda e as medidas, eu estudo e apresento a solução.","Ideal pra um cômodo específico, tipo aquele quarto que nunca ficou do jeito certo.","Pacote intermediário: pra ambientes novos, sem obra nem marcenaria complexa.","Projeto completo: quando envolve troca de revestimento, bancada, marcenaria sob medida.","Cada pacote tem entrega e prazo diferentes, mas o mesmo cuidado técnico por trás.","Qual desses combina com o seu momento agora? Comenta aqui embaixo."],"legenda":"Recebo bastante gente achando que só existe uma forma de trabalhar comigo, um projeto grande e caro. Na prática, organizei o atendimento em três frentes diferentes, pensadas pra caber em momentos e orçamentos diferentes. Desde uma dica pontual pra resolver aquele cômodo específico até um projeto completo com todas as etapas técnicas. Salva esse carrossel pra decidir com calma qual combina com você.","cta":"Salve este carrossel"},
+
+{"id":"d03","day":3,"week":1,"data":"16/09 · qua","formato":"Estático","pilar":"Vida real na casa nova","tema":"Perto dos 30 e organizando a casa pela primeira vez","objetivo":"Conectar a marca à fase de vida real do público, gerando identificação no topo de funil.","gancho":"Perto dos 30, organizando a própria casa pela primeira vez. Talvez você também esteja aí.","visual":"Arte estática com foto de ambiente residencial simples e acolhedor, tipografia leve, fundo neutro.","legenda":"Uma fase de vida específica costuma trazer junto a experiência de morar sozinha ou dividir espaço com alguém pela primeira vez, e organizar essa casa nova mexe muito mais do que parece na rotina e no bem-estar de quem vive ali. Eu mesma estou vivendo essa fase agora, e é exatamente esse momento que mais entendo como designer. Comenta aqui embaixo se você também está organizando um espaço novo agora.","cta":"Comente sobre seu momento atual"},
+
+{"id":"d04","day":4,"week":1,"data":"17/09 · qui","formato":"Reel","pilar":"Antes e depois","tema":"Transformação real de um projeto entregue","objetivo":"Mostrar prova visual concreta do trabalho da Namá.","gancho":"Isso aqui era um espaço vazio há poucas semanas.","visual":"Vídeo de 7 segundos, take único, transição rápida de foto antes e depois de um projeto real (cozinha ou apartamento já entregue), sem fala, música de fundo.","legenda":"Cada projeto começa exatamente assim, um espaço vazio ou fora do lugar, cheio de potencial que ainda não apareceu. O que muda entre o antes e o depois nunca é só estética, é entender como aquele espaço específico vai funcionar na rotina de quem mora ali. Esse projeto passou pelas etapas de estudo, escolha de material e acompanhamento até a entrega final. Comenta aqui embaixo o que mais chamou sua atenção nessa transformação.","cta":"Comente o que mais chamou sua atenção"},
+
+{"id":"d05","day":5,"week":1,"data":"18/09 · sex","formato":"Carrossel","pilar":"Bastidores técnicos","tema":"Por que um DIY dá errado mesmo com referência linda no Pinterest","objetivo":"Trazer autoridade técnica sem ensinar o passo a passo completo, preservando o motivo de contratação.","gancho":"Por que aquele projeto lindo do Pinterest não ficou igual quando você tentou em casa.","visual":"6 slides explicando, em nível conceitual, os motivos técnicos por trás de um DIY que não sai como o planejado, sem ensinar a solução passo a passo.","slides":["A foto de referência não mostra a escala real do ambiente.","Proporção entre móvel e espaço muda tudo, e isso é fácil de errar sem medir direito.","Iluminação do ambiente de referência quase nunca é igual à da sua casa.","Material e acabamento fotografam diferente do que são na prática.","Um olhar técnico enxerga esses detalhes antes de qualquer compra ser feita.","Você já viveu essa frustração com algum projeto de DIY? Comenta aqui embaixo."],"legenda":"Ver uma referência linda e tentar replicar em casa parece simples, mas existe uma camada técnica que a foto nunca mostra: escala, proporção, iluminação e material real do ambiente. É exatamente aí que entra o olhar de quem já passou por centenas de projetos diferentes. Salva esse carrossel pra lembrar disso antes da próxima tentativa de DIY.","cta":"Salve este carrossel"},
+
+{"id":"d06","day":6,"week":1,"data":"19/09 · sab","formato":"Estático","pilar":"Prova social","tema":"Relato de cliente","objetivo":"Reforçar credibilidade com prova social breve e direta.","gancho":"\"Eu não sabia que dava pra resolver meu quarto com um orçamento tão menor do que eu imaginava.\"","visual":"Arte estática simples, aspas grandes em destaque, fundo neutro, sem foto de rosto.","legenda":"Relatos assim confirmam exatamente o que quero que as pessoas sintam ao conhecer a Namá: que resolver um espaço não precisa custar o que a maioria imagina antes de perguntar. Guardo cada mensagem assim porque ela mostra o resultado real do trabalho, muito além da estética final. Se você já foi cliente e quer compartilhar sua experiência, comenta aqui embaixo.","cta":"Compartilhe sua experiência"},
+
+{"id":"d07","day":7,"week":1,"data":"20/09 · dom","formato":"Reel","pilar":"Vida real na casa nova","tema":"Domingo organizando a própria rotina em casa","objetivo":"Fechar a semana reforçando conexão emocional e humanizando a marca.","gancho":"Domingo de organizar a própria casa, sem pressa nenhuma.","visual":"Vídeo de 7 segundos, take único, Anna arrumando uma prateleira ou organizando objetos em casa, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Fim de semana também é dia de cuidar do próprio espaço, ajustar um detalhe, trocar algo de lugar, sentir que a casa está cada vez mais parecida com quem mora nela. Essa sensação de ajuste constante é parte do que mais gosto no meu trabalho, e é o que também tento levar pra cada projeto que acompanho. Comenta aqui embaixo o que você mudaria no seu espaço hoje se pudesse.","cta":"Comente o que você mudaria no seu espaço"},
+
+{"id":"d08","day":8,"week":2,"data":"21/09 · seg","formato":"Reel","pilar":"Imobiliárias e Airbnb","tema":"Quanto você cobraria por esse espaço?","objetivo":"Abrir a frente de conteúdo pra donos de Airbnb e imobiliárias com abordagem comparativa e provocativa.","gancho":"Quanto você cobraria por essa diária? E por essa aqui?","visual":"Vídeo de 7 segundos, take único, comparação visual rápida entre dois ambientes (um genérico e outro bem resolvido), sem fala, texto na tela, música de fundo.","legenda":"Dois espaços do mesmo tamanho, no mesmo bairro, podem ter percepção de valor completamente diferente dependendo de como o ambiente está resolvido visualmente. Se você tem um imóvel de temporada ou administra imóveis pra locação, entender essa diferença impacta direto no que você consegue cobrar. Comenta aqui embaixo quanto você acha que cada um desses ambientes renderia de diária.","cta":"Comente sua estimativa de diária"},
+
+{"id":"d09","day":9,"week":2,"data":"22/09 · ter","formato":"Carrossel","pilar":"Desmistificar o preço","tema":"O pacote 'só uma dica': como funciona em 3 passos","objetivo":"Detalhar o pacote de entrada com clareza total, reduzindo insegurança sobre o processo.","gancho":"O pacote mais rápido e acessível da Namá, explicado em 3 passos.","visual":"5 slides detalhando o processo (envio de demanda e medidas, pagamento, reunião de apresentação), com ícone em cada etapa.","slides":["Passo 1: você me conta a demanda e envia as medidas do espaço.","Passo 2: o pagamento é combinado antes de eu começar o estudo.","Passo 3: em poucos dias, marco uma reunião pra apresentar a solução.","O estudo leva cerca de uma hora, a apresentação outras duas.","Esse é o jeito mais rápido de resolver um problema específico do seu espaço."],"legenda":"O pacote 'só uma dica' nasceu pra resolver exatamente aquele problema pontual que incomoda todo dia, sem exigir um projeto inteiro. Você me manda a demanda e as medidas, o pagamento é combinado antes de eu começar, e em poucos dias já temos uma reunião com a solução pronta pra apresentar. Salva esse carrossel se você tem um espaço específico pedindo esse tipo de ajuda agora.","cta":"Salve este carrossel"},
+
+{"id":"d10","day":10,"week":2,"data":"23/09 · qua","formato":"Estático","pilar":"Bastidores técnicos","tema":"Frase sobre técnica e experiência","objetivo":"Reforçar autoridade técnica com frase direta.","gancho":"Sete anos de experiência cabem numa reunião de duas horas.","visual":"Arte estática com tipografia forte, fundo neutro, frase centralizada.","legenda":"Antes de trabalhar direto com projeto residencial, passei por loja, escritório e visual merchandising, cada experiência ensinando um jeito diferente de olhar pra um espaço. Esse repertório todo está por trás de cada reunião, mesmo nas mais rápidas e objetivas. Comenta aqui embaixo se você já teve experiência boa com algum profissional que trouxe bagagem de área diferente.","cta":"Comente sua experiência"},
+
+{"id":"d11","day":11,"week":2,"data":"24/09 · qui","formato":"Reel","pilar":"Antes e depois","tema":"Outro projeto real, outra transformação","objetivo":"Reforçar prova visual com variedade de tipo de projeto.","gancho":"Esse apartamento passou por uma transformação completa em poucas semanas.","visual":"Vídeo de 7 segundos, take único, sequência de fotos antes e depois de outro projeto (apartamento ou cozinha), sem fala, música de fundo.","legenda":"Nem todo projeto segue o mesmo caminho, alguns pedem troca completa de revestimento e marcenaria, outros só precisam de um olhar certeiro sobre o que já existe no espaço. Esse aqui passou pelas etapas mais completas, do estudo técnico até a entrega final acompanhada de perto. Comenta aqui embaixo qual tipo de transformação você mais gostaria de ver por aqui.","cta":"Comente que tipo de projeto você quer ver"},
+
+{"id":"d12","day":12,"week":2,"data":"25/09 · sex","formato":"Carrossel","pilar":"Imobiliárias e Airbnb","tema":"Design como investimento: quanto ele pode valorizar seu imóvel","objetivo":"Educar o público B2B sobre retorno financeiro do design bem aplicado.","gancho":"Design de interiores é investimento que volta pro seu bolso, não gasto.","visual":"6 slides mostrando o raciocínio de retorno financeiro (percepção de valor, diária mais alta, ocupação maior, venda mais rápida), com exemplo visual em cada slide.","slides":["Ambiente bem resolvido gera percepção de valor mais alta antes mesmo de entrar.","Fotos melhores geram mais clique e mais reserva em qualquer plataforma.","Hóspede satisfeito com o ambiente costuma deixar avaliação melhor.","Imóvel pra venda com ambiente bem resolvido costuma vender mais rápido.","O investimento inicial em design tende a voltar em poucos meses de operação.","Você já calculou quanto um ambiente melhor renderia no seu imóvel? Comenta aqui embaixo."],"legenda":"Quem administra imóvel de temporada ou trabalha com locação sabe que cada detalhe visual influencia direto na decisão de quem está escolhendo onde ficar. Design bem aplicado é sobre aumentar percepção de valor, taxa de ocupação e até velocidade de venda, muito mais do que sobre deixar bonito. Salva esse carrossel se você administra ou pretende administrar imóvel de locação.","cta":"Salve este carrossel"},
+
+{"id":"d13","day":13,"week":2,"data":"26/09 · sab","formato":"Estático","pilar":"Vida real na casa nova","tema":"Reflexão pessoal sobre a fase dos 30","objetivo":"Humanizar a marca com reflexão genuína sobre a trajetória pessoal de Anna.","gancho":"Também estou aprendendo a organizar minha vida na casa nova, ao mesmo tempo que ajudo você com a sua.","visual":"Arte estática com foto pessoal em ambiente doméstico simples, tipografia leve, fundo neutro.","legenda":"Recentemente mudei de cidade e estou vivendo, na prática, tudo que falo aqui sobre organizar um espaço novo e sentir que ele finalmente parece seu. Essa vivência muda o jeito como olho pra cada cliente que também está começando essa fase agora. Comenta aqui embaixo se mudança de casa também mexeu bastante com sua rotina recentemente.","cta":"Comente sua experiência de mudança"},
+
+{"id":"d14","day":14,"week":2,"data":"27/09 · dom","formato":"Reel","pilar":"Desmistificar o preço","tema":"Meu espaço é pequeno, vale a pena mesmo?","objetivo":"Responder diretamente uma objeção comum sobre porte do espaço.","gancho":"Espaço pequeno não é motivo pra achar que design de interiores não é pra você.","visual":"Vídeo de 7 segundos, take único, Anna organizando um ambiente pequeno e simples, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Uma dúvida comum é achar que consultoria de design só faz sentido pra espaço grande ou reforma completa. Na prática, o pacote de entrada foi pensado exatamente pra resolver aquele cômodo pequeno e específico que incomoda todo dia, sem exigir projeto grande nenhum. Comenta aqui embaixo qual é o espaço pequeno da sua casa que mais te incomoda hoje.","cta":"Comente qual espaço mais te incomoda"},
+
+{"id":"d15","day":15,"week":3,"data":"28/09 · seg","formato":"Reel","pilar":"Bastidores técnicos","tema":"Processo real de medição e estudo","objetivo":"Mostrar bastidor real do trabalho, reforçando transparência e método.","gancho":"Isso aqui é o começo real de qualquer projeto: medir tudo com atenção.","visual":"Vídeo de 7 segundos, take único, Anna medindo um ambiente com trena e anotando, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Antes de qualquer sugestão de móvel ou cor, existe uma etapa que ninguém vê: medir cada detalhe do espaço com atenção, porque um centímetro errado muda o resultado inteiro. Esse cuidado técnico é o que sustenta cada solução que apresento depois, seja no pacote mais rápido ou no mais completo. Comenta aqui embaixo se você já teve algum problema por não medir direito antes de comprar um móvel.","cta":"Comente sua experiência com medidas"},
+
+{"id":"d16","day":16,"week":3,"data":"29/09 · ter","formato":"Carrossel","pilar":"Desmistificar o preço","tema":"5 mitos sobre contratar um designer de interiores","objetivo":"Desconstruir crenças populares que atrasam a decisão de contratar.","gancho":"5 mitos sobre contratar designer de interiores que talvez estejam te afastando.","visual":"6 slides, um mito por slide, com resposta curta desconstruindo cada um.","slides":["Mito 1: só serve pra reforma grande. Também resolve um cômodo específico.","Mito 2: é caro demais pro meu orçamento. Existe pacote de entrada acessível.","Mito 3: só funciona presencial. O processo remoto funciona com medidas e fotos.","Mito 4: preciso trocar tudo de novo. Muitas soluções aproveitam o que você já tem.","Mito 5: é só pra quem já tem casa pronta. Funciona ainda melhor pra espaço recém-mudado.","Alguma dessas ideias já te afastou de contratar antes? Comenta aqui embaixo."],"legenda":"Contratar um designer de interiores carrega bastante mito que afasta justamente quem mais se beneficiaria disso. Reuni aqui os principais que ouço com frequência antes de alguém entender como o processo realmente funciona na prática. Salva esse carrossel e compartilha com quem também tem essas dúvidas.","cta":"Salve e compartilhe"},
+
+{"id":"d17","day":17,"week":3,"data":"30/09 · qua","formato":"Estático","pilar":"Antes e depois","tema":"Foto simples de antes e depois","objetivo":"Reforçar prova visual em formato estático rápido de consumir.","gancho":"Mesmo espaço, outra sensação completamente diferente.","visual":"Arte estática dividida em duas fotos (antes e depois de um projeto real), tipografia leve na base.","legenda":"O espaço físico continuou o mesmo, o que mudou foi a forma como cada elemento dele foi pensado, desde a disposição até a escolha de cor e material. Esse tipo de transformação é possível em qualquer um dos três pacotes que ofereço, dependendo da complexidade que o espaço pede. Comenta aqui embaixo qual dessas duas versões você prefere.","cta":"Comente sua preferência"},
+
+{"id":"d18","day":18,"week":3,"data":"01/10 · qui","formato":"Reel","pilar":"Imobiliárias e Airbnb","tema":"Bastidor de padronização de apartamento","objetivo":"Mostrar aplicação prática da frente B2B com bastidor real ou simulado.","gancho":"Padronizar um apartamento pra atrair mais tipo de hóspede começa assim.","visual":"Vídeo de 7 segundos, take único, Anna organizando itens de decoração num ambiente neutro, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Um apartamento de temporada bem padronizado consegue atrair um público mais amplo, sem perder identidade nem ficar genérico demais. Esse tipo de projeto pensa em durabilidade do material, facilidade de manutenção e apelo visual pra foto, tudo ao mesmo tempo. Se você administra mais de um imóvel de locação, comenta aqui embaixo que te explico como esse tipo de projeto funciona.","cta":"Comente e saiba como funciona"},
+
+{"id":"d19","day":19,"week":3,"data":"02/10 · sex","formato":"Carrossel","pilar":"Bastidores técnicos","tema":"O que entra em cada um dos 3 pacotes","objetivo":"Detalhar com profundidade técnica o conteúdo de cada pacote, reforçando percepção de valor.","gancho":"O que exatamente você recebe em cada um dos três pacotes da Namá.","visual":"7 slides, dois a três por pacote, detalhando entregáveis específicos de cada nível de serviço.","slides":["Dica rápida: estudo de uma hora, apresentação de duas horas, solução pro problema pontual.","Ideal pra um cômodo específico que já tem estrutura, só precisa de direção certa.","Pacote intermediário: lista de compra completa, sem obra nem marcenaria sob medida.","Ideal pra ambiente novo, tipo quarto de bebê ou home office do zero.","Projeto completo: todas as etapas técnicas, incluindo marcenaria e revestimento.","Ideal pra reforma real, como cozinha com troca de bancada e acabamento.","Cada pacote tem prazo e entrega documentados desde o início, sem surpresa."],"legenda":"Muita gente pede mais detalhe sobre o que exatamente está incluso em cada pacote antes de decidir, e faz todo sentido. Reuni aqui o que entra em cada nível de serviço, desde a dica pontual até o projeto completo com todas as etapas técnicas. Salva esse carrossel pra consultar sempre que precisar decidir qual pacote faz sentido pro seu caso.","cta":"Salve este carrossel"},
+
+{"id":"d20","day":20,"week":3,"data":"03/10 · sab","formato":"Estático","pilar":"Prova social","tema":"Frase sobre confiança dos clientes","objetivo":"Reforçar credibilidade com um sinal forte de confiança sem expor dado sensível de valor.","gancho":"Tem cliente que já me pagou quase tudo antes mesmo de ver o projeto pronto.","visual":"Arte estática com tipografia forte, fundo neutro, frase centralizada.","legenda":"Esse tipo de confiança não se constrói da noite pro dia, ela vem de projeto anterior bem entregue e de acompanhamento próximo em cada etapa. Levo esse compromisso pra cada novo cliente, independente do pacote escolhido. Comenta aqui embaixo o que mais pesa pra você confiar num profissional antes mesmo de ver o resultado final.","cta":"Comente o que mais pesa na sua confiança"},
+
+{"id":"d21","day":21,"week":3,"data":"04/10 · dom","formato":"Reel","pilar":"Vida real na casa nova","tema":"Dia a dia trabalhando de qualquer lugar","objetivo":"Reforçar o modelo 100% online com bastidor real do trabalho remoto.","gancho":"Trabalho de onde eu estiver, sem perder o cuidado com cada detalhe do projeto.","visual":"Vídeo de 7 segundos, take único, Anna no computador olhando planta ou imagens de referência, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Grande parte do meu trabalho hoje acontece de forma remota, com medidas e fotos enviadas por quem contrata e reunião marcada pra apresentar cada solução. Isso não muda o cuidado técnico nem a atenção aos detalhes, só torna o processo mais acessível pra quem está em qualquer canto do Brasil. Comenta aqui embaixo se você já contratou algum serviço totalmente remoto antes.","cta":"Comente sua experiência com serviço remoto"},
+
+{"id":"d22","day":22,"week":4,"data":"05/10 · seg","formato":"Reel","pilar":"Desmistificar o preço","tema":"Por que resolvi criar um pacote mais acessível","objetivo":"Contar a motivação pessoal por trás da estratégia de pacotes, reforçando autenticidade.","gancho":"Criei o pacote mais acessível porque eu mesma já pensei que design de interiores não era pra mim.","visual":"Vídeo de 7 segundos, take único, Anna olhando pela janela de casa, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Antes de virar profissional da área, também olhei pra orçamento de projeto e achei caro demais pro meu momento, mesmo sabendo o quanto aquilo importava. Foi pensando nessa mesma sensação que criei um pacote de entrada com preço acessível, pra que ninguém precise adiar cuidar do próprio espaço só por achar que não cabe no orçamento. Comenta aqui embaixo se você já desistiu de algo assim por achar que não cabia no seu momento.","cta":"Comente sua experiência"},
+
+{"id":"d23","day":23,"week":4,"data":"06/10 · ter","formato":"Carrossel","pilar":"Prova social","tema":"Relatos reunidos de clientes","objetivo":"Consolidar múltiplos relatos curtos pra reforçar credibilidade.","gancho":"Reunimos relatos reais de quem já trabalhou com a Namá.","visual":"5 slides, um relato por slide (anonimizado ou com autorização), fundo neutro, aspas em destaque.","slides":["\"Achei que ia custar muito mais do que custou de verdade.\"","\"Ela entendeu exatamente o que eu queria, mesmo à distância.\"","\"Meu espaço pequeno finalmente parece organizado e meu.\"","\"O processo foi rápido e sem complicação nenhuma.\"","\"Recomendo demais pra quem está começando a organizar a própria casa.\"","Se você já viveu algo parecido, comenta aqui embaixo."],"legenda":"Cada relato que recebo confirma o mesmo padrão: quando o processo é claro desde o início, sobre preço, prazo e entrega, a experiência de contratar fica muito mais tranquila. Reuni aqui alguns relatos recentes de clientes em pacotes diferentes. Se você já trabalhou comigo e quer compartilhar sua experiência, comenta aqui embaixo ou manda mensagem.","cta":"Comente sua experiência"},
+
+{"id":"d24","day":24,"week":4,"data":"07/10 · qua","formato":"Estático","pilar":"Desmistificar o preço","tema":"Frase de impacto sobre acessibilidade","objetivo":"Reforçar a mensagem central da marca em formato salvável.","gancho":"Você não precisa de reforma grande pra finalmente gostar do seu espaço.","visual":"Arte estática com tipografia forte, fundo neutro, frase centralizada.","legenda":"Boa parte dos problemas de um espaço se resolve com direção certa, não com obra grande nem investimento alto. Às vezes o que falta é só um olhar técnico sabendo exatamente onde ajustar. Comenta aqui embaixo se você já pensou que precisaria de reforma grande pra resolver um espaço que, na verdade, só pedia um ajuste pontual.","cta":"Comente sua reflexão"},
+
+{"id":"d25","day":25,"week":4,"data":"08/10 · qui","formato":"Reel","pilar":"Antes e depois","tema":"Projeto de quarto de bebê ou ambiente novo","objetivo":"Mostrar exemplo prático de pacote intermediário com transformação real.","gancho":"Um quarto de bebê inteiro, montado do zero, sem obra nenhuma.","visual":"Vídeo de 7 segundos, take único, sequência de fotos de um ambiente novo montado (quarto de bebê ou home office), sem fala, música de fundo.","legenda":"Esse é um exemplo perfeito de pacote intermediário: ambiente inteiramente novo, tudo comprado do zero, mas sem obra nem marcenaria sob medida envolvida. O resultado depende de escolha certa de móvel, cor e disposição, não de reforma. Comenta aqui embaixo se você tem algum ambiente novo pra montar do zero em breve.","cta":"Comente sobre seu próximo ambiente"},
+
+{"id":"d26","day":26,"week":4,"data":"09/10 · sex","formato":"Carrossel","pilar":"Imobiliárias e Airbnb","tema":"5 erros que fazem seu Airbnb perder reserva","objetivo":"Entregar valor prático pro público B2B e gerar salvamento.","gancho":"5 erros visuais que fazem seu Airbnb perder reserva sem você perceber.","visual":"6 slides, um erro por slide (foto mal iluminada, ambiente sem identidade, móvel desgastado à mostra, entre outros), com explicação curta em cada um.","slides":["Foto do anúncio com iluminação ruim afasta reserva antes mesmo da leitura da descrição.","Ambiente sem nenhuma identidade visual se perde entre dezenas de opções parecidas.","Móvel visivelmente desgastado nas fotos gera desconfiança sobre limpeza e cuidado.","Falta de itens decorativos simples faz o espaço parecer provisório, não acolhedor.","Excesso de item pessoal nas fotos quebra a sensação de espaço pronto pra receber.","Seu anúncio tem algum desses problemas? Comenta aqui embaixo."],"legenda":"Pequenos detalhes visuais fazem diferença enorme na taxa de reserva de um imóvel de temporada, muito antes de qualquer decisão sobre preço. Reuni aqui os erros mais comuns que vejo em anúncio de Airbnb, fáceis de corrigir com direção certa. Salva esse carrossel e revisa seu anúncio ainda essa semana.","cta":"Salve este carrossel"},
+
+{"id":"d27","day":27,"week":4,"data":"10/10 · sab","formato":"Estático","pilar":"Vida real na casa nova","tema":"Reflexão sobre voltar a postar","objetivo":"Humanizar a marca reconhecendo a pausa e reforçando o novo começo.","gancho":"Fiquei um tempo longe daqui. Voltei com mais clareza do que quero mostrar.","visual":"Arte estática com foto pessoal simples, frase em destaque, fundo neutro.","legenda":"Passei um tempo sem postar porque sentia que o conteúdo daqui não fazia mais sentido do jeito que estava. Usei essa pausa pra entender melhor o que realmente quero mostrar: que design de interiores pode caber no orçamento de muito mais gente do que se imagina. Comenta aqui embaixo se você também já precisou pausar algo pra voltar com mais clareza depois.","cta":"Comente sua experiência com pausa e retomada"},
+
+{"id":"d28","day":28,"week":4,"data":"11/10 · dom","formato":"Reel","pilar":"Desmistificar o preço","tema":"Perguntas rápidas sobre os pacotes","objetivo":"Reduzir barreira final de contato respondendo dúvidas práticas.","gancho":"As perguntas que mais recebo sobre os pacotes, respondidas rapidinho.","visual":"Vídeo de 7 segundos, take único, Anna andando por um ambiente com o celular na mão, sem falar pra câmera. Perguntas e respostas curtas em texto na tela, música de fundo.","legenda":"Separei aqui as dúvidas mais comuns antes de escolher um pacote: quanto tempo leva, se funciona pra qualquer cidade, e se dá pra aproveitar o que você já tem em casa. Preferi responder direto aqui pra facilitar antes de você me chamar no WhatsApp. Se ainda ficou alguma dúvida, comenta aqui embaixo que eu respondo pessoalmente.","cta":"Comente sua dúvida"},
+
+{"id":"d29","day":29,"week":5,"data":"12/10 · seg","formato":"Reel","pilar":"Prova social","tema":"Recapitulando o mês sobre os pacotes da Namá","objetivo":"Consolidar a mensagem do mês e converter interesse acumulado em contato direto.","gancho":"Recapitulando tudo que já mostrei esse mês sobre os pacotes da Namá.","visual":"Vídeo de 7 segundos, take único, Anna organizando materiais de projeto numa mesa, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Esse mês passei por vários pontos importantes: os três jeitos de trabalhar comigo, por que um DIY costuma dar errado, como o design pode ser investimento pra quem administra imóvel de locação, e um pouco da minha própria trajetória até aqui. Se em algum momento desse mês você se imaginou como cliente, esse é o momento de dar o próximo passo. Manda mensagem no WhatsApp e vamos conversar sobre o seu espaço.","cta":"Manda mensagem no WhatsApp"},
+
+{"id":"d30","day":30,"week":5,"data":"13/10 · ter","formato":"Carrossel","pilar":"Fechamento","tema":"Tudo que você precisa saber pra começar seu projeto com a Namá","objetivo":"Fechar o ciclo de 30 dias com recapitulação completa e CTA forte.","gancho":"Isso é tudo que você precisa saber antes de começar seu projeto com a Namá.","visual":"7 slides organizados por tema (pacotes, processo, atendimento online, diferenciais técnicos, como começar), fechando com CTA grande de WhatsApp.","slides":["Três pacotes, do mais rápido ao mais completo, com preço claro desde o início.","Atendimento 100% online, pra qualquer cidade do Brasil.","Processo simples: você envia demanda e medidas, eu apresento a solução.","Sete anos de experiência em projetos residenciais, lojas e escritórios.","MBA em gestão de escritórios de design sustentando cada decisão técnica.","Tudo começa com uma mensagem contando qual espaço você quer resolver."],"legenda":"Fechando esse mês de conteúdo, quis reunir num só lugar tudo que você precisa saber antes de decidir começar um projeto com a Namá. Três pacotes pensados pra momentos diferentes, atendimento 100% online pra qualquer lugar do Brasil, e sete anos de experiência técnica sustentando cada solução apresentada. Se depois desse mês você sentiu que chegou a hora de resolver aquele espaço que incomoda, manda mensagem. Eu leio e respondo pessoalmente.","cta":"Manda mensagem e conte qual espaço você quer resolver"}
+]
+;
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt==='Reel') return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+async function persist(id, value){
+  try{
+    if(window.storage && window.storage.set){
+      await window.storage.set('day-'+id, JSON.stringify(value), false);
+      showToast();
+    }
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+async function loadState(){
+  state = {};
+  try{
+    if(window.storage && window.storage.list){
+      const listRes = await window.storage.list('day-', false);
+      const keys = (listRes && listRes.keys) ? listRes.keys : [];
+      for(const k of keys){
+        try{
+          const res = await window.storage.get(k, false);
+          if(res && res.value !== undefined){
+            const id = k.replace('day-','');
+            state[id] = JSON.parse(res.value);
+          }
+        }catch(e){}
+      }
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', async ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    if(window.storage && window.storage.delete){
+      for(const d of CAL_DATA){
+        try{ await window.storage.delete('day-'+d.id, false); }catch(e){}
+      }
+    }
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
