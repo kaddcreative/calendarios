@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · @katchads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,UklGRuomAABXRUJQVlA4IN4mAACQ0gCdASr0AfQBPlEmkEajoiGhIXBpkHAKCWdu+/xItgeAfU35u8uW4f4r8hdGGebuvyheqXzAP0W/YX/D9mbzIfuF+2nvlemX/aeoh/euoz9ADy6fZw/sP/O/c/2sdWW7X90H/E/IntK/j03txL/1vRT+bfmr9p63f8L/oeGPzc1CPx3+o/57gGwB/nP9c/1/5w+/v9x/0vRX+M9QD9duKuoEfo/1df73/4f7j8vfbd+kf6v/1/7D4B/57/dP+v64n/09uf7b//b3X/22//4oqWNXbbNNiATsS9flFyo8EcAnU89PyxiLO2X1NKsYgE7K15e9DjvHz7xF1JKSCvy16OV5GJURZUzibYTfXwYxUzkksQQ9hX1POzMrCRnf1oy+8IXGaT1Td7Ly1x96nYiPhDTcEs6ngDkkAPLGIJBi+9Z0ZKQEWyBPQ0KL/mwWIeGW/LfvzRf85PGJHy0QIXGbbI+Lrpma7TO7mRTsypI9Si0NEMCuVzEUBbn6kA+z6VqqrdXZZF1lTxnpiZKhNDA7DhJeS8ogAEi5BD2YHRdEj7R/gywXItkhevMIDoWJbGH6ws6FlimHDizPlAPwI3uyD0aVZ7ETh7gVnlUle8aAbPVajIIwc9s2Oz+aGGSzA3jfICgZae7/pvZaKk04s0dVO6IukHxChkhu7hhMkXY8LP793uoyIY7vHvet+bSD4XP0zHZURQtukb5W2aRVt8mam99f6CRdmu9V7e1L0IgpgvX6iCUU89Gr9LvlY8IvUG+2E6PJi+oFX3CrLHf1cIi1Z5besG4lEgC82vQcbDUY1/0pDcgoM2vAJ5Y5Rn2f61sLXrJrrtv05PVUTTJabOpzfr49R+sqPCDqOiiU/LeHQYNREwY8LdBFwl0WXTgKXw1RQGS/qf6OXNKMq3BKYoj6ylY/tqD5f/2T2WPfB2/mdbdoT/zWCZy38D48FaPiEyHVMyk5UvPIB5ABPTsRcqUmcqOu44bnog74Shqv2dleoZQi+YFXNfYSnhCykA40lKK47B0LcP4F9xWWq40xHjYdCypmNGHjGPC0U42RVG2qohdkzr45G7BCJ4ssltleF2YfB8Y5F5cGinDRc1mHrEjWUJkx+V4s/7Lz6YtuGaeCSvKYiBHHUHj3lWdSIbEBTrPZ+wDB41/kV7YKIxlvvfViEZmx3CityxUfDMchusdWQga5UCHsnTEfwf8FiTFjXUHAQntLIOcmsC7Cgw+536bbSbN3zkBCzSSPRuBt+z3TOKIBP2bwDfyZjp56KVien5YxAIe4IVmuOMSBu4kX9PFFJYzV7kH+fV+6HiWSNVjZjxM9UV4sC8u4w/5q9sHC62JZ6XEAJOp82JWywVYZf9QQvq/qJuGzMyaNrm71qceKGVepMP0dSJoi5eS2wCiC0QLN8Tz0/LF2RB53Jjda0O7C3IPrFQ3gMC/mLyz30UxR+heDiikdXLt2D6DTh7WQpAL07WaaOS6YxgL4Uvtel7Xp9QyvZdAdRZfG4cdtjjPWFAnZcecJrFkArOgT92K19yQNmVMT5739PM21g5MrAGZayB41lyzeEaiFJJQW0eBxwLMZ7MEqiIqVEWV/HN/wFxNmL6ddlPw+6TJGTHXf9FcJ7/gMEMxxVKSuofJnsp4WUSmsa1DI+80Oxe5vQ10hdtSH5hyxACofHGfY8FLEVCvI2stIZma9Dukk/BqsbrmVPJeG4VHYV3k4WIseuWvzO4xtNdS0qXbmE/nyIu0ocnbtLROsRiwM8X9QqbChKQno4pC24WYrBBHr6JegHcJmeDbLuC8KJH5q3lOkjtOQoGLyPlCDus1sX5xQfxhINwqvccTgkuhjfA13uKrMGGHKBiwU9NF5fyR31jqep5HqiGh9Dr01LHv/2dUSo4dtc2A6kGSBAobOJCrm76bAC6xBv3n0pkVzhq5e4FOjEUYtEaqyCm6F3maMyAVbHESvBhiATpmP/7JE5sPv4J2Xkzp5gdssdiRXnOB1eGQhnbIYnL+4OjJ/CCuqqjk8dJf+Bu7ZoEOX7DIh7tojncEtkT6+RAWUfowXwo4lzaRpe1F3ZuyQBF0ZWD3QeetHKlh4omHB5qhsdEn/IeU0dH1G1vsY6ZpxLAqfTvg4r6VyDBaUobyKFRh4EUVO1RMQCEOZECnpheHIKYqGjLNc90o2xUOhupRWUEekQ0SY/KljYi1W0YiZ6hL7rbuUa49Y3oAnZU9HUcFdNpkJnu89PvpEmj1siljYgE7Lnfnqeen5YtgAAP79lsoQQSMe3ByW5FzCkxdHVLbVE2LZ5wCVYXFJYdPwwLrkbF7zNFAErqSXVrhaIhebvaK7q7aq6VR1Ixdl4mpVz8JBVL3XOgqpeooMHtWviv/Pk8V5yYo1r5yRf+hgCP04b8ZBsrvNMxlOkpvntCVHKg6wEiJIrj3XIyKMw+5l+HlKt1ViSYsQREDNdyARqQ+p5D9oT2UaZTb5QaxLq7tfIwU+tGVW85uQSUlyMra2Jej3YCVlsSqhQFSGtiKvLdWyrut6yFHnN0iSF9JHV1FT+J/53J3B+a8UDdqMu2ez56Q0XV6Sh+KZfdVhR3R3rWWzWsbKllYZd1Ghr0AaLRer99XKrp3Axhy+7Bd5BGMVKvNsvzR0Xb4tL+zE24A1R1LVqzTmKWFSswWxUM91t15pdzZt4j78dCWIIFb2cw21BHdT2fkHSatqgZ6qvcMJmpkt91bmIVtRoFY1PWzcd3wIXbfr/2py8TlIPPpBCLlYsITz4v3n1N2wGg8DLQR52tXHeBj6x0/NxLmQHkbej2N8Y3xRaLn+Xk0iAd2q5NlNPHJ6d67xmHWX+kroqmaft89u8VfY2Qf8Qz20frV1SJr+FMcNUU5Ly7xGwN15eDMe4iyVxoGlJPiZRar7dVibvb7LryxP1l9xe8lQQlpWwz6iHawuAX6awV99NU8HwacPNMHOG0mnnKLZCKHUCIiDpeVa374IBLyaEpHXLHRga10pGyLARy+qWA3LwnbDiFHPB/iUGuQrMCONoUbBqKhujz1dKdvEihs1q09NHlkWYt1E1Ojy2MBh6d7jQIPwhQHUNlK/yzH6yr33kVChnbLiqigXtDvu/l01D6EcW/tbu9COoeP+1lZ8OWu3W/AKBDfKZSE/LGUqMVXMLqQOdx9CLnRNfb55mA1VdIMwoMHIbgEch81q8gpESmgfjo+mFQLC8Dlv1gP0iUEVablmZ/OCpqE6H893vTx4HJR635qXqUoSp+mltiC/AfDHGTz1Wu6Ae/9YdVVVvuKAyL9Gr3r/UB2sl5MlMLzKWmrIEQJs0OsgHr9OpGbE0vjLP3+w8zhi0d0JgvPKTPwIJOi3WA/+LygcOtQ6v2+Ybad02IETXu9OBWM/AhK/pnsy3Kz138OTmQAXgp6Eqo8i2dTw7BYOEMve40MeEmqxttq0JQOBniV38JHJeSQnSCU02BU4paJItHWZ+hCtLbepbdt8WwEjDG8ORpSQ4QX10SjM4gIEiXsHgVYuHC6hyjdFOJKOBQopDvuVMM+JqykQiOGtq3HyMNoeKMsViFQ/fUo4ULGnVnRLu/4h4wZlRSr8Tid8YK/L7HlCpyHkO3MxJBG8Hm8eur8V+WHl2nBNsqgQVOibIP7VKdyQvuiHNyJ3NUbNyZr24r7zMnp2rtidsug7EoIOeeaCeUrfL0rhJx2wPic1H+dj+0pIXbcz7Ywn7NkE/aZfkvTswTx2/pvwX4P8qvviIahlsxO5Ugp222BWsUzAdvVKiVmcy83sfIfpdWhx5ukWotMUxw9mF9i0cdtKJX7OHoDD3PAaQNBqFbgYF5gtejXQiT2C77aj/I3TYO4BpViCrd1xHI0THiodgEMS55moSJZp049/QSEsJJ0FsW5PDdhmAJQyf9HZd2FKeKPPdKlcqW3IMxrxEGF+0d8necERyYL/Kmex6+Qslm7+Q0+7c0puLL5tL6DKNYfDUeNq9EwbboEGYrJ5Ezgoi77DTGYQdvhj0wPfFXbOGLuvWFd4J8aYjseqS256/4pVo/EV8gEvUsoQKHv+1qgCag0z33JHdNnySQZ141Q8pH0EqDSW1zSecG6yV8/ND3Yexsw8r5MUT03PaGLBIvcAGJQMWDEJ4M+nooxK7KUtKR7UcGiOFwvqzXGCf2VeUqvtJbp0/sqvw3Zs/dqsdbB2VcZg0Ts4R9Dtv5bh0grjD2gfcd52dEtL/Os0o7lV+Jfek27vxOE1GopBHsFKqgG02I6jtlZYewkaXmU7WC6Nxl2lTct0Cr7M65GbnwUlOy6KIdi8e5B9Fwa9OMGZdb9WH+Xh3o5ETnfrVzXf5SXv5uuSCPssXTkSWKxeXrE5ekMOhE2+J/zNnVHrXGHqlMh81tjw1FTSAMrbzC2XcWQq5DBLfEEViF7S9hi3jlx89FiGNkl/z7JtHguLSc9P7+VRv/4Tu4jvbvKPGM/8eKtslwCKlEQ6H1bjfE8jHeH57Ru04GL0cFo5nRJL/wfcBQ7TkgWZY63T5Ituo7HREOps+MHzy6MJBpdDa0RN+EA6jofNwPJh2un6PaSQnElfrXkx9jmJhDtwg76Y6vvkvxjrPmj4C58ZNo3Tl2OzRkObSXXyHZnxTorlRMoRp3OowNtREcMCeezS4wuHKifggpKAuRFV+AjSa+LGOTs3W/WRbuQNYsR/izgNIRltvSbHK5mSYIus/m7wd5PVK66fzfUsgSvgcu7ZRvuSXbmmEYN++JTsitXKtVa2fWeADNtOBVesnyeGI5OmdSGwGUnyMxjz7ZZZeV7MDw7TIpfqPVt12iYm9Ag73Sl/eVOrkXBoI2PaT5CbNM+dXxYys7Wjm6Ee+gc8HaSIELlMoQisozU8KeedCof4XzeHzan7KooC6nRMoR7ilpz+4e/ClZuppdAGrg6ku5stjFlojaJMOutR533KFbZo1wsoXKJMGoBWAjQ6gNGwaaWf8Wly1cOpMklcDp1kJGtDrRxh5XDbZxr8b9c2ijfFG2K8LbBzMlNQchy2kxilNHhJYkzZXqNKsk4epCrj4lz3+tEn51OtX3FUkCmENQoNVmonA41FAE/18DQajVYnQRBe0MF/cxMWjtyfqy4BStPfFnxxHtwsIyX98j0nqLWdF+CyW0dM0MkAyfS3Cb0mL8cfTRHlu0OZVDyKixG8n29DGtXBGaSxfVxmr0PCL6YFrEoNTb1QDHBI0yfKx+V7UnglbqOxgz+CDbQ9MbJc4sUL4J1CF0JCSDsevi+cN0ADVUeua+gYTz6QbKnPhSTDuY8TqysEJjiiv8sV7RHPcb+H8YfZNQjNCrJ8KQznHOGKBQ/7qEobhF8MJL3BanqK8YmrLeDpiOB2ikBZPdDgu4g7m38kOAy5b2AktvpA+xKAF4aXOUeF0tDcCd2F2DhDONwpjnJ3+7RTsbHlSp6XcIZ+DnXMeavMw+j3EvtC+YfWYWguMY5fyzi4JftCP6U8Vlyf4kBb+Q6/tSRfJKO5JAHqDcQZMyhdpqtDIfBbrfZRUsxlGlz9LpHUaa8EPr/4TBcXEQGMYWX2ZTcnonshObicpcmDkFNL+PhUf444zGbnPTbeLvRSAHak0jIlhET4MrAv/gFw6tLLBm4hWiSY5SxkN1qZ7/cAJ2A+nDm30iK1i+fxc+Iu4B7l5X3j3aUM0V0jw7axDSUBFcwGo7uKvJIbH0zW1klDhJcgtjmVqzaK6n3Q1Q8uP+w4TTRHAW0RDKfWa0Gm1GU8HzWEM5yj+eqqaPKjYkd7lF/JFiC+n0Va+fuJbO59XUk6uVGegj7IkONWjAduye1DKQ+IfCP4l7t+16eCrc2wO0AkfkPGdfn77X9HD5wsi07mRUE+muBvvGm/6waIMwQKb1tF08ty96afxxkYwhlzDSQpRAzbqZAIj1eSFZGtJTxuwKlCNvQB40Yq4ft58+dDkXPbNr+/50riYl9kks5ARNwBM+1758UWoyaX+OSgN1iUkxh2gXHzLf+8x+U5+gWaqNjQikgGLODU+XKeIB97EwcH1Y8vRRn65Wh6tm20mlIj/3r+tS3egYuugMOX7UfvWHqitHVzPJVqW1Ud5y+0YeEn3GpTAnoPr/Bh2udLO7JESeKCWlof1V0mDlwXeeYY2aXto8kybEclBLJyHn1sRcoEwJBWMcWZx/Da0gMC14mJGX7OuPXy2AF9DKNfj3t698hlbn84J7epwvldBX46B11i6GthMIa/qcrdxDOwGpiOlHJcy3LxNuG8pLD5IQIuDi2lIXlS62GOAHRLzrBq6ntn0fAbp9GMj4JmgLmHmg+YCttY9/tmwIKOLqu4+XBeEu7rEaxba8Kvkyy5hu/zlFTVZY2zHJSdtCqx5f13AA0RaCLHMABp+wEb6xnqaPrPjXlC1eomXZPAUYEdj6Coi3laIOqZkAG25LywbD1CWN+RCKnXYLfTzCmr3RNDk9meG9SvTcRJ89mEwcPHFykARyKylWT+9Hv3I/ur+HmNagv9zwijgKcmu9e1+sp1RCEYO36E3yow1e/XICObD8BhQsiTShUvD2T+zQzLaYgX166/QqjvoX5Tya+QkerC/e0Ts2A3Ku3lF7/1XFkoiFvSDcUfXM/M5CapScUAiRRCJO8wMg0G8Zgqoav902HgQYE7GkVC88YgV/TqIbXbucEsDr439gS5/T7CxyIcHFdJkJNYW2QXB/3qZLDGZy9woCJe+Y/Mi9G38SJ3LR3nRg1f0fkgjIl3WcCIINTJzhjZYL3Jh6LmLBEnfUSzIodipGufPlmpHzfoGfdKtQ1d+9eT1Rpm+36KqLecJ6RKir3iwvipMYq7ObRu+4KDG22433vtWDwE+MCLQYghkzLzYUDRu/sxKwUlGvbV7GCKEAqZykoSDIqefcty6fyVhNgTSe7uLkvcV/o94VSq0xuiTnJiln8DCAe5EsYhM3qau4G1eRBduG92KdIKCLR2v9PIQ/rLjtuYDT9VC4NVKQ69p3uHZiUpRa5S/EJ8SSzefLPjfGrf5/wWjYbJ2j5642OJLhSlpoCCH6MttAc9ppSbfebPNceKjsVXlqBUst5QOTkBQ5LslKcSr/ekG4T6M4Z3xVeSS+O3rgAw9g4erjgA2Vn5hbGNgXDceq6j/E/FEe9nsX4JLFVEL4XOdJhABS3xMYUKHkXvowdkanYLBbvQZhiI3dQiNn5SYJNSGH7N6lYQXfWMnFAj2o+zjL3Eo4G4AGpone3QmMACtFkJvaQSQGywjz8ncmTBRtn1qBxDZ0w/kpyAZ8yMfpOtPGAIfwYYI9Kft0rfu09ci9/q/YwI9gXTGcXE//8vJSzndYhLDLnr1DmeAdFYpbjYCzXBQm2cCizXrkOS4jukh4g51QC+PWNKf2QVacGrH4EBsa/PZ98YeyYgtX+JgjLtHJ+WaqfYGG6XIAS9bES4E2tYUNtYny1NzmsB0945hADJ1ldjP/y6iZ35ne+3hTnAvGwuG+sYA25Cu9wvZ+Df9cCC3qoJmdWxAscfZuF644LSSJ54UWakKXwYQvNTFUtKABrOqwCoWqTOyseS3iU39l2tAlijiU+pHaX63NjDmr2TTT1349hvh23zicmM8ERa/1QCULbhnu3nGVv/fhiNn8TQu869+a39mhaJnqRo4ZW9AvzGZxWxsbXE4mP65rUlXMU+mjV9N9tw5HACf1dwp0pYpDXZmA8G4V/DY7uYZlL04imgRdtgRcXVQZ0Lh1DSYMeQE9eQqcoBFtcHnNtKistC1xTenyisOHaO6wViaWpbc1WNTRWWypQGH+K+ul3qrONbNuo2sIHOvYTb5A+WuDh64GZ8mJjEfI83eTYuhToDM6JUP1k5eRH1VK+iw2uWaN/BFvXsrYUdNCEbWTGxSQ1mTMDhFs5cxTN2HljAS6cUQSDf/igUEPzX8x7IiQUqqLWeSfOTpHWLnXLK8Udw/Of3mCjyQINX/ozZ2EEOmgiQhW2wZy47qaeEQVK7ZZL6vPcl8VGOvhgM2GpkN4zXLptAiiwEOwJOn0cb4+7j8qozX3zOy5nfU+L4JeICEkopTF3dOc0fLYfekx577A41VVV+qG9cVcZqFQ/bOPOeh1Y1/F1gUCT0+OFlafc3mu8AmcEAWXM8jYyzA2s0bvF9j3+56EceWu+zE7+JJ7svCrxBMXpP1EP/61SNpZ4l3NXD+hto516QEv6nYabcd21Jw3h9cDjuAOxw8IkVO/xGDwa1bLTzXBr8KmDCoRI66D1tVxd1fkqSq/fl8WD/h3kn0wn8FKO3alSD9VMaYljVUboobZs+Q0wOJKjz/XamFZQoUi4aCIN2oiLhuTagV8Ne3l9WlwREkLpQdL9IXDc+H6z9bLMw9+8VtzzWvMi21JidJfy3u2PLeAkcf9MB+MifJZSjxkPF+ybSRKCZZ/m56qKTe+FRsJ+OkymOfimf5xOvWq5MAWRRjjH1yf4r5rX7IriOpgEn5MMlX5f2FgjgzwaJoAM+wDGFG0sOWfwDJJYs/zvioQbnv52dqnL/+F7rRv/nc8RFqWJS/k0BUYVGtsdqZYhifBeplbbL/0njAK9S90oPAw/83uR7vPoWsfxMJ7+QUTg9fH+I7aam+eTRRSWojzGcSQ8f9YLAgWxUfNC/5S+M9/i032X6aI1QYuIUktX0yn0r6mGWYKdauhfmjVN7pfwc0yEnENrKk7NEhMmqmuPEEIMwyn88ZYvW6sOwH7dFQ/pk0Njaf0vr+/WtouFVFTTBzPwEveOOPoKrtJ6HB78vD/XZQcON69trL/b1y7/DPGxxqFZ8eGHLChhtzWOX9NrH5rLxNel+kACkGmCFbcb/r84ntd+D1rHDdxLFFv11Vr5jBFnRfii4/hmf4kREauoFvZA2q39N9xTwsQP+sJ17m2Cs7X+3ZVKhVJ5MjMnhxzPIOiX34h81OtISqiDBD7zVCJIbA+Rzat9jzByT4Ow/ymXNPllXqsAMA3uYwqGCX/E5EEbcWQdOwUjpD5np5rGnJdGm0+DfrhPKpVkEQuJ91duYoVdY5UNiP7WAhh+F0MljTpxkvlo9FHbTsHI9mwqvQsvaMTsP1ItttdQ2vT09s1mD3tzbxTfBDQarB3EDeVQfevz+z7sZH2V3hExDKJoLnux3k0+7nsmjYAx1w6pr+sVjjvRcO5wrmJtCdzuWqEEg+U+JvBjfbjX+f+Ym8+reBTJsv4JrDyey9T4CjXwON14W+JLUrgj3DKEKf1Eg/Q6mYonX8/QhC57l4D9JFHTX+hNkAK/+zIc2KpSU4gYqH/gZRqm21slBuU4wvpltF/f+mM5XCiOvTR2qZvho7/fYaZP5VX36YtZxE5UFpu6Br13sWE31Lye4ec0xTOK42VWcM8NfS5xVI85pxw4nX1aHR1QJEl+ZGRJDd1XhGV4hvTl4CmQm4SZAnWrm10vDfbkSkFJwPFG7gxaXEbZJ4HyBzuvLWvp9dvBey0qcLSXZ2oxT5Kene1Dpv9sy80coVlsSLJHvUZDEmpcfYOZezqTjur8oZ9N0lOTHnHL2n++miiZ1J6kMGL2sSHPitocm8/psxl4ti78ZEX2OEvR9Xa1D1P1KXXJSesz6MJ1pMwbd4r3KTiV9sBxW9OlF8hp2NuXuqx7orf5uzyhZHyzfthUfUA3yd8TSRe7rEhQCa7iy1zOHlaBs/ihlxKcG/B1Id9gC2YcHut/uO/yWEFyBKayL1f4/7uVEECjfDUzIkJCq7e6irv1nsMiRtojkhBf2LCsndJbBa1g7GvkeN7FzYNQ0gUy9NuLCpPTMkV/X22i9YhRoiULTcnFy8kAnLdqN5SPo946bmJJbL9g96dv9Q+XQBbScLclDEhHUEyLHsSOSLFrJYAECbIsQr1RIExb3Ig2jfx5ENfH8DW4L/1ErFsaeWcvpR7HdTQ24RalU4T7FaTBF2Sl+XkwCKp71vH+5F1Kc36+LeLekFn18HFq2saPX6fmbFjVPYqBGBkK3fKNHsHbPL+v3d7KFtuBy/OXqdfB2iQ8fvM6VUiGPP0HrAgncAX4jv8c/sIRkU86H2lJrmVeodSRIlQbblDJT4nYZkp0/goE2O6Ho0XPLbuMZCyOZTcAd54Bxr7XRX7WKUH59YfG74+cQTFje1+IOWLyh5eKl2Mp3h72E04zIJgXT6Eu2x/afAn1DuSYRjUKz5H7FW5lF1ZCPYMnxluOsia8x+tdKR4COFm5Q9YsolLYIHi6rhyedUdH7QbViBd5ppEAzWuF2m5H6DQKTlN4M5FDaapc3ehDoGVAqbh1fQHQx+29Lg4TjZPut/KI3Nf/5km1EHCJUnxXID3XlGgKDcceK1elhqdR/fRvlAwGfJJQCoCz3KC5PBz1HYdVH4MU7CDc18VW0G7gHkfJqAw8est83KA7oHbwm1GTnVzVxmUU+1uV/Ixqeb0T+C/r7faGtc1Dk0tAXdzyjYy+reu0JGiPX9PvCrDhSYaEmWOMxr5+68e6jA9GZ6bHv1nAY+nG90i+MLymSATV4wuXSPdo2JxpoCCoZmhQvwDUnDH2lgRsNIBTs2ezclcSsND7AKtMK2/KysI4am6QrCX+c6ymvjsExYaKETeHAyI8ybSS1YuzVVfFXoerQVG64Y8uUnrdlyhoVzrP9ms0MI6j2CuJv7lVXQverkQV8YVc2FlcJBN2UyX560Z7aXfsMTmfkAVwXTrwHaSTdY3Lfrpv16jjwdHpHVCC2toDGjvNfZRB6JbZCokUg9HMJg+SaMDVfW9u/2XOIRmp7WfgrTKmH5BrDRbGmvyBA7QClVpbyB/bS7v2TuWAVK91Ez9RNoSA7cGzGN3oa585lsMkU2G/cc5/cm8iz4LjO5aJPvjT6ydSKck5XMkaZAN3gxeDdfKD4b7LdxxwCQR3hbkBU1/zpDYhFIEjLRy9HiqPfEDlin7KuN4MafjLtiqiF3JpsTNTfAJ9FvJCiHH+RrqJIqQPb/SfLXQS68VGi1mkRubhX2+sy/Sn9espB6F6fW2iYZiYibOAFhhdxaOAEmHSgiuXZwYqa1rG3sgVHBdvnljpvbXY3saBBe55lGcCrMDaU+92nZvHubQh1xRvAAHjp8D6EMImPKfbeaQ8L5pU817l+iKZrI+aXF45E8I5jSPqFfwELX3A90t+vve1HUCYYaDczCTMJeZaMp+vBdVZp6O+Zq0kdkPTrg7VKrGp0wdsAX4V0Rr8FrUSh9H5Ane/lwpSpEP4I9JqE6eVCYNHz3iHX/rPXJcywEkCNeE0OQtftFe+6r9AayPWH2F7vNEhYmDaEzN24l2Y/4BPEs9IkVmhaXXJioKQtQeHfF4in9F5Wqfi5+smg5eBkS6tahPyl/TREyxcEWpBCyewcyPAjQvQyn6Dc9mv49zRGRIrGQhIZKZIB8Umh51Fjo8jjTtFEEzK6N8itUWepFMy+l3Rf4/ZbT1HzPxSlXghPk7cpHXUyniE75/vVV6iPca8aJsHO2g/C6NwGiTBnhroQPeUSv6brgsfe58FTglcPutwwoAAA22ni16PYaH1+MWW8+V9zz+hVc1L3kSVC4yp6MnFQePXrwd0VmwjVf9D0OZmko/L177PHJgA6zBtyHiCl/kv6V0xAUKB6VGbb2TnzbdighAyatmGIJ/tSNg00hx2QrMrqOH/SJd+Rbp2mMjbgelONkKmK6Woej+xdIFhHGy2/bdKiAcnUFbFxX0/rBv1MiXPrXyLQkUGqikYxGwfx2H5QoQ3O7IBQYh2qzIo9taDQSlLH0ipjUV27IxzykDQXPSg+vxiXMD7cdLYmlSSu65VSG64KELhKqLyW7etpmYMy1G2bK1UgeHYFyNkhm/WXHhuMNTylPsGjqmyyRwERxDvOslioANidWpKACUyUWXBg72j/4QH+gGEig2u6T1tiI4rZ6c2zO5R1399ZiK+quIaJLp1ShociB/UALnHMlfYRg4WFBfeFZmNz2Fs32V34aopVC8QfjfqAOds1egfCpk4mLRkJK2z1iqbgYDl5JGVmZPlOCA1QI0bYF5+dBtvkYkHoRH52GFzVf7aWW+dZB1u7anGS/Il03+lYR64k0vvU119LF//OVDftKAf+71vUpMnbzJk2deZmVbyx7CJcaZcKqpC6EX7ss1sVTCf8ZUXdXzkwZmfpNmdhUlENEHwWOG96fXoFjO9Pti1uppXUiJdEiamJMqW8MoyrTWL0OzZP8thgzSib0991rmDJ/3HLIjC6mKbEBCdB4Y8aokObCA/ceXitQgRRcrbBn4/CmskTmU71fOl6Gu+b58U+XrL1ONgJSs+74BtfclF9vVTihJZlygBnN+25GohqhDUSfbwurZ0iVN4a176Vp+J61PdVF/sMNurA9trk+qqLBm5hGkjPjmZIquAXwcNti6F9GDn5PwUAEJzZfpmAu92IWTgdmMpkJS6OlSkYquwJi3fO2p1jNDkeH28I5g5w01aucXjIpWI+euVPxNcfmRa2DyXCC5E5+rARrMDIczC76Quw9I6bOG3162FlKIYoP3Ftcj8BXaRir8p1Cvrar6im3/3uFIMuCl6uT03zhG5gEwhULzMVTSrVrZ5cJ6VPz35v4b/Kcd8AGCHD5faZD57bm7YGUKVLsxptlNw4x4cG4cIFUm9aAxvSiKdPhgO3yqLzMdOoPyav6DZg0R1TT2WjsscV/OQ0wp9KoENW3J65YFO0LCRbMC4XBdGisqwGqsBmLeau1Uc9MCG2T8zd+lfWsDc1vhy4n3nv4OE3l0M+HNzzgbqQ1Xjc8Admy6AMvPslpsino6AHQr3h3u/WuiCNhrZsIMhDZG5RN3qaBoJ6KMpIBdVG3LqkHFkxMDJneNwS+5fjf2RNscV3N2K8TOM2XGs7MoDhXkXYxSujuq9VkWTRFpDEeg34DsqH/rZAmcp3ITcqZgDNBVC4QjmJo+LebZXeMRRFmTxvJsZ6far1JTzEWqs4O1YDxvSqoFroDmSLHwiRaIK6u/RPyGJqkwjFWLbrLNtWyiKjlKzT9RyaVd12lH5Ydal7cZ53cggmC1JhemhHOytDNleGSEaJwigbwRCv5pg9Iwv4wEqo4KiWfUl9pTqUySmJP5MxGyNdsVBVuIkxxCrtQeoIWkTtWC7shV8k19kcWuu5gMnHEP0YxiorulfATE1FT8QCncaVeBXDd0iR7BoxAYoPXhwPnLshTvx8rwXjdIAUC0G1LoPCuniKpLgDd7PhHoNlSE1w+1BaTHvVhLy+fSKocMtYrI5xs7xSS5S/AJHIVTiXAFkgJpmgdsNXYRm40PGlG+ZqyoK1DYgM6sAnNmYhJ9AATkganpRZg4DlACEStzt9sAAAAA==" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+  </nav>
+</div>
+
+<div class="hero">
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @katchads</h1>
+  <p class="lead">Versão revisada, com foco em qualquer tipo de negócio físico local, linguagem bem mais simples em todo conteúdo, e cada gancho deixando claro logo de cara sobre o que o vídeo ou post fala. Cada card do calendário é interativo: marque o que já foi produzido e acompanhe o progresso em tempo real. Nos carrosséis, o texto de cada slide já vem pronto pra copiar e colar.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Karina Katch · @katchads</b></span>
+    <span class="chip">Nicho <b>Tráfego pago para negócio físico local</b></span>
+    <span class="chip">Perfil <b>@katchads</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<!-- ================= DIAGNÓSTICO ================= -->
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Ajustes feitos em cima do primeiro diagnóstico, depois do seu retorno.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">O que mudou nessa versão</span>
+    <p>A primeira versão desse calendário tinha três problemas reais. Primeiro, boa parte dos temas repetia conteúdo que você já tinha publicado antes, tipo "Facebook Ads não funciona" e "erro de configuração", sem trazer ângulo novo. Segundo, o recorte de público ficou estreito demais, focado só em ótica e clínica estética, quando o objetivo real é atrair qualquer negócio físico que já tem faturamento relevante. Terceiro, e o mais importante, muitos ganchos eram vagos demais. O exemplo que você mandou, "Você não precisa de um orçamento gigante pra começar a testar", deixa a pessoa se perguntando "testar o quê?" antes mesmo de decidir continuar assistindo. Essa versão corrige os três pontos.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Regras que essa versão segue à risca</span>
+    <ul>
+      <li><b>Público mais amplo:</b> o conteúdo agora fala com qualquer negócio físico local (loja, restaurante, salão, barbearia, academia, pet shop, clínica, entre outros), não só ótica e clínica estética.</li>
+      <li><b>Faturamento alto sem falar o número:</b> o foco real continua sendo negócio que já fatura acima de 30 mil por mês, mas nenhum conteúdo público vai mencionar esse valor. Isso é feito através do tom da mensagem: fala-se sempre com quem já tem movimento e quer crescer mais, nunca com quem está começando do zero.</li>
+      <li><b>Linguagem simples de verdade:</b> todo gancho e toda legenda usam frase curta, palavra fácil, do jeito que você explicaria pra uma criança de 5 anos entender de primeira.</li>
+      <li><b>Gancho sempre deixa claro o assunto:</b> nenhum gancho começa por uma frase solta que deixa a pessoa se perguntando "sobre o quê?". O assunto aparece nítido logo na primeira frase.</li>
+      <li><b>Temas variados:</b> os 30 dias cobrem tipo de negócio diferente a cada poucos posts (loja de roupa, padaria, salão, pet shop, restaurante, academia, entre outros), pra não repetir sempre o mesmo exemplo nem parecer o mesmo conteúdo de antes.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Dores visíveis do público</span>
+      <ul>
+        <li>"Já gastei com anúncio e não vi resultado."</li>
+        <li>"Meu negócio já tem movimento, mas eu sei que podia vender mais."</li>
+        <li>"Não sei se meu gestor de tráfego atual está fazendo certo."</li>
+        <li>"Já tentei rodar anúncio sozinho e não funcionou."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Dores ocultas do público</span>
+      <ul>
+        <li>Medo de continuar perdendo dinheiro com anúncio sem entender pra onde ele vai.</li>
+        <li>Vergonha de não saber avaliar se um gestor de tráfego é realmente bom.</li>
+        <li>Ansiedade de ver concorrente da mesma região crescendo com anúncio.</li>
+        <li>Desconfiança acumulada de agência genérica que não trouxe resultado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Desejos emocionais</span>
+      <ul>
+        <li>Sentir confiança de estar com alguém que entende negócio físico de verdade.</li>
+        <li>Sentir orgulho de ver o movimento do negócio crescer de forma visível.</li>
+        <li>Sentir alívio de parar de tentar sozinho sem direção nenhuma.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Desejos práticos</span>
+      <ul>
+        <li>Anúncio rodando com estratégia clara, não achismo.</li>
+        <li>Contato de cliente novo chegando toda semana, de forma previsível.</li>
+        <li>Entender exatamente pra onde o dinheiro investido está indo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Objeções que seguram a decisão de contratar</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item">
+      <div class="o-head"><span>"Já contratei gestor de tráfego antes e não deu certo"</span><span class="o-num">01</span></div>
+      <p>A lógica por trás: desconfiança acumulada por experiência ruim anterior. Precisa mostrar o processo real por trás de um case concreto.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Anúncio não funciona pro meu tipo de negócio"</span><span class="o-num">02</span></div>
+      <p>A lógica por trás: experiência ruim anterior generalizada pra plataforma inteira. Precisa entender que o problema quase sempre é configuração e estratégia, não a ferramenta.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Não sei se tenho orçamento suficiente pra investir"</span><span class="o-num">03</span></div>
+      <p>A lógica por trás: incerteza sobre investimento mínimo necessário. Precisa de transparência sobre isso logo no conteúdo, com o assunto sempre claro desde o gancho.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Prefiro tentar sozinho e economizar"</span><span class="o-num">04</span></div>
+      <p>A lógica por trás: vê gestão profissional como custo evitável. Precisa ver o custo real de continuar tentando sem estratégia.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Será que ela entende do meu tipo de negócio específico"</span><span class="o-num">05</span></div>
+      <p>A lógica por trás: dúvida se a experiência se aplica a qualquer negócio físico, não só a um nicho. Precisa ver exemplo variado de tipo de negócio no conteúdo, não sempre o mesmo.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de mercado</span>
+    <p>A maioria dos gestores de tráfego se posiciona de forma genérica ou trava a comunicação num nicho só, o que limita quem se reconhece no conteúdo. Karina já tem um case concreto e publicado, um negócio que saiu de R$100 mil pra R$700 mil por mês em 90 dias, e pode usar esse case como prova de método pra qualquer tipo de negócio físico estabelecido, não só pra um nicho específico. A oportunidade é falar com o dono de negócio que já tem movimento e quer crescer mais, em linguagem simples, sem citar valor de faturamento, deixando o próprio tom do conteúdo filtrar quem tem porte pra investir.</p>
+  </div>
+</section>
+
+<!-- ================= POSICIONAMENTO ================= -->
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de marca</h2></div>
+  <p class="section-intro">Um eixo comercial único, sem distração: gestão de tráfego pra negócio físico local que já tem movimento e quer vender mais.</p>
+
+  <div class="quote-block">"Anúncio simples, feito com estratégia, pra mais gente conhecer seu negócio."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card">
+      <h3>Território de marca</h3>
+      <p>O @katchads fala com qualquer dono de negócio físico que já roda, tem cliente de verdade, e quer vender mais com anúncio bem feito. É conteúdo pra quem já sabe que o negócio funciona e sente que podia vender mais. O nome comercial segue único: <b>Karina Katch</b>, sempre em português, sempre em linguagem simples.</p>
+    </div>
+    <div class="card">
+      <h3>Arquétipo de marca</h3>
+      <p>Arquétipo principal: <b>a Sábia</b>, sustentada por estratégia clara e processo simples de entender antes de qualquer anúncio ir ao ar. Traço secundário: <b>a Heroína</b>, construído pelo case real e comprovado de um negócio que saiu de R$100 mil pra R$700 mil por mês em 90 dias. A comunicação é direta, fácil de entender, sempre apontando pro próximo passo.</p>
+    </div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Bio revisada</div>
+    <pre>📈 Karina Katch | Gestora de Tráfego
+Ajudo negócio físico a vender mais todo santo dia com anúncio
+🎯 Estratégia · Meta Ads · Resultado real
+👇 Chama pra conversar</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Frase de posicionamento</h3>
+    <p style="font-family:var(--display);font-size:17px;color:var(--ink-0);">"Anúncio simples, feito com estratégia, pra mais gente conhecer seu negócio."</p>
+  </div>
+</section>
+
+<!-- ================= LINHA EDITORIAL ================= -->
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares sustentam o conteúdo mensal, todos girando em torno de gestão de tráfego pra negócio físico local, com exemplo variado de tipo de negócio a cada semana.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Prova de resultado</h4><p>O case real de R$100 mil pra R$700 mil, usado como exemplo de método, não como promessa fixa pra qualquer negócio.</p><span class="fun">Fundo de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Educação simples</h4><p>Explica termo de tráfego pago do jeito mais fácil possível, sem nenhuma palavra difícil.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Bastidores da gestão</h4><p>Erro comum de configuração, rotina real de trabalho, processo por trás de cada campanha.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Quebra de objeção</h4><p>Desmistifica medo de contratar, desconfiança de plataforma e dúvida sobre orçamento.</p><span class="fun">Fundo de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Seu negócio está pronto pra crescer</h4><p>Sinais de que o momento é bom pra investir, sem citar valor de faturamento, falando com quem já tem movimento.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Prova social</h4><p>Depoimento e relato de cliente, expandindo o destaque que já existe no perfil.</p><span class="fun">Fundo de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels</h3><p>Vídeos curtos de cerca de 7 segundos, um take só, sem fala. Gancho em texto na tela, sempre deixando claro o assunto na primeira frase, música de fundo. Quem converte é a legenda embaixo.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Educativo, um raciocínio curto por slide, sempre fechando com convite de salvar ou comentar.</p></div>
+    <div class="card"><h3>Estático</h3><p>Frase direta ou dado simples, sempre com o assunto claro logo na primeira leitura.</p></div>
+    <div class="card"><h3>Stories</h3><p>Bastidor real de gestão, enquete sobre dúvida de anúncio, caixinha de pergunta sobre orçamento.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do">
+      <h4>Sempre fazer</h4>
+      <ul>
+        <li>Deixar o assunto do conteúdo claro logo na primeira frase do gancho, sem deixar a pessoa se perguntando "sobre o quê?".</li>
+        <li>Usar linguagem simples, frase curta, palavra fácil, em todo gancho e toda legenda.</li>
+        <li>Variar o tipo de negócio usado como exemplo (loja, restaurante, salão, academia, pet shop, entre outros), sem travar sempre no mesmo nicho.</li>
+        <li>Falar com quem já tem negócio rodando e quer vender mais, nunca com quem está começando do zero.</li>
+      </ul>
+    </div>
+    <div class="rule-dont">
+      <h4>Nunca fazer</h4>
+      <ul>
+        <li>Mencionar valor de faturamento mínimo em qualquer conteúdo público.</li>
+        <li>Prometer resultado de venda garantido em qualquer peça de conteúdo.</li>
+        <li>Repetir o mesmo tema de vídeo já publicado antes sem trazer ângulo novo.</li>
+        <li>Usar termo técnico sem explicar do jeito mais simples possível.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Identificação com o negócio que já roda mas podia vender mais, curiosidade sobre o case real já publicado.</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Clareza sobre o processo de gestão, confiança técnica na estratégia por trás de cada campanha.</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Segurança pra chamar no direct, urgência de parar de perder dinheiro com anúncio sem direção.</p></div>
+  </div>
+</section>
+
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">3 reels · 2 carrosséis · 2 estáticos por semana. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos carrosséis, o texto de cada slide já vem pronto pra copiar e colar. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com o perfil recém-reposicionado, a meta deste ciclo é atrair contato de qualquer negócio físico local com movimento real, sem restringir a comunicação a um nicho só. Publicando os 30 dias completos, com gancho sempre claro e linguagem simples, o perfil passa a filtrar naturalmente quem tem porte pra investir, sem precisar dizer isso em nenhum post.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+30%</div><div class="g-lbl">alcance médio por publicação em 30 dias</div></div>
+      <div class="goal-item"><div class="g-num">20+</div><div class="g-lbl">contatos iniciados por WhatsApp qualificados</div></div>
+      <div class="goal-item"><div class="g-num">4+</div><div class="g-lbl">novos clientes fechados, de qualquer tipo de negócio físico</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{"id":"d01","day":1,"week":1,"data":"21/09 · seg","formato":"Reel","pilar":"Prova de resultado","tema":"O case de um negócio que triplicou o faturamento com anúncio","objetivo":"Abrir o mês com prova concreta, deixando o assunto claro desde a primeira frase.","gancho":"Esse vídeo é sobre um negócio que triplicou o faturamento com anúncio em 90 dias.","visual":"Vídeo de 7 segundos, take único, Karina no computador olhando gráfico de resultado, sem falar pra câmera. Gancho em texto grande na tela, música de fundo.","legenda":"Esse resultado não veio de sorte. Veio de um plano simples: descobrir quem é o cliente certo, mostrar o anúncio certo pra essa pessoa, e ajustar toda semana o que não estava indo bem. Esse mesmo plano serve pra loja, salão, restaurante, academia, qualquer negócio físico que já tem cliente e quer ter mais. Se seu negócio já roda mas você sente que podia vender mais, comenta aqui embaixo que eu te explico como isso funcionaria.","cta":"Comente e saiba como funciona"},
+
+{"id":"d02","day":2,"week":1,"data":"22/09 · ter","formato":"Carrossel","pilar":"Educação simples","tema":"3 palavras fáceis pra saber se seu anúncio está funcionando","objetivo":"Explicar métrica em linguagem extremamente simples, gerando salvamento.","gancho":"Esse post é sobre 3 palavras simples que mostram se seu anúncio está funcionando.","visual":"5 slides no padrão do perfil, cada um explicando uma palavra em linguagem bem fácil, com exemplo de negócio local.","slides":["Custo: quanto você gasta pra trazer um cliente novo.","Alcance: quantas pessoas diferentes viram seu anúncio.","Venda: quantas dessas pessoas realmente compraram de você.","Se o custo está baixo e a venda está alta, o anúncio está indo bem.","Se não sabe responder isso hoje, é sinal de que precisa de ajuda pra entender."],"legenda":"Você não precisa entender de tráfego pago pra saber se seu anúncio está funcionando. Só precisa saber essas três coisas: quanto você gastou, quantas pessoas viram, e quantas compraram. Se seu gestor de anúncio nunca te explicou isso de forma simples, é um sinal de alerta. Salva esse carrossel pra usar da próxima vez que olhar seu relatório.","cta":"Salve este carrossel"},
+
+{"id":"d03","day":3,"week":1,"data":"23/09 · qua","formato":"Estático","pilar":"Quebra de objeção","tema":"Gastar pouco no anúncio pra testar antes de investir mais","objetivo":"Deixar claro o assunto (teste de anúncio com valor baixo) já no gancho, corrigindo o erro apontado.","gancho":"Este post é sobre testar seu primeiro anúncio gastando pouco, antes de investir mais.","visual":"Arte estática com tipografia forte, fundo escuro, frase centralizada.","legenda":"Muita gente acha que precisa de um valor alto pra começar a anunciar, e isso trava a decisão. Na prática, dá pra testar com um valor pequeno primeiro, ver o que funciona, e só depois investir mais, com mais segurança. Comenta aqui embaixo se esse era um medo que te segurava.","cta":"Comente seu receio sobre valor de anúncio"},
+
+{"id":"d04","day":4,"week":1,"data":"24/09 · qui","formato":"Reel","pilar":"Bastidores da gestão","tema":"O erro de configuração que faz seu anúncio gastar com a pessoa errada","objetivo":"Mostrar autoridade técnica com bastidor real, gancho explícito sobre o erro específico.","gancho":"Esse vídeo mostra o erro de configuração que faz seu anúncio gastar com pessoa errada.","visual":"Vídeo de 7 segundos, take único, Karina mexendo no computador, tela do gerenciador de anúncios ao fundo, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Quando o público do anúncio está configurado errado, seu dinheiro vai pra pessoa que nunca vai comprar de você. Já encontrei esse tipo de erro em mais de uma conta antes de assumir a gestão. Comenta aqui embaixo se você já revisou pra quem seu anúncio está sendo mostrado hoje.","cta":"Comente sobre seu público de anúncio"},
+
+{"id":"d05","day":5,"week":1,"data":"25/09 · sex","formato":"Carrossel","pilar":"Seu negócio está pronto pra crescer","tema":"5 sinais de que seu negócio já pode investir em anúncio","objetivo":"Filtrar lead qualificado sem citar número de faturamento, falando com quem já tem movimento.","gancho":"Esse post é sobre 5 sinais de que seu negócio já pode investir em anúncio agora.","visual":"6 slides, um sinal por slide (fluxo estável, equipe pronta pra atender mais gente, ticket médio definido, entre outros), com ícone simples em cada slide.","slides":["Seu negócio já tem cliente chegando, mesmo que pouco.","Sua equipe consegue atender mais gente sem travar tudo.","Você já sabe quanto cada cliente costuma gastar com você.","Você tem um valor separado pra testar, sem afetar o resto do caixa.","Você quer cliente novo chegando toda semana, não só de vez em quando.","Quantos desses sinais o seu negócio já tem? Comenta aqui embaixo."],"legenda":"Nem todo negócio está pronto pra investir em anúncio agora, e reconhecer isso evita gasto sem direção. Esses sinais ajudam a ver se já é a hora certa ou se ainda vale ajustar outra coisa antes. Salva esse carrossel pra avaliar seu momento com calma.","cta":"Salve este carrossel"},
+
+{"id":"d06","day":6,"week":1,"data":"26/09 · sab","formato":"Estático","pilar":"Prova social","tema":"O que um cliente disse depois de ver o resultado do anúncio","objetivo":"Reforçar credibilidade com prova social breve, gancho explícito sobre a fonte da frase.","gancho":"Isso aqui é o que um cliente meu escreveu depois de ver o resultado do próprio anúncio.","visual":"Arte estática simples, aspas grandes em destaque, fundo escuro, sem foto de rosto.","legenda":"Recebo mensagens assim com frequência, e cada uma confirma o mesmo padrão: quando a estratégia é feita pra realidade daquele negócio, o resultado aparece e a confiança vem junto. Guardo cada mensagem assim porque ela mostra o motivo real do meu trabalho. Se você já é cliente e quer compartilhar sua experiência, comenta aqui embaixo.","cta":"Compartilhe sua experiência"},
+
+{"id":"d07","day":7,"week":1,"data":"27/09 · dom","formato":"Reel","pilar":"Educação simples","tema":"Por que seu anúncio não traz cliente novo","objetivo":"Fechar a semana com um tema de alta identificação, gancho totalmente explícito.","gancho":"Esse vídeo explica por que seu anúncio não está trazendo cliente novo.","visual":"Vídeo de 7 segundos, take único, Karina digitando no notebook, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Se seu anúncio já roda faz tempo e o cliente novo não aparece, o problema quase nunca é a plataforma. É a forma como o anúncio foi montado: pra quem ele mostra, o que ele fala, e se ele conecta com quem realmente compra de você. Comenta aqui embaixo há quanto tempo seu anúncio está rodando sem resultado.","cta":"Comente há quanto tempo seu anúncio roda"},
+
+{"id":"d08","day":8,"week":2,"data":"28/09 · seg","formato":"Reel","pilar":"Quebra de objeção","tema":"Já contratou gestor de tráfego antes e não funcionou","objetivo":"Responder diretamente objeção comum, gancho explícito sobre o tema.","gancho":"Esse vídeo é pra quem já contratou gestor de tráfego antes e não funcionou.","visual":"Vídeo de 7 segundos, take único, Karina andando pelo espaço de trabalho, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Quando um gestor anterior não trouxe resultado, quase sempre faltou entender o negócio de verdade antes de rodar qualquer anúncio. Antes de qualquer coisa, entendo o que já foi tentado antes pra não repetir o mesmo caminho. Comenta aqui embaixo se você já teve essa experiência com outro gestor.","cta":"Comente sua experiência anterior"},
+
+{"id":"d09","day":9,"week":2,"data":"29/09 · ter","formato":"Carrossel","pilar":"Bastidores da gestão","tema":"O que eu olho antes de ligar o primeiro anúncio de um cliente","objetivo":"Mostrar processo real, gancho explícito sobre o momento específico (antes do primeiro anúncio).","gancho":"Esse post mostra o que eu olho antes de ligar o primeiro anúncio de um cliente novo.","visual":"6 slides detalhando etapas do diagnóstico inicial (público, concorrência, oferta, histórico, orçamento, objetivo), com ícone em cada slide.","slides":["Primeiro, eu descubro quem é o cliente ideal do negócio de verdade.","Depois, eu olho o que o concorrente da região está fazendo.","Eu vejo o que diferencia esse negócio dos outros parecidos.","Eu confiro se já rodou anúncio antes e o que aconteceu.","Eu defino junto com o dono quanto dá pra investir com segurança.","Só depois disso o primeiro anúncio vai ao ar, nunca antes."],"legenda":"Muita gente pensa que gestão de tráfego começa direto ligando o anúncio, mas o trabalho de verdade começa antes disso. Entender o cliente ideal e o que diferencia o negócio é o que garante que o anúncio fale com quem realmente compra. Salva esse carrossel pra entender o processo antes de decidir.","cta":"Salve este carrossel"},
+
+{"id":"d10","day":10,"week":2,"data":"30/09 · qua","formato":"Estático","pilar":"Prova de resultado","tema":"O resultado que vem de método, não de sorte","objetivo":"Reforçar autoridade ligada ao case, gancho explícito sobre o assunto.","gancho":"Esse post é sobre o resultado que vem de método, não de sorte.","visual":"Arte estática com tipografia forte, fundo escuro, frase centralizada.","legenda":"O case do negócio que saiu de R$100 mil pra R$700 mil não foi um golpe de sorte. Foi um método que se repete e se ajusta pra cada tipo de negócio, seja loja, restaurante, salão ou qualquer outro. É esse mesmo método que aplico em cada conta que assumo hoje. Comenta aqui embaixo se você já teve algum resultado que as pessoas acharam que foi sorte.","cta":"Comente sua experiência"},
+
+{"id":"d11","day":11,"week":2,"data":"01/10 · qui","formato":"Reel","pilar":"Educação simples","tema":"A diferença entre anunciar uma loja e anunciar um restaurante","objetivo":"Trazer exemplo variado de tipo de negócio, mantendo gancho explícito.","gancho":"Esse vídeo explica por que anunciar uma loja é diferente de anunciar um restaurante.","visual":"Vídeo de 7 segundos, take único, Karina olhando criativo de anúncio na tela, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Cada tipo de negócio pede um jeito diferente de anunciar. Uma loja de roupa costuma vender pela imagem do produto, um restaurante costuma vender pela vontade de comer aquilo agora. Usar o mesmo anúncio genérico pros dois reduz o resultado dos dois. Comenta aqui embaixo qual é o seu tipo de negócio, que eu te digo o que costuma funcionar melhor.","cta":"Comente seu tipo de negócio"},
+
+{"id":"d12","day":12,"week":2,"data":"02/10 · sex","formato":"Carrossel","pilar":"Quebra de objeção","tema":"5 ideias erradas sobre anunciar negócio físico","objetivo":"Desconstruir crenças populares, gancho explícito sobre o tema.","gancho":"Esse post desmonta 5 ideias erradas sobre anunciar um negócio físico.","visual":"6 slides, uma ideia errada por slide, com resposta curta desconstruindo cada uma.","slides":["Ideia errada 1: anúncio só funciona pra loja online. Funciona muito bem pra negócio físico também.","Ideia errada 2: precisa de muito dinheiro pra começar. Dá pra testar com valor pequeno.","Ideia errada 3: o resultado aparece em poucos dias. Geralmente leva algumas semanas pra amadurecer.","Ideia errada 4: qualquer gestor entrega o mesmo resultado. O processo usado faz toda diferença.","Ideia errada 5: depois que liga o anúncio, não precisa mais mexer. Precisa ajustar sempre.","Alguma dessas ideias já te segurou antes? Comenta aqui embaixo."],"legenda":"Existe bastante ideia errada sobre anunciar negócio físico, e ela afasta justamente quem mais se beneficiaria disso. Reuni aqui as principais que ouço com frequência, antes de a pessoa entender como o processo realmente funciona. Salva esse carrossel e manda pra outro dono de negócio que também tem essas dúvidas.","cta":"Salve e compartilhe"},
+
+{"id":"d13","day":13,"week":2,"data":"03/10 · sab","formato":"Estático","pilar":"Educação simples","tema":"Por que esperar algumas semanas antes de julgar o anúncio","objetivo":"Entregar informação prática rápida, gancho explícito sobre o assunto.","gancho":"Esse post explica por que você precisa esperar algumas semanas antes de julgar seu anúncio.","visual":"Arte estática com informação simples sobre tempo mínimo de teste de campanha, tom educativo.","legenda":"Um anúncio precisa de tempo pra aprender quem costuma comprar antes de mostrar o resultado de verdade. Desligar tudo nos primeiros dias joga fora justamente o que estava sendo aprendido. Comenta aqui embaixo se você já desligou um anúncio cedo demais antes.","cta":"Comente sua experiência"},
+
+{"id":"d14","day":14,"week":2,"data":"04/10 · dom","formato":"Reel","pilar":"Prova social","tema":"O relato de um cliente sobre o resultado do próprio negócio","objetivo":"Construir confiança usando relato real, gancho explícito.","gancho":"Esse vídeo mostra o que um cliente meu falou sobre o resultado do próprio negócio.","visual":"Vídeo de 7 segundos, take único de fundo (Karina no computador, sem falar pra câmera), com texto do depoimento sobreposto, música de fundo.","legenda":"Recebo mensagens assim com frequência, e cada uma confirma o mesmo padrão: quando a estratégia é feita pra realidade daquele negócio, o resultado aparece e se mantém, não só num mês isolado. Guardo cada mensagem assim porque ela mostra o motivo real do meu trabalho. Se você já é cliente e quer compartilhar sua experiência, comenta aqui embaixo.","cta":"Compartilhe sua experiência"},
+
+{"id":"d15","day":15,"week":3,"data":"05/10 · seg","formato":"Reel","pilar":"Bastidores da gestão","tema":"O erro que faz o cliente que chamou no WhatsApp sumir","objetivo":"Mostrar bastidor técnico, gancho explícito sobre o problema específico.","gancho":"Esse vídeo mostra o erro que faz o cliente que chamou no WhatsApp simplesmente sumir.","visual":"Vídeo de 7 segundos, take único, Karina mexendo no celular junto com o computador, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Um erro simples na conexão entre o anúncio e o WhatsApp pode fazer você perder contato sem nem perceber que ele chegou a existir. Revisar esse tipo de detalhe é parte do que faço logo no início de cada gestão. Comenta aqui embaixo se você já verificou se essa conexão está funcionando certinho.","cta":"Comente sobre sua conexão de WhatsApp"},
+
+{"id":"d16","day":16,"week":3,"data":"06/10 · ter","formato":"Carrossel","pilar":"Educação simples","tema":"O que muda no anúncio de negócio que vende produto x negócio que vende serviço","objetivo":"Trazer exemplo amplo de tipos de negócio, gancho explícito.","gancho":"Esse post explica o que muda no anúncio de quem vende produto e de quem vende serviço.","visual":"6 slides comparando lado a lado elementos de anúncio pra cada tipo (linguagem, oferta, tipo de imagem, urgência).","slides":["Quem vende produto costuma mostrar o próprio item no anúncio.","Quem vende serviço costuma mostrar o resultado que a pessoa vai sentir.","A urgência muda: produto fala de estoque, serviço fala de vaga limitada.","O tipo de prova social também muda entre os dois.","Tratar os dois com o mesmo anúncio genérico reduz o resultado.","Seu negócio vende produto ou serviço? Comenta aqui embaixo."],"legenda":"Usar o mesmo tipo de anúncio pra quem vende produto e pra quem vende serviço costuma entregar resultado abaixo do que podia ser. Cada um pede uma linguagem e um tipo de prova social diferente. Salva esse carrossel pra entender melhor como isso se aplica no seu negócio.","cta":"Salve este carrossel"},
+
+{"id":"d17","day":17,"week":3,"data":"07/10 · qua","formato":"Estático","pilar":"Quebra de objeção","tema":"Você não precisa de um valor alto pra começar a anunciar","objetivo":"Reduzir a incerteza sobre investimento, gancho corrigido deixando o assunto explícito desde a primeira frase.","gancho":"Esse post é sobre começar a anunciar sem precisar de um valor alto.","visual":"Arte estática com tipografia forte, fundo escuro, frase centralizada.","legenda":"Uma das maiores travas antes de investir em anúncio é achar que precisa de um valor alto demais pra começar. Na prática, dá pra iniciar pequeno, testar, e só aumentar o valor depois que o anúncio já está funcionando bem. Comenta aqui embaixo se esse era um dos seus receios antes de considerar investir.","cta":"Comente seu receio sobre valor de anúncio"},
+
+{"id":"d18","day":18,"week":3,"data":"08/10 · qui","formato":"Reel","pilar":"Prova de resultado","tema":"Como começou o processo do case de R$100 mil pra R$700 mil","objetivo":"Aprofundar o case principal, gancho explícito sobre o assunto.","gancho":"Esse vídeo mostra como começou o processo que levou um negócio de R$100 mil pra R$700 mil.","visual":"Vídeo de 7 segundos, take único, Karina revisando planilha ou gráfico de resultado, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"O processo começou com uma conversa simples sobre o negócio, antes de qualquer anúncio ir ao ar. A partir disso, cada ajuste de público e imagem foi feito olhando o que os números mostravam, semana após semana. Esse acompanhamento constante é o que sustenta um resultado assim com o tempo. Comenta aqui embaixo se você quer entender como esse processo funcionaria pro seu negócio.","cta":"Comente e saiba mais sobre o processo"},
+
+{"id":"d19","day":19,"week":3,"data":"09/10 · sex","formato":"Carrossel","pilar":"Bastidores da gestão","tema":"O que você recebe quando contrata minha gestão de tráfego","objetivo":"Detalhar com clareza o serviço, gancho explícito.","gancho":"Esse post mostra exatamente o que você recebe quando contrata minha gestão de tráfego.","visual":"6 slides detalhando etapas e entregas do serviço (diagnóstico, estratégia, criativo, acompanhamento, relatório, ajuste).","slides":["Uma conversa completa sobre seu negócio antes de qualquer anúncio ir ao ar.","Um plano feito pro seu caso, não copiado de outro negócio.","Direção de imagem e texto do anúncio pensada pro seu tipo de negócio.","Acompanhamento toda semana, com ajuste quando algo não vai bem.","Um relatório simples de entender, sem gráfico decorativo.","Conversa direta comigo em cada etapa, sem intermediário."],"legenda":"Uma dúvida comum antes de fechar é entender o que realmente está incluso. Vai muito além de só ligar o anúncio, envolve conversa completa sobre o negócio, direção certa pro seu tipo de produto e acompanhamento toda semana até o resultado aparecer. Salva esse carrossel pra entender o processo antes de decidir.","cta":"Salve este carrossel"},
+
+{"id":"d20","day":20,"week":3,"data":"10/10 · sab","formato":"Estático","pilar":"Seu negócio está pronto pra crescer","tema":"Seu concorrente já pode estar anunciando enquanto você pensa","objetivo":"Gerar urgência real ligada à concorrência, gancho explícito.","gancho":"Esse post é sobre seu concorrente já estar anunciando enquanto você ainda pensa no assunto.","visual":"Arte estática com tipografia forte, fundo escuro, frase centralizada.","legenda":"Cada vez mais negócio físico está investindo em anúncio pra ganhar espaço na própria região, e quem demora demais pra começar acaba entrando na disputa mais tarde e pagando mais caro por isso. Não é sobre pressa, é sobre não deixar a decisão pra depois. Comenta aqui embaixo se você já percebeu concorrente da sua região anunciando mais.","cta":"Comente sobre sua concorrência local"},
+
+{"id":"d21","day":21,"week":3,"data":"11/10 · dom","formato":"Reel","pilar":"Bastidores da gestão","tema":"Um pedaço real do meu dia revisando anúncio de cliente","objetivo":"Mostrar bastidor genuíno, gancho explícito.","gancho":"Esse vídeo mostra um pedaço real do meu dia revisando anúncio de cliente.","visual":"Vídeo de 7 segundos, take único, Karina no notebook com café ao lado, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Boa parte do meu trabalho acontece longe do gráfico bonito que você vê depois, é revisão de número, ajuste de público e conversa com cliente sobre o que está indo bem ou não. Esse acompanhamento constante é o que sustenta resultado no longo prazo. Comenta aqui embaixo o que você mais valoriza em quem cuida do seu anúncio.","cta":"Comente o que você mais valoriza"},
+
+{"id":"d22","day":22,"week":4,"data":"12/10 · seg","formato":"Reel","pilar":"Quebra de objeção","tema":"Fazer o anúncio sozinho pra economizar dinheiro","objetivo":"Responder diretamente essa objeção, gancho explícito sobre o assunto.","gancho":"Esse vídeo é sobre tentar fazer o anúncio sozinho pra economizar dinheiro.","visual":"Vídeo de 7 segundos, take único, Karina caminhando pelo espaço de trabalho, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Fazer sozinho sem saber por onde começar costuma custar tempo e dinheiro gasto sem direção nenhuma. O investimento em gestão profissional existe justamente pra evitar esse tipo de gasto errado desde o início. Comenta aqui embaixo se você já tentou fazer sozinho e sentiu essa dificuldade.","cta":"Comente sua experiência tentando sozinho"},
+
+{"id":"d23","day":23,"week":4,"data":"13/10 · ter","formato":"Carrossel","pilar":"Prova social","tema":"O que meus clientes falam sobre trabalhar comigo","objetivo":"Consolidar múltiplos relatos curtos, gancho explícito.","gancho":"Esse post reúne o que meus clientes falam sobre trabalhar comigo.","visual":"6 slides, um relato por slide (anonimizado ou com autorização), fundo escuro, aspas em destaque.","slides":["\"Finalmente entendi pra onde meu dinheiro de anúncio estava indo.\"","\"Ela realmente entendeu meu negócio antes de sugerir qualquer coisa.\"","\"Meu movimento ficou muito mais constante depois da estratégia nova.\"","\"Recebo relatório que eu realmente entendo, sem enrolação.\"","\"O acompanhamento toda semana fez toda diferença no resultado.\"","Se você já viveu algo parecido, comenta aqui embaixo."],"legenda":"Cada relato que recebo confirma o mesmo padrão: entender o negócio de verdade gera resultado diferente de anúncio genérico. Reuni aqui alguns relatos recentes de clientes de negócios bem diferentes entre si. Se você também já trabalha comigo e quer compartilhar sua experiência, comenta aqui embaixo ou manda mensagem.","cta":"Comente sua experiência"},
+
+{"id":"d24","day":24,"week":4,"data":"14/10 · qua","formato":"Estático","pilar":"Prova de resultado","tema":"Anúncio sem plano custa mais caro do que plano sem anúncio","objetivo":"Reforçar a mensagem central da marca, gancho explícito.","gancho":"Esse post é sobre por que anúncio sem plano costuma custar mais caro do que plano sem anúncio.","visual":"Arte estática com tipografia forte, fundo escuro, frase centralizada.","legenda":"Ligar o anúncio sem plano por trás costuma custar mais caro no fim das contas, porque o dinheiro some sem trazer cliente novo de verdade. Prefiro montar a estratégia primeiro, mesmo que o anúncio comece um pouco mais devagar, do que gastar sem direção nenhuma. Comenta aqui embaixo se você já viveu essa diferença na prática.","cta":"Comente sua experiência"},
+
+{"id":"d25","day":25,"week":4,"data":"15/10 · qui","formato":"Reel","pilar":"Educação simples","tema":"O erro de anúncio que afasta o cliente que mais compraria","objetivo":"Aprofundar autoridade com erro comum e amplo, gancho explícito.","gancho":"Esse vídeo mostra o erro de anúncio que afasta o cliente que mais compraria de você.","visual":"Vídeo de 7 segundos, take único, Karina revisando criativo de anúncio na tela, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Um erro comum é falar só do produto ou serviço, sem mostrar o que a pessoa realmente vai sentir depois de comprar. Esse ajuste simples de texto muda bastante o resultado do anúncio. Comenta aqui embaixo se você sente que seu anúncio ainda fala só sobre o que você vende, não sobre o que a pessoa ganha.","cta":"Comente sobre o texto do seu anúncio"},
+
+{"id":"d26","day":26,"week":4,"data":"16/10 · sex","formato":"Carrossel","pilar":"Educação simples","tema":"Passo a passo simples pra saber se vale investir em anúncio agora","objetivo":"Entregar processo prático de decisão, gancho explícito.","gancho":"Esse post é um passo a passo simples pra saber se vale investir em anúncio agora.","visual":"5 slides com etapas de decisão (avaliar processo de venda, calcular orçamento disponível, definir objetivo claro, entre outros), com ícone em cada slide.","slides":["Primeiro, veja se seu jeito de atender já funciona quando o cliente chega.","Depois, veja quanto você pode investir sem afetar o resto do caixa.","Defina um objetivo claro: mais cliente novo, mais venda repetida, ou os dois.","Veja se seu concorrente da região já está anunciando.","Se a maioria das respostas foi positiva, provavelmente é hora de começar."],"legenda":"Decidir investir em anúncio não precisa ser um salto no escuro. Esse passo a passo ajuda a organizar a decisão, sem pressa e sem demora desnecessária. Salva esse carrossel e usa como checklist antes da sua próxima decisão.","cta":"Salve este carrossel"},
+
+{"id":"d27","day":27,"week":4,"data":"17/10 · sab","formato":"Estático","pilar":"Bastidores da gestão","tema":"Cada anúncio meu segue um método, não um palpite","objetivo":"Trazer profundidade pessoal ao processo técnico, gancho explícito.","gancho":"Esse post é sobre por que cada anúncio meu segue um método, não um palpite.","visual":"Arte estática com tipografia elegante, fundo escuro, frase em destaque.","legenda":"Prefiro construir cada anúncio em cima de número real e teste organizado do que confiar só no que parece bom na hora. Esse método é o que sustenta resultado que se repete, não só um mês bom isolado. Comenta aqui embaixo se você valoriza saber que existe um processo real por trás do seu anúncio.","cta":"Comente sua opinião"},
+
+{"id":"d28","day":28,"week":4,"data":"18/10 · dom","formato":"Reel","pilar":"Quebra de objeção","tema":"As perguntas que mais recebo antes de fechar comigo","objetivo":"Reduzir barreira final de contato, gancho explícito.","gancho":"Esse vídeo responde as perguntas que mais recebo antes de fechar comigo.","visual":"Vídeo de 7 segundos, take único, Karina andando com o celular na mão, sem falar pra câmera. Perguntas e respostas curtas em texto na tela, música de fundo.","legenda":"Separei aqui as dúvidas mais comuns antes de fechar comigo: qual valor mínimo pra começar, quanto tempo até ver o primeiro resultado, e se atendo qualquer tipo de negócio físico. Preferi responder direto aqui pra facilitar antes de você me chamar no WhatsApp. Se ainda ficou alguma dúvida, comenta aqui embaixo que eu respondo pessoalmente.","cta":"Comente sua dúvida"},
+
+{"id":"d29","day":29,"week":5,"data":"19/10 · seg","formato":"Reel","pilar":"Prova social","tema":"Recapitulando o mês sobre anunciar negócio físico","objetivo":"Consolidar a mensagem do mês, gancho explícito.","gancho":"Esse vídeo recapitula tudo que já mostrei esse mês sobre anunciar negócio físico.","visual":"Vídeo de 7 segundos, take único, Karina organizando materiais de trabalho, sem falar pra câmera. Gancho em texto na tela, música de fundo.","legenda":"Esse mês passei por vários pontos importantes: o case do negócio que foi de R$100 mil pra R$700 mil, os erros mais comuns de configuração, a diferença entre anunciar produto e serviço, e o processo completo por trás de cada gestão. Se em algum momento desse mês você se imaginou como cliente, esse é o momento de dar o próximo passo. Manda mensagem no WhatsApp e vamos conversar sobre o momento do seu negócio.","cta":"Manda mensagem no WhatsApp"},
+
+{"id":"d30","day":30,"week":5,"data":"20/10 · ter","formato":"Carrossel","pilar":"Fechamento","tema":"Tudo que você precisa saber antes de contratar minha gestão de tráfego","objetivo":"Fechar o ciclo de 30 dias com recapitulação completa, gancho explícito.","gancho":"Esse post reúne tudo que você precisa saber antes de contratar minha gestão de tráfego.","visual":"7 slides organizados por tema (processo, case, diferenciais, como começar), fechando com CTA grande de WhatsApp.","slides":["Atendo qualquer negócio físico com movimento real, não só um nicho.","Case real: negócio que saiu de R$100 mil pra R$700 mil por mês em 90 dias.","Conversa completa sobre seu negócio antes de qualquer anúncio ir ao ar.","Acompanhamento toda semana, com ajuste conforme o resultado aparece.","Relatório simples de entender, sem enrolação.","Tudo começa com uma conversa sobre o momento do seu negócio."],"legenda":"Fechando esse mês de conteúdo, quis reunir num só lugar tudo que você precisa saber antes de decidir investir em anúncio comigo. Processo simples de entender, feito pra qualquer negócio físico que já tem movimento, e um case que já prova que o método funciona. Se depois desse mês você sentiu que chegou a hora de vender mais, manda mensagem. Eu leio e respondo pessoalmente.","cta":"Manda mensagem e agende uma conversa"}
+]
+;
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt==='Reel') return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-katchads-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
