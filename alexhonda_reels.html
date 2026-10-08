@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · @alex_honda.revemar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @alex_honda.revemar</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o posicionamento de marca do Alex e o plano editorial completo para os próximos 30 dias. Cada card do calendário é interativo: marque o que já foi produzido e acompanhe o progresso em tempo real. Por pedido do Alex, esse ciclo é 100% em reels falados, com roteiro completo de até 1 minuto pronto pra gravar.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Alex · Consultor Honda Revemar</b></span>
+    <span class="chip">Nicho <b>Motos Honda · financiamento e consórcio</b></span>
+    <span class="chip">Perfil <b>@alex_honda.revemar</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<!-- ================= DIAGNÓSTICO ================= -->
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise sem filtro do que o perfil comunica hoje, cruzando o conteúdo já publicado, a bio atual e o briefing enviado por Alex.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>Com 130 posts e mais de 1.200 seguidores em só 9 meses de atuação, Alex já tem algo que muito consultor de venda não tem: voz própria. Os posts no padrão vermelho e preto com frase de impacto, tipo "Você não quer uma moto, você quer a liberdade que ela vai te trazer", já mostram instinto de quebra de objeção. A bio também já está bem resolvida, com link direto de WhatsApp. O talento pra comunicar já existe, o que falta é consistência: o feed mistura esse estilo forte com post de catálogo genérico da fábrica e spam de hashtag, o que dilui justamente o que já está funcionando.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>Conteúdo genérico da fábrica misturado com conteúdo próprio:</b> posts de lançamento tipo "Nova Twister" com o piloto Diogo Moreira são do material oficial da Honda, sem a voz nem o rosto de Alex, e competem por espaço com o conteúdo que realmente construiu a audiência dele.</li>
+      <li><b>Spam de hashtag em vez de estratégia:</b> posts com "#explore #engajamento #viralreels #consórciohonda #consorciohonda" sinalizam aposta em hack de alcance em vez de conteúdo consistente, o que pesa contra a credibilidade de quem está decidindo uma compra financiada.</li>
+      <li><b>Segue muito mais do que é seguido:</b> 2.664 contas seguidas contra 1.252 seguidores é sinal clássico de estratégia de seguir-de-volta, o tipo de detalhe que um cliente mais atento pode notar e associar a perfil pouco maduro.</li>
+      <li><b>Nenhuma rotina visível de pilar:</b> o feed alterna entre humor, entrega, catálogo e quebra de objeção sem nenhum ritmo, o que torna difícil pro seguidor saber o que esperar quando entra no perfil.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Dores visíveis do público</span>
+      <ul>
+        <li>"Não sei se consigo financiar com meu nome do jeito que está."</li>
+        <li>"Não entendo a diferença entre consórcio e financiamento."</li>
+        <li>"Tenho medo de fechar negócio e descobrir pegadinha depois."</li>
+        <li>"Ando adiando a troca de moto há meses."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Dores ocultas do público</span>
+      <ul>
+        <li>Vergonha de perguntar sobre financiamento por achar que não vai ser aprovado.</li>
+        <li>Medo de ser enganado por vendedor que só quer bater meta.</li>
+        <li>Frustração de depender de transporte público ou de terceiros.</li>
+        <li>Insegurança de assumir uma parcela sem entender todas as condições.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card">
+      <span class="tag">Desejos emocionais</span>
+      <ul>
+        <li>Sentir a liberdade de sair de casa na hora que quiser.</li>
+        <li>Sentir orgulho de ter conquistado a moto própria.</li>
+        <li>Sentir confiança de estar sendo bem orientado na compra.</li>
+        <li>Sentir alívio de finalmente parar de adiar essa decisão.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Desejos práticos</span>
+      <ul>
+        <li>Entender qual forma de pagamento cabe melhor no orçamento.</li>
+        <li>Saber se o nome sujo impede ou não a compra.</li>
+        <li>Ter clareza total das condições antes de assinar qualquer contrato.</li>
+        <li>Contar com alguém disponível depois da entrega, se precisar.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Objeções que seguram a decisão de simular</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item">
+      <div class="o-head"><span>"Meu nome está sujo, nem adianta tentar"</span><span class="o-num">01</span></div>
+      <p>A lógica por trás: desconhecimento de que consórcio costuma ter análise diferente do financiamento tradicional. Precisa de conteúdo explicando essa alternativa com cuidado, sem prometer aprovação garantida.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Não tenho dinheiro pra dar entrada"</span><span class="o-num">02</span></div>
+      <p>A lógica por trás: acredita que toda compra de moto exige entrada alta. Precisa mostrar que existem opções com entrada reduzida ou sem entrada.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Vou esperar juntar o dinheiro todo e comprar à vista"</span><span class="o-num">03</span></div>
+      <p>A lógica por trás: percepção de que parcelar é sempre pior que pagar à vista. Precisa mostrar o custo de adiar versus o custo de parcelar hoje.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Não confio em vendedor de concessionária"</span><span class="o-num">04</span></div>
+      <p>A lógica por trás: experiência ruim prévia com vendedor que só empurrou venda. Precisa reforçar o diferencial de honestidade e acompanhamento declarado no briefing.</p>
+    </div>
+    <div class="obj-item">
+      <div class="o-head"><span>"Não entendo as opções de pagamento direito"</span><span class="o-num">05</span></div>
+      <p>A lógica por trás: linguagem confusa entre financiamento, consórcio e cartão parcelado. Precisa de conteúdo educativo simples diferenciando cada opção.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de mercado</span>
+    <p>O público de 20 a 50 anos buscando primeira moto ou troca de modelo em Capanema e região compara concessionária por confiança tanto quanto por preço, já que a decisão envolve uma parcela de meses ou anos pela frente. Alex já construiu, em apenas 9 meses, uma audiência real e um estilo de comunicação direto que já funciona. A oportunidade dos próximos 30 dias é limpar o feed do conteúdo genérico de fábrica e do spam de hashtag, organizar o que já funciona em pilares claros, e transformar o alcance que ele já tem em simulações e entregas reais.</p>
+  </div>
+</section>
+
+<!-- ================= POSICIONAMENTO ================= -->
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de marca</h2></div>
+  <p class="section-intro">Um eixo central claro: o consultor que simplifica a decisão de comprar moto e acompanha o cliente do início ao fim, com honestidade.</p>
+
+  <div class="quote-block">"Entre o sonho da moto nova e a realidade do seu bolso, eu sou a ponte."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card">
+      <h3>Território de marca</h3>
+      <p>Enquanto boa parte da comunicação do nicho foca só em modelo e preço, Alex ocupa o território da ponte financeira: o consultor que traduz financiamento, consórcio, cartão e à vista em uma decisão simples, sem pegadinha, com acompanhamento até depois da entrega. O nome comercial segue único, <b>Alex Honda Revemar</b>, mantendo o padrão visual vermelho e preto que já tem identidade construída.</p>
+    </div>
+    <div class="card">
+      <h3>Arquétipo de marca</h3>
+      <p>Arquétipo principal: <b>o Cara Comum</b>, sustentado pelo tom descontraído, pelo humor leve e pela proximidade que já aparece nos posts atuais. Traço secundário: <b>o Herói</b>, construído por ajudar o cliente a vencer a barreira financeira e realizar o sonho da moto própria. A comunicação equilibra leveza com senso prático de resolver um problema real.</p>
+    </div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Bio revisada</div>
+    <pre>🏍️ Alex | Consultor Honda Revemar
+Te ajudo a sair daqui com a moto certa pro seu bolso
+💰 Consórcio · Financiamento · Cartão em até 21x · À vista
+👇 Simula sua Honda agora pelo WhatsApp</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Frase de posicionamento</h3>
+    <p style="font-family:var(--display);font-size:17px;color:var(--ink-0);">"Entre o sonho da moto nova e a realidade do seu bolso, eu sou a ponte."</p>
+  </div>
+</section>
+
+<!-- ================= LINHA EDITORIAL ================= -->
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares sustentam o conteúdo mensal, mantendo o tom descontraído que já funciona no perfil e organizando o que hoje aparece misturado sem critério.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Motivação e desejo</h4><p>Conecta a moto ao desejo real de liberdade, mantendo o estilo de frase de impacto que já funciona no perfil.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Educação sobre pagamento</h4><p>Explica financiamento, consórcio, cartão e à vista em linguagem simples, sem citar taxa fixa sem ressalva.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Quebra de objeção</h4><p>Desmistifica medo de nome sujo, falta de entrada e desconfiança em vendedor, sempre com cuidado e sem prometer aprovação garantida.</p><span class="fun">Fundo de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Prova social e entregas</h4><p>Reaproveita o formato "mais uma entrega realizada" já validado no perfil, gerando identificação.</p><span class="fun">Fundo de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Bastidores e autoridade</h4><p>Reforça o diferencial de acompanhamento do início ao fim e a honestidade declarada no briefing.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Humor leve e descontraído</h4><p>Mantém o tom bem-humorado que já existe no perfil, sempre fechando com gancho comercial, nunca só hashtag solta.</p><span class="fun">Topo de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels</h3><p>Vídeos curtos de cerca de 7 segundos, um take só, sem Alex falando pra câmera. Gancho em texto na tela, escrito como um título direto e impactante. Música de fundo animada, cena real da loja ou do balcão de atendimento. Quem converte é a legenda embaixo.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Educativo ou de prova social, um raciocínio curto por slide, sempre fechando com convite de salvar ou de chamar no direct.</p></div>
+    <div class="card"><h3>Estático</h3><p>Frase de impacto direta, seguindo o padrão vermelho e preto já construído no perfil.</p></div>
+    <div class="card"><h3>Stories</h3><p>Bastidor real de simulação, enquete sobre forma de pagamento preferida, caixinha de pergunta sobre financiamento ou consórcio.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do">
+      <h4>Sempre fazer</h4>
+      <ul>
+        <li>Escrever o gancho como um título direto e de impacto, deixando o assunto claro logo de cara.</li>
+        <li>Manter o tom descontraído e próximo que já existe no perfil, sem forçar formalidade.</li>
+        <li>Indicar caminho claro de contato, direct ou WhatsApp, na maior parte do conteúdo comercial.</li>
+        <li>Separar visualmente conteúdo próprio de conteúdo genérico de fábrica, priorizando sempre a voz de Alex.</li>
+      </ul>
+    </div>
+    <div class="rule-dont">
+      <h4>Nunca fazer</h4>
+      <ul>
+        <li>Prometer aprovação garantida de crédito, consórcio ou financiamento.</li>
+        <li>Citar taxa de juros ou valor de parcela fixo sem reforçar que as condições variam conforme análise.</li>
+        <li>Usar spam de hashtag genérica no lugar de legenda com conteúdo real.</li>
+        <li>Expor dado identificável de cliente sem autorização explícita.</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Identificação com o desejo de liberdade e com a vontade de parar de adiar a troca ou a primeira moto.</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Clareza sobre as formas de pagamento, confiança no acompanhamento honesto do processo.</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Segurança pra simular sem compromisso, vontade real de sair da loja com a moto própria.</p></div>
+  </div>
+</section>
+
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">30 reels falados, um por dia. Toque em cada card pra abrir o roteiro completo de até 1 minuto, com gancho na tela diferente da abertura falada pra reter mais audiência. Marque o check quando publicar, seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com mais de 1.200 seguidores construídos em só 9 meses, a meta deste ciclo é organizar o que já funciona em pilares consistentes, cortar o conteúdo genérico que dilui a voz de Alex, e transformar o alcance existente em simulações reais de compra. Publicando os 30 dias completos, o perfil passa a comunicar autoridade sem perder o tom descontraído que já é a marca registrada do Alex.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+30%</div><div class="g-lbl">seguidores em 30 dias sobre a base atual</div></div>
+      <div class="goal-item"><div class="g-num">40+</div><div class="g-lbl">simulações iniciadas por WhatsApp ou direct</div></div>
+      <div class="goal-item"><div class="g-num">10+</div><div class="g-lbl">motos entregues dentro do ciclo</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <img src="data:image/webp;base64,UklGRuomAABXRUJQVlA4IN4mAACQ0gCdASr0AfQBPlEmkEajoiGhIXBpkHAKCWdu+/xItgeAfU35u8uW4f4r8hdGGebuvyheqXzAP0W/YX/D9mbzIfuF+2nvlemX/aeoh/euoz9ADy6fZw/sP/O/c/2sdWW7X90H/E/IntK/j03txL/1vRT+bfmr9p63f8L/oeGPzc1CPx3+o/57gGwB/nP9c/1/5w+/v9x/0vRX+M9QD9duKuoEfo/1df73/4f7j8vfbd+kf6v/1/7D4B/57/dP+v64n/09uf7b//b3X/22//4oqWNXbbNNiATsS9flFyo8EcAnU89PyxiLO2X1NKsYgE7K15e9DjvHz7xF1JKSCvy16OV5GJURZUzibYTfXwYxUzkksQQ9hX1POzMrCRnf1oy+8IXGaT1Td7Ly1x96nYiPhDTcEs6ngDkkAPLGIJBi+9Z0ZKQEWyBPQ0KL/mwWIeGW/LfvzRf85PGJHy0QIXGbbI+Lrpma7TO7mRTsypI9Si0NEMCuVzEUBbn6kA+z6VqqrdXZZF1lTxnpiZKhNDA7DhJeS8ogAEi5BD2YHRdEj7R/gywXItkhevMIDoWJbGH6ws6FlimHDizPlAPwI3uyD0aVZ7ETh7gVnlUle8aAbPVajIIwc9s2Oz+aGGSzA3jfICgZae7/pvZaKk04s0dVO6IukHxChkhu7hhMkXY8LP793uoyIY7vHvet+bSD4XP0zHZURQtukb5W2aRVt8mam99f6CRdmu9V7e1L0IgpgvX6iCUU89Gr9LvlY8IvUG+2E6PJi+oFX3CrLHf1cIi1Z5besG4lEgC82vQcbDUY1/0pDcgoM2vAJ5Y5Rn2f61sLXrJrrtv05PVUTTJabOpzfr49R+sqPCDqOiiU/LeHQYNREwY8LdBFwl0WXTgKXw1RQGS/qf6OXNKMq3BKYoj6ylY/tqD5f/2T2WPfB2/mdbdoT/zWCZy38D48FaPiEyHVMyk5UvPIB5ABPTsRcqUmcqOu44bnog74Shqv2dleoZQi+YFXNfYSnhCykA40lKK47B0LcP4F9xWWq40xHjYdCypmNGHjGPC0U42RVG2qohdkzr45G7BCJ4ssltleF2YfB8Y5F5cGinDRc1mHrEjWUJkx+V4s/7Lz6YtuGaeCSvKYiBHHUHj3lWdSIbEBTrPZ+wDB41/kV7YKIxlvvfViEZmx3CityxUfDMchusdWQga5UCHsnTEfwf8FiTFjXUHAQntLIOcmsC7Cgw+536bbSbN3zkBCzSSPRuBt+z3TOKIBP2bwDfyZjp56KVien5YxAIe4IVmuOMSBu4kX9PFFJYzV7kH+fV+6HiWSNVjZjxM9UV4sC8u4w/5q9sHC62JZ6XEAJOp82JWywVYZf9QQvq/qJuGzMyaNrm71qceKGVepMP0dSJoi5eS2wCiC0QLN8Tz0/LF2RB53Jjda0O7C3IPrFQ3gMC/mLyz30UxR+heDiikdXLt2D6DTh7WQpAL07WaaOS6YxgL4Uvtel7Xp9QyvZdAdRZfG4cdtjjPWFAnZcecJrFkArOgT92K19yQNmVMT5739PM21g5MrAGZayB41lyzeEaiFJJQW0eBxwLMZ7MEqiIqVEWV/HN/wFxNmL6ddlPw+6TJGTHXf9FcJ7/gMEMxxVKSuofJnsp4WUSmsa1DI+80Oxe5vQ10hdtSH5hyxACofHGfY8FLEVCvI2stIZma9Dukk/BqsbrmVPJeG4VHYV3k4WIseuWvzO4xtNdS0qXbmE/nyIu0ocnbtLROsRiwM8X9QqbChKQno4pC24WYrBBHr6JegHcJmeDbLuC8KJH5q3lOkjtOQoGLyPlCDus1sX5xQfxhINwqvccTgkuhjfA13uKrMGGHKBiwU9NF5fyR31jqep5HqiGh9Dr01LHv/2dUSo4dtc2A6kGSBAobOJCrm76bAC6xBv3n0pkVzhq5e4FOjEUYtEaqyCm6F3maMyAVbHESvBhiATpmP/7JE5sPv4J2Xkzp5gdssdiRXnOB1eGQhnbIYnL+4OjJ/CCuqqjk8dJf+Bu7ZoEOX7DIh7tojncEtkT6+RAWUfowXwo4lzaRpe1F3ZuyQBF0ZWD3QeetHKlh4omHB5qhsdEn/IeU0dH1G1vsY6ZpxLAqfTvg4r6VyDBaUobyKFRh4EUVO1RMQCEOZECnpheHIKYqGjLNc90o2xUOhupRWUEekQ0SY/KljYi1W0YiZ6hL7rbuUa49Y3oAnZU9HUcFdNpkJnu89PvpEmj1siljYgE7Lnfnqeen5YtgAAP79lsoQQSMe3ByW5FzCkxdHVLbVE2LZ5wCVYXFJYdPwwLrkbF7zNFAErqSXVrhaIhebvaK7q7aq6VR1Ixdl4mpVz8JBVL3XOgqpeooMHtWviv/Pk8V5yYo1r5yRf+hgCP04b8ZBsrvNMxlOkpvntCVHKg6wEiJIrj3XIyKMw+5l+HlKt1ViSYsQREDNdyARqQ+p5D9oT2UaZTb5QaxLq7tfIwU+tGVW85uQSUlyMra2Jej3YCVlsSqhQFSGtiKvLdWyrut6yFHnN0iSF9JHV1FT+J/53J3B+a8UDdqMu2ez56Q0XV6Sh+KZfdVhR3R3rWWzWsbKllYZd1Ghr0AaLRer99XKrp3Axhy+7Bd5BGMVKvNsvzR0Xb4tL+zE24A1R1LVqzTmKWFSswWxUM91t15pdzZt4j78dCWIIFb2cw21BHdT2fkHSatqgZ6qvcMJmpkt91bmIVtRoFY1PWzcd3wIXbfr/2py8TlIPPpBCLlYsITz4v3n1N2wGg8DLQR52tXHeBj6x0/NxLmQHkbej2N8Y3xRaLn+Xk0iAd2q5NlNPHJ6d67xmHWX+kroqmaft89u8VfY2Qf8Qz20frV1SJr+FMcNUU5Ly7xGwN15eDMe4iyVxoGlJPiZRar7dVibvb7LryxP1l9xe8lQQlpWwz6iHawuAX6awV99NU8HwacPNMHOG0mnnKLZCKHUCIiDpeVa374IBLyaEpHXLHRga10pGyLARy+qWA3LwnbDiFHPB/iUGuQrMCONoUbBqKhujz1dKdvEihs1q09NHlkWYt1E1Ojy2MBh6d7jQIPwhQHUNlK/yzH6yr33kVChnbLiqigXtDvu/l01D6EcW/tbu9COoeP+1lZ8OWu3W/AKBDfKZSE/LGUqMVXMLqQOdx9CLnRNfb55mA1VdIMwoMHIbgEch81q8gpESmgfjo+mFQLC8Dlv1gP0iUEVablmZ/OCpqE6H893vTx4HJR635qXqUoSp+mltiC/AfDHGTz1Wu6Ae/9YdVVVvuKAyL9Gr3r/UB2sl5MlMLzKWmrIEQJs0OsgHr9OpGbE0vjLP3+w8zhi0d0JgvPKTPwIJOi3WA/+LygcOtQ6v2+Ybad02IETXu9OBWM/AhK/pnsy3Kz138OTmQAXgp6Eqo8i2dTw7BYOEMve40MeEmqxttq0JQOBniV38JHJeSQnSCU02BU4paJItHWZ+hCtLbepbdt8WwEjDG8ORpSQ4QX10SjM4gIEiXsHgVYuHC6hyjdFOJKOBQopDvuVMM+JqykQiOGtq3HyMNoeKMsViFQ/fUo4ULGnVnRLu/4h4wZlRSr8Tid8YK/L7HlCpyHkO3MxJBG8Hm8eur8V+WHl2nBNsqgQVOibIP7VKdyQvuiHNyJ3NUbNyZr24r7zMnp2rtidsug7EoIOeeaCeUrfL0rhJx2wPic1H+dj+0pIXbcz7Ywn7NkE/aZfkvTswTx2/pvwX4P8qvviIahlsxO5Ugp222BWsUzAdvVKiVmcy83sfIfpdWhx5ukWotMUxw9mF9i0cdtKJX7OHoDD3PAaQNBqFbgYF5gtejXQiT2C77aj/I3TYO4BpViCrd1xHI0THiodgEMS55moSJZp049/QSEsJJ0FsW5PDdhmAJQyf9HZd2FKeKPPdKlcqW3IMxrxEGF+0d8necERyYL/Kmex6+Qslm7+Q0+7c0puLL5tL6DKNYfDUeNq9EwbboEGYrJ5Ezgoi77DTGYQdvhj0wPfFXbOGLuvWFd4J8aYjseqS256/4pVo/EV8gEvUsoQKHv+1qgCag0z33JHdNnySQZ141Q8pH0EqDSW1zSecG6yV8/ND3Yexsw8r5MUT03PaGLBIvcAGJQMWDEJ4M+nooxK7KUtKR7UcGiOFwvqzXGCf2VeUqvtJbp0/sqvw3Zs/dqsdbB2VcZg0Ts4R9Dtv5bh0grjD2gfcd52dEtL/Os0o7lV+Jfek27vxOE1GopBHsFKqgG02I6jtlZYewkaXmU7WC6Nxl2lTct0Cr7M65GbnwUlOy6KIdi8e5B9Fwa9OMGZdb9WH+Xh3o5ETnfrVzXf5SXv5uuSCPssXTkSWKxeXrE5ekMOhE2+J/zNnVHrXGHqlMh81tjw1FTSAMrbzC2XcWQq5DBLfEEViF7S9hi3jlx89FiGNkl/z7JtHguLSc9P7+VRv/4Tu4jvbvKPGM/8eKtslwCKlEQ6H1bjfE8jHeH57Ru04GL0cFo5nRJL/wfcBQ7TkgWZY63T5Ituo7HREOps+MHzy6MJBpdDa0RN+EA6jofNwPJh2un6PaSQnElfrXkx9jmJhDtwg76Y6vvkvxjrPmj4C58ZNo3Tl2OzRkObSXXyHZnxTorlRMoRp3OowNtREcMCeezS4wuHKifggpKAuRFV+AjSa+LGOTs3W/WRbuQNYsR/izgNIRltvSbHK5mSYIus/m7wd5PVK66fzfUsgSvgcu7ZRvuSXbmmEYN++JTsitXKtVa2fWeADNtOBVesnyeGI5OmdSGwGUnyMxjz7ZZZeV7MDw7TIpfqPVt12iYm9Ag73Sl/eVOrkXBoI2PaT5CbNM+dXxYys7Wjm6Ee+gc8HaSIELlMoQisozU8KeedCof4XzeHzan7KooC6nRMoR7ilpz+4e/ClZuppdAGrg6ku5stjFlojaJMOutR533KFbZo1wsoXKJMGoBWAjQ6gNGwaaWf8Wly1cOpMklcDp1kJGtDrRxh5XDbZxr8b9c2ijfFG2K8LbBzMlNQchy2kxilNHhJYkzZXqNKsk4epCrj4lz3+tEn51OtX3FUkCmENQoNVmonA41FAE/18DQajVYnQRBe0MF/cxMWjtyfqy4BStPfFnxxHtwsIyX98j0nqLWdF+CyW0dM0MkAyfS3Cb0mL8cfTRHlu0OZVDyKixG8n29DGtXBGaSxfVxmr0PCL6YFrEoNTb1QDHBI0yfKx+V7UnglbqOxgz+CDbQ9MbJc4sUL4J1CF0JCSDsevi+cN0ADVUeua+gYTz6QbKnPhSTDuY8TqysEJjiiv8sV7RHPcb+H8YfZNQjNCrJ8KQznHOGKBQ/7qEobhF8MJL3BanqK8YmrLeDpiOB2ikBZPdDgu4g7m38kOAy5b2AktvpA+xKAF4aXOUeF0tDcCd2F2DhDONwpjnJ3+7RTsbHlSp6XcIZ+DnXMeavMw+j3EvtC+YfWYWguMY5fyzi4JftCP6U8Vlyf4kBb+Q6/tSRfJKO5JAHqDcQZMyhdpqtDIfBbrfZRUsxlGlz9LpHUaa8EPr/4TBcXEQGMYWX2ZTcnonshObicpcmDkFNL+PhUf444zGbnPTbeLvRSAHak0jIlhET4MrAv/gFw6tLLBm4hWiSY5SxkN1qZ7/cAJ2A+nDm30iK1i+fxc+Iu4B7l5X3j3aUM0V0jw7axDSUBFcwGo7uKvJIbH0zW1klDhJcgtjmVqzaK6n3Q1Q8uP+w4TTRHAW0RDKfWa0Gm1GU8HzWEM5yj+eqqaPKjYkd7lF/JFiC+n0Va+fuJbO59XUk6uVGegj7IkONWjAduye1DKQ+IfCP4l7t+16eCrc2wO0AkfkPGdfn77X9HD5wsi07mRUE+muBvvGm/6waIMwQKb1tF08ty96afxxkYwhlzDSQpRAzbqZAIj1eSFZGtJTxuwKlCNvQB40Yq4ft58+dDkXPbNr+/50riYl9kks5ARNwBM+1758UWoyaX+OSgN1iUkxh2gXHzLf+8x+U5+gWaqNjQikgGLODU+XKeIB97EwcH1Y8vRRn65Wh6tm20mlIj/3r+tS3egYuugMOX7UfvWHqitHVzPJVqW1Ud5y+0YeEn3GpTAnoPr/Bh2udLO7JESeKCWlof1V0mDlwXeeYY2aXto8kybEclBLJyHn1sRcoEwJBWMcWZx/Da0gMC14mJGX7OuPXy2AF9DKNfj3t698hlbn84J7epwvldBX46B11i6GthMIa/qcrdxDOwGpiOlHJcy3LxNuG8pLD5IQIuDi2lIXlS62GOAHRLzrBq6ntn0fAbp9GMj4JmgLmHmg+YCttY9/tmwIKOLqu4+XBeEu7rEaxba8Kvkyy5hu/zlFTVZY2zHJSdtCqx5f13AA0RaCLHMABp+wEb6xnqaPrPjXlC1eomXZPAUYEdj6Coi3laIOqZkAG25LywbD1CWN+RCKnXYLfTzCmr3RNDk9meG9SvTcRJ89mEwcPHFykARyKylWT+9Hv3I/ur+HmNagv9zwijgKcmu9e1+sp1RCEYO36E3yow1e/XICObD8BhQsiTShUvD2T+zQzLaYgX166/QqjvoX5Tya+QkerC/e0Ts2A3Ku3lF7/1XFkoiFvSDcUfXM/M5CapScUAiRRCJO8wMg0G8Zgqoav902HgQYE7GkVC88YgV/TqIbXbucEsDr439gS5/T7CxyIcHFdJkJNYW2QXB/3qZLDGZy9woCJe+Y/Mi9G38SJ3LR3nRg1f0fkgjIl3WcCIINTJzhjZYL3Jh6LmLBEnfUSzIodipGufPlmpHzfoGfdKtQ1d+9eT1Rpm+36KqLecJ6RKir3iwvipMYq7ObRu+4KDG22433vtWDwE+MCLQYghkzLzYUDRu/sxKwUlGvbV7GCKEAqZykoSDIqefcty6fyVhNgTSe7uLkvcV/o94VSq0xuiTnJiln8DCAe5EsYhM3qau4G1eRBduG92KdIKCLR2v9PIQ/rLjtuYDT9VC4NVKQ69p3uHZiUpRa5S/EJ8SSzefLPjfGrf5/wWjYbJ2j5642OJLhSlpoCCH6MttAc9ppSbfebPNceKjsVXlqBUst5QOTkBQ5LslKcSr/ekG4T6M4Z3xVeSS+O3rgAw9g4erjgA2Vn5hbGNgXDceq6j/E/FEe9nsX4JLFVEL4XOdJhABS3xMYUKHkXvowdkanYLBbvQZhiI3dQiNn5SYJNSGH7N6lYQXfWMnFAj2o+zjL3Eo4G4AGpone3QmMACtFkJvaQSQGywjz8ncmTBRtn1qBxDZ0w/kpyAZ8yMfpOtPGAIfwYYI9Kft0rfu09ci9/q/YwI9gXTGcXE//8vJSzndYhLDLnr1DmeAdFYpbjYCzXBQm2cCizXrkOS4jukh4g51QC+PWNKf2QVacGrH4EBsa/PZ98YeyYgtX+JgjLtHJ+WaqfYGG6XIAS9bES4E2tYUNtYny1NzmsB0945hADJ1ldjP/y6iZ35ne+3hTnAvGwuG+sYA25Cu9wvZ+Df9cCC3qoJmdWxAscfZuF644LSSJ54UWakKXwYQvNTFUtKABrOqwCoWqTOyseS3iU39l2tAlijiU+pHaX63NjDmr2TTT1349hvh23zicmM8ERa/1QCULbhnu3nGVv/fhiNn8TQu869+a39mhaJnqRo4ZW9AvzGZxWxsbXE4mP65rUlXMU+mjV9N9tw5HACf1dwp0pYpDXZmA8G4V/DY7uYZlL04imgRdtgRcXVQZ0Lh1DSYMeQE9eQqcoBFtcHnNtKistC1xTenyisOHaO6wViaWpbc1WNTRWWypQGH+K+ul3qrONbNuo2sIHOvYTb5A+WuDh64GZ8mJjEfI83eTYuhToDM6JUP1k5eRH1VK+iw2uWaN/BFvXsrYUdNCEbWTGxSQ1mTMDhFs5cxTN2HljAS6cUQSDf/igUEPzX8x7IiQUqqLWeSfOTpHWLnXLK8Udw/Of3mCjyQINX/ozZ2EEOmgiQhW2wZy47qaeEQVK7ZZL6vPcl8VGOvhgM2GpkN4zXLptAiiwEOwJOn0cb4+7j8qozX3zOy5nfU+L4JeICEkopTF3dOc0fLYfekx577A41VVV+qG9cVcZqFQ/bOPOeh1Y1/F1gUCT0+OFlafc3mu8AmcEAWXM8jYyzA2s0bvF9j3+56EceWu+zE7+JJ7svCrxBMXpP1EP/61SNpZ4l3NXD+hto516QEv6nYabcd21Jw3h9cDjuAOxw8IkVO/xGDwa1bLTzXBr8KmDCoRI66D1tVxd1fkqSq/fl8WD/h3kn0wn8FKO3alSD9VMaYljVUboobZs+Q0wOJKjz/XamFZQoUi4aCIN2oiLhuTagV8Ne3l9WlwREkLpQdL9IXDc+H6z9bLMw9+8VtzzWvMi21JidJfy3u2PLeAkcf9MB+MifJZSjxkPF+ybSRKCZZ/m56qKTe+FRsJ+OkymOfimf5xOvWq5MAWRRjjH1yf4r5rX7IriOpgEn5MMlX5f2FgjgzwaJoAM+wDGFG0sOWfwDJJYs/zvioQbnv52dqnL/+F7rRv/nc8RFqWJS/k0BUYVGtsdqZYhifBeplbbL/0njAK9S90oPAw/83uR7vPoWsfxMJ7+QUTg9fH+I7aam+eTRRSWojzGcSQ8f9YLAgWxUfNC/5S+M9/i032X6aI1QYuIUktX0yn0r6mGWYKdauhfmjVN7pfwc0yEnENrKk7NEhMmqmuPEEIMwyn88ZYvW6sOwH7dFQ/pk0Njaf0vr+/WtouFVFTTBzPwEveOOPoKrtJ6HB78vD/XZQcON69trL/b1y7/DPGxxqFZ8eGHLChhtzWOX9NrH5rLxNel+kACkGmCFbcb/r84ntd+D1rHDdxLFFv11Vr5jBFnRfii4/hmf4kREauoFvZA2q39N9xTwsQP+sJ17m2Cs7X+3ZVKhVJ5MjMnhxzPIOiX34h81OtISqiDBD7zVCJIbA+Rzat9jzByT4Ow/ymXNPllXqsAMA3uYwqGCX/E5EEbcWQdOwUjpD5np5rGnJdGm0+DfrhPKpVkEQuJ91duYoVdY5UNiP7WAhh+F0MljTpxkvlo9FHbTsHI9mwqvQsvaMTsP1ItttdQ2vT09s1mD3tzbxTfBDQarB3EDeVQfevz+z7sZH2V3hExDKJoLnux3k0+7nsmjYAx1w6pr+sVjjvRcO5wrmJtCdzuWqEEg+U+JvBjfbjX+f+Ym8+reBTJsv4JrDyey9T4CjXwON14W+JLUrgj3DKEKf1Eg/Q6mYonX8/QhC57l4D9JFHTX+hNkAK/+zIc2KpSU4gYqH/gZRqm21slBuU4wvpltF/f+mM5XCiOvTR2qZvho7/fYaZP5VX36YtZxE5UFpu6Br13sWE31Lye4ec0xTOK42VWcM8NfS5xVI85pxw4nX1aHR1QJEl+ZGRJDd1XhGV4hvTl4CmQm4SZAnWrm10vDfbkSkFJwPFG7gxaXEbZJ4HyBzuvLWvp9dvBey0qcLSXZ2oxT5Kene1Dpv9sy80coVlsSLJHvUZDEmpcfYOZezqTjur8oZ9N0lOTHnHL2n++miiZ1J6kMGL2sSHPitocm8/psxl4ti78ZEX2OEvR9Xa1D1P1KXXJSesz6MJ1pMwbd4r3KTiV9sBxW9OlF8hp2NuXuqx7orf5uzyhZHyzfthUfUA3yd8TSRe7rEhQCa7iy1zOHlaBs/ihlxKcG/B1Id9gC2YcHut/uO/yWEFyBKayL1f4/7uVEECjfDUzIkJCq7e6irv1nsMiRtojkhBf2LCsndJbBa1g7GvkeN7FzYNQ0gUy9NuLCpPTMkV/X22i9YhRoiULTcnFy8kAnLdqN5SPo946bmJJbL9g96dv9Q+XQBbScLclDEhHUEyLHsSOSLFrJYAECbIsQr1RIExb3Ig2jfx5ENfH8DW4L/1ErFsaeWcvpR7HdTQ24RalU4T7FaTBF2Sl+XkwCKp71vH+5F1Kc36+LeLekFn18HFq2saPX6fmbFjVPYqBGBkK3fKNHsHbPL+v3d7KFtuBy/OXqdfB2iQ8fvM6VUiGPP0HrAgncAX4jv8c/sIRkU86H2lJrmVeodSRIlQbblDJT4nYZkp0/goE2O6Ho0XPLbuMZCyOZTcAd54Bxr7XRX7WKUH59YfG74+cQTFje1+IOWLyh5eKl2Mp3h72E04zIJgXT6Eu2x/afAn1DuSYRjUKz5H7FW5lF1ZCPYMnxluOsia8x+tdKR4COFm5Q9YsolLYIHi6rhyedUdH7QbViBd5ppEAzWuF2m5H6DQKTlN4M5FDaapc3ehDoGVAqbh1fQHQx+29Lg4TjZPut/KI3Nf/5km1EHCJUnxXID3XlGgKDcceK1elhqdR/fRvlAwGfJJQCoCz3KC5PBz1HYdVH4MU7CDc18VW0G7gHkfJqAw8est83KA7oHbwm1GTnVzVxmUU+1uV/Ixqeb0T+C/r7faGtc1Dk0tAXdzyjYy+reu0JGiPX9PvCrDhSYaEmWOMxr5+68e6jA9GZ6bHv1nAY+nG90i+MLymSATV4wuXSPdo2JxpoCCoZmhQvwDUnDH2lgRsNIBTs2ezclcSsND7AKtMK2/KysI4am6QrCX+c6ymvjsExYaKETeHAyI8ybSS1YuzVVfFXoerQVG64Y8uUnrdlyhoVzrP9ms0MI6j2CuJv7lVXQverkQV8YVc2FlcJBN2UyX560Z7aXfsMTmfkAVwXTrwHaSTdY3Lfrpv16jjwdHpHVCC2toDGjvNfZRB6JbZCokUg9HMJg+SaMDVfW9u/2XOIRmp7WfgrTKmH5BrDRbGmvyBA7QClVpbyB/bS7v2TuWAVK91Ez9RNoSA7cGzGN3oa585lsMkU2G/cc5/cm8iz4LjO5aJPvjT6ydSKck5XMkaZAN3gxeDdfKD4b7LdxxwCQR3hbkBU1/zpDYhFIEjLRy9HiqPfEDlin7KuN4MafjLtiqiF3JpsTNTfAJ9FvJCiHH+RrqJIqQPb/SfLXQS68VGi1mkRubhX2+sy/Sn9espB6F6fW2iYZiYibOAFhhdxaOAEmHSgiuXZwYqa1rG3sgVHBdvnljpvbXY3saBBe55lGcCrMDaU+92nZvHubQh1xRvAAHjp8D6EMImPKfbeaQ8L5pU817l+iKZrI+aXF45E8I5jSPqFfwELX3A90t+vve1HUCYYaDczCTMJeZaMp+vBdVZp6O+Zq0kdkPTrg7VKrGp0wdsAX4V0Rr8FrUSh9H5Ane/lwpSpEP4I9JqE6eVCYNHz3iHX/rPXJcywEkCNeE0OQtftFe+6r9AayPWH2F7vNEhYmDaEzN24l2Y/4BPEs9IkVmhaXXJioKQtQeHfF4in9F5Wqfi5+smg5eBkS6tahPyl/TREyxcEWpBCyewcyPAjQvQyn6Dc9mv49zRGRIrGQhIZKZIB8Umh51Fjo8jjTtFEEzK6N8itUWepFMy+l3Rf4/ZbT1HzPxSlXghPk7cpHXUyniE75/vVV6iPca8aJsHO2g/C6NwGiTBnhroQPeUSv6brgsfe58FTglcPutwwoAAA22ni16PYaH1+MWW8+V9zz+hVc1L3kSVC4yp6MnFQePXrwd0VmwjVf9D0OZmko/L177PHJgA6zBtyHiCl/kv6V0xAUKB6VGbb2TnzbdighAyatmGIJ/tSNg00hx2QrMrqOH/SJd+Rbp2mMjbgelONkKmK6Woej+xdIFhHGy2/bdKiAcnUFbFxX0/rBv1MiXPrXyLQkUGqikYxGwfx2H5QoQ3O7IBQYh2qzIo9taDQSlLH0ipjUV27IxzykDQXPSg+vxiXMD7cdLYmlSSu65VSG64KELhKqLyW7etpmYMy1G2bK1UgeHYFyNkhm/WXHhuMNTylPsGjqmyyRwERxDvOslioANidWpKACUyUWXBg72j/4QH+gGEig2u6T1tiI4rZ6c2zO5R1399ZiK+quIaJLp1ShociB/UALnHMlfYRg4WFBfeFZmNz2Fs32V34aopVC8QfjfqAOds1egfCpk4mLRkJK2z1iqbgYDl5JGVmZPlOCA1QI0bYF5+dBtvkYkHoRH52GFzVf7aWW+dZB1u7anGS/Il03+lYR64k0vvU119LF//OVDftKAf+71vUpMnbzJk2deZmVbyx7CJcaZcKqpC6EX7ss1sVTCf8ZUXdXzkwZmfpNmdhUlENEHwWOG96fXoFjO9Pti1uppXUiJdEiamJMqW8MoyrTWL0OzZP8thgzSib0991rmDJ/3HLIjC6mKbEBCdB4Y8aokObCA/ceXitQgRRcrbBn4/CmskTmU71fOl6Gu+b58U+XrL1ONgJSs+74BtfclF9vVTihJZlygBnN+25GohqhDUSfbwurZ0iVN4a176Vp+J61PdVF/sMNurA9trk+qqLBm5hGkjPjmZIquAXwcNti6F9GDn5PwUAEJzZfpmAu92IWTgdmMpkJS6OlSkYquwJi3fO2p1jNDkeH28I5g5w01aucXjIpWI+euVPxNcfmRa2DyXCC5E5+rARrMDIczC76Quw9I6bOG3162FlKIYoP3Ftcj8BXaRir8p1Cvrar6im3/3uFIMuCl6uT03zhG5gEwhULzMVTSrVrZ5cJ6VPz35v4b/Kcd8AGCHD5faZD57bm7YGUKVLsxptlNw4x4cG4cIFUm9aAxvSiKdPhgO3yqLzMdOoPyav6DZg0R1TT2WjsscV/OQ0wp9KoENW3J65YFO0LCRbMC4XBdGisqwGqsBmLeau1Uc9MCG2T8zd+lfWsDc1vhy4n3nv4OE3l0M+HNzzgbqQ1Xjc8Admy6AMvPslpsino6AHQr3h3u/WuiCNhrZsIMhDZG5RN3qaBoJ6KMpIBdVG3LqkHFkxMDJneNwS+5fjf2RNscV3N2K8TOM2XGs7MoDhXkXYxSujuq9VkWTRFpDEeg34DsqH/rZAmcp3ITcqZgDNBVC4QjmJo+LebZXeMRRFmTxvJsZ6far1JTzEWqs4O1YDxvSqoFroDmSLHwiRaIK6u/RPyGJqkwjFWLbrLNtWyiKjlKzT9RyaVd12lH5Ydal7cZ53cggmC1JhemhHOytDNleGSEaJwigbwRCv5pg9Iwv4wEqo4KiWfUl9pTqUySmJP5MxGyNdsVBVuIkxxCrtQeoIWkTtWC7shV8k19kcWuu5gMnHEP0YxiorulfATE1FT8QCncaVeBXDd0iR7BoxAYoPXhwPnLshTvx8rwXjdIAUC0G1LoPCuniKpLgDd7PhHoNlSE1w+1BaTHvVhLy+fSKocMtYrI5xs7xSS5S/AJHIVTiXAFkgJpmgdsNXYRm40PGlG+ZqyoK1DYgM6sAnNmYhJ9AATkganpRZg4DlACEStzt9sAAAAA==" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{"id": "d01", "day": 1, "week": 1, "data": "13/10 · ter", "formato": "Reel", "pilar": "Motivação e desejo", "tema": "O que muda no seu dia a dia quando você tem sua própria moto", "objetivo": "Abrir o calendário conectando com o desejo central do público, roteiro falado de até 1 minuto, gancho na tela diferente da abertura falada.", "gancho": "O que muda no seu dia a dia quando você tem sua própria moto", "visual": "Toda semana alguém chega aqui na loja contando a mesma história: cansou de depender de ônibus lotado ou de app de carro na hora do corre. Aí vem a pergunta, será que vale a pena? E eu respondo sempre a mesma coisa: depende do que você está buscando. Se é liberdade pra sair na hora que você quiser, chegar no trabalho sem atraso, buscar os filhos na escola sem correr contra o relógio, a moto própria resolve isso de um jeito que transporte público e aplicativo nunca vão resolver. Não é sobre ter uma moto bonita parada na garagem, é sobre recuperar tempo todos os dias. E tempo recuperado todos os dias, no fim do mês, vale muito mais do que parece. Se essa liberdade faz sentido pra sua rotina, me chama no direct que eu simulo com você sem nenhum compromisso.", "legenda": "Ter a própria moto muda rota de ônibus lotado por trajeto direto, fila de app por sair na hora que você quiser. É esse tipo de liberdade que vejo estampada na cara de quem vem buscar a moto aqui na loja. Me chama no direct e simula a sua.", "cta": "Me chama no direct e simula a sua moto"},
+
+{"id": "d02", "day": 2, "week": 1, "data": "14/10 · qua", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "Consórcio ou financiamento, qual combina mais com você", "objetivo": "Esclarecer a dúvida mais comum do público antes da compra, roteiro falado comparando as duas opções.", "gancho": "Consórcio ou financiamento, qual combina mais com você", "visual": "Essa pergunta eu escuto quase todo santo dia aqui na loja. Consórcio ou financiamento, qual é melhor? E a resposta curta é: depende da sua urgência e do seu bolso. No financiamento, você sai com a moto na hora, já começa a pagar a parcela no mesmo mês, mas passa por análise de crédito antes de assinar o contrato. No consórcio, você entra num grupo, a parcela costuma ser mais levinha, só que a contemplação depende de sorteio ou lance, então não tem data certa pra sair com a moto. Tem gente que prioriza velocidade e escolhe financiamento. Tem gente que prioriza parcela mais baixa e topa esperar um pouco, e escolhe consórcio. Nenhuma das duas é errada, o que muda é o seu momento. Se quiser entender qual encaixa melhor na sua vida, me chama no direct e simulamos as duas juntos.", "legenda": "Essa é a dúvida que mais escuto aqui na loja, e a resposta muda de pessoa pra pessoa. Separei as diferenças principais pra você já chegar com mais clareza na hora de simular. Me chama no direct e simulamos juntos.", "cta": "Me chama no direct e simulamos juntos"},
+
+{"id": "d03", "day": 3, "week": 1, "data": "15/10 · qui", "formato": "Reel", "pilar": "Quebra de objeção", "tema": "Eu não tenho dinheiro pra comprar uma moto, será mesmo", "objetivo": "Retomar linha de objeção já validada no perfil, roteiro desconstruindo a crença antes de perguntar o preço.", "gancho": "Eu não tenho dinheiro pra comprar uma moto, será mesmo", "visual": "Essa frase passa pela cabeça de muita gente antes mesmo de perguntar o preço de uma moto. E na prática, o que eu mais vejo aqui na loja é falta de informação sobre as opções que existem, muito mais do que falta de dinheiro. Tem gente que acha que só dá pra comprar à vista, e descobre que o cartão parcelado em até 21 vezes cabe perfeitamente no orçamento. Tem gente que acha que o nome sujo tira qualquer chance, e descobre que o consórcio nem passa por esse tipo de análise. O que impede a decisão quase sempre é a falta de alguém pra mostrar o caminho certo pro seu bolso, o valor da moto quase nunca é o problema real. Antes de desistir só pela primeira impressão, comenta aqui embaixo ou me chama no direct que eu te mostro as opções reais que existem pra você.", "legenda": "Essa frase passa pela cabeça de muita gente antes de perguntar o preço. Na prática, a maioria só não descobriu ainda qual possibilidade cabe na realidade dela, financiamento, consórcio ou cartão parcelado. Comenta aqui embaixo ou me chama no direct que eu te mostro as opções.", "cta": "Me chame no direct e eu mostro as opções"},
+
+{"id": "d04", "day": 4, "week": 1, "data": "16/10 · sex", "formato": "Reel", "pilar": "Bastidores e autoridade", "tema": "Como é o acompanhamento do cliente do início ao fim aqui na loja", "objetivo": "Reforçar diferencial declarado no briefing, roteiro mostrando compromisso pós-venda.", "gancho": "Como é o acompanhamento do cliente do início ao fim aqui na loja", "visual": "Muita gente pensa que meu trabalho termina quando o cliente assina o contrato. Pra mim é exatamente o contrário, é aí que ele começa de verdade. Desde a primeira simulação eu já explico cada detalhe, financiamento, consórcio, cartão, sem enrolação. Depois que a moto é entregue, eu continuo disponível se precisar de qualquer coisa, uma dúvida sobre a parcela, uma orientação sobre manutenção, o que for. Esse acompanhamento é o que faz um cliente voltar meses depois pra indicar um amigo ou pra trocar de modelo comigo de novo. Não é sobre fechar uma venda e esquecer, é sobre construir confiança que dura além da entrega da chave. Se você quer esse tipo de atendimento do começo ao fim, me chama no WhatsApp e começamos essa conversa agora.", "legenda": "Meu trabalho não termina quando você assina o contrato, começa ali. Acompanho desde a primeira simulação até a entrega da chave, e sigo disponível se precisar de qualquer coisa depois. Me chama no WhatsApp e começamos essa conversa.", "cta": "Me chama no WhatsApp e começamos essa conversa"},
+
+{"id": "d05", "day": 5, "week": 1, "data": "17/10 · sab", "formato": "Reel", "pilar": "Prova social e entregas", "tema": "Mais uma entrega realizada aqui na Revemar", "objetivo": "Reaproveitar formato de prova social em roteiro falado, reforçando ritmo de entregas.", "gancho": "Mais uma entrega realizada aqui na Revemar", "visual": "Olha esse momento aqui, chave na mão, sorriso no rosto, mais uma entrega fechada na Revemar. Cada uma dessas tem uma história diferente por trás. Tem cliente que juntou dinheiro por meses pra chegar até aqui. Tem quem trocou de modelo depois de anos rodando na mesma moto. Tem quem está realizando o sonho da primeira moto própria, que às vezes demora anos pra acontecer. Pra mim, cada entrega é a prova de que a conversa certa, no momento certo, muda o rumo de uma decisão que parecia distante. Eu sou só a ponte pra esse momento acontecer, o resto é você que constrói com esforço e paciência. Se você também quer viver esse momento, me chama no direct e vamos começar sua simulação hoje.", "legenda": "Cada entrega dessas carrega uma história diferente: tem gente que juntou dinheiro por meses, tem gente que trocou de modelo depois de anos no mesmo, tem gente realizando o sonho da primeira moto. Eu sou a ponte pra esse momento acontecer. Me chame quando for a sua vez.", "cta": "Me chame no direct quando for a sua vez"},
+
+{"id": "d06", "day": 6, "week": 1, "data": "18/10 · dom", "formato": "Reel", "pilar": "Motivação e desejo", "tema": "Daqui a 1 ano você pode estar com sua moto", "objetivo": "Reforçar frase de posicionamento já validada no perfil, roteiro com visão de futuro.", "gancho": "Daqui a 1 ano você pode estar com sua moto", "visual": "Para e pensa comigo num minuto. Daqui a um ano, você pode estar contando pra um amigo que a moto que você sonhava já está parada na sua garagem, pronta pra sair quando você quiser. Ou pode estar na mesma conversa de hoje, pensando besteira, adiando pra depois, esperando um momento perfeito que nunca chega igual você imagina. A diferença entre esses dois cenários está em começar a simular agora, mesmo sem pressa de fechar, isso tem muito mais peso do que sorte. Simular não custa nada e te mostra exatamente onde você está em relação ao seu objetivo. O tempo passa igual pra quem decide e pra quem só espera, a diferença é o que cada um faz com ele. Comenta aqui embaixo o que te faria começar hoje.", "legenda": "Daqui a um ano você pode estar comentando com um amigo que a moto já está parada na garagem, pronta pra sair quando você quiser. Ou pode estar adiando ainda. A diferença está em começar a simular agora. Comenta aqui embaixo o que te faria começar hoje.", "cta": "Me chama no direct e conta o que te faria começar hoje"},
+
+{"id": "d07", "day": 7, "week": 1, "data": "19/10 · seg", "formato": "Reel", "pilar": "Humor leve e descontraído", "tema": "A cara de quem vem só olhar e sai com a moto", "objetivo": "Trazer humor leve característico do perfil, mantendo CTA comercial no fim.", "gancho": "A cara de quem vem só olhar e sai com a moto", "visual": "Vem muita gente aqui na loja dizendo bem assim: relaxa, eu só vim olhar. Um tempinho depois, já está marcando a data de entrega, rindo da própria cara de surpresa. E eu entendo perfeitamente, porque geralmente é só de ver de perto, ver o valor da parcela, entender como funciona a simulação, que a pessoa descobre que o plano cabia no bolso o tempo todo, ela só não sabia disso. Então se bater aquela vontade de só dar uma espiadinha, sem compromisso nenhum, fica tranquilo que eu recebo você do mesmo jeito, sem pressão pra fechar nada na hora. Só não se assusta se sair de aqui com data marcada igual todo mundo. Me chama no WhatsApp e vem só dar uma olhada.", "legenda": "Vem muita gente aqui dizendo que é só pra olhar, e sai com data de entrega marcada. Geralmente é só ver de perto que o plano cabia no bolso o tempo todo. Se bater essa vontade de só dar uma olhada, me chama no WhatsApp que eu recebo você.", "cta": "Me chama no WhatsApp e vem só dar uma olhada"},
+
+{"id": "d08", "day": 8, "week": 2, "data": "20/10 · ter", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "O que muda entre pagar à vista e parcelar sua moto", "objetivo": "Explicar vantagens e trade-offs das duas formas mais simples de pagamento em roteiro falado.", "gancho": "O que muda entre pagar à vista e parcelar sua moto", "visual": "Essa é outra pergunta clássica aqui na loja: vale mais pagar à vista ou parcelar? Pagar à vista costuma trazer um desconto direto no preço final, isso é fato, loja gosta de fechar assim. Mas parcelar, seja no financiamento, no consórcio ou no cartão em várias vezes, deixa o valor bem mais leve no bolso mês a mês, e isso também tem o seu peso na decisão. Não existe opção certa ou errada aqui, existe o que faz sentido pro seu momento financeiro agora. Quem tem o dinheiro guardado e quer economizar, escolhe à vista. Quem prefere manter a reserva e pagar devagar, escolhe parcelar. O importante é simular as duas pontas antes de decidir, porque no papel a diferença fica bem mais clara do que na cabeça. Me chama no direct e vemos juntos qual se encaixa melhor em você.", "legenda": "Pagar à vista costuma trazer desconto direto no preço final. Parcelar, seja no financiamento, consórcio ou cartão, deixa o valor mais leve no bolso mês a mês. Nenhuma opção é certa ou errada, depende do momento financeiro de cada um. Me chama no direct e vemos juntos qual se encaixa melhor em você.", "cta": "Me chama no direct e vemos qual se encaixa em você"},
+
+{"id": "d09", "day": 9, "week": 2, "data": "21/10 · qua", "formato": "Reel", "pilar": "Quebra de objeção", "tema": "5 desculpas que eu mais escuto antes de alguém comprar a moto", "objetivo": "Desconstruir objeções comuns em tom descontraído, roteiro contando as desculpas mais frequentes.", "gancho": "5 desculpas que eu mais escuto antes de alguém comprar a moto", "visual": "Depois de meses atendendo aqui na loja, já perdi a conta de quantas vezes escutei as mesmas frases antes de alguém sair com a moto nova. Vou esperar meu salário aumentar, só que o plano certo se ajusta ao salário que a pessoa já tem hoje. Meu nome está sujo, não vou conseguir, só que consórcio nem passa pelo mesmo tipo de análise do financiamento tradicional. Prefiro juntar e pagar à vista, só que o preço da moto também pode subir enquanto isso. Não entendo nada de financiamento, por isso eu explico cada opção numa simulação sem compromisso nenhum. E a última, clássica: vou pensar mais um pouco. Pensar não custa nada, mas simular também não custa nada. Qual dessas já passou pela sua cabeça? Comenta aqui embaixo.", "legenda": "Depois de meses atendendo aqui na loja, já perdi a conta de quantas vezes escutei essas frases antes de alguém sair com a moto nova. Separei as mais comuns, com a real por trás de cada uma. Comenta aqui embaixo qual dessas já passou pela sua cabeça.", "cta": "Comente qual dessas desculpas já passou pela sua cabeça"},
+
+{"id": "d10", "day": 10, "week": 2, "data": "22/10 · qui", "formato": "Reel", "pilar": "Bastidores e autoridade", "tema": "9 meses de Revemar e a certeza de que escolhi o caminho certo", "objetivo": "Reforçar autoridade mesmo com pouco tempo de experiência, roteiro falado em tom pessoal.", "gancho": "9 meses de Revemar e a certeza de que escolhi o caminho certo", "visual": "Faz nove meses que eu comecei aqui na Revemar, e parece pouco tempo quando eu digo em voz alta, mas já foram dezenas de entregas e histórias diferentes acompanhadas de perto. Teve gente comprando a primeira moto da vida, teve gente trocando de modelo depois de anos, teve gente que chegou cheia de dúvida e saiu com clareza total sobre qual plano fazia sentido. O que não muda desde o primeiro dia é um compromisso simples: ser honesto sobre o que cabe no bolso de cada pessoa, mesmo quando isso significa indicar o plano mais simples da linha, que dá uma comissão menor pra mim. Prefiro assim do que empurrar parcela alta só pra fechar venda maior. Comenta aqui embaixo se você já passou por atendimento sem essa honestidade.", "legenda": "Nove meses pode parecer pouco tempo, mas já foram dezenas de entregas e histórias diferentes acompanhadas de perto. O que não muda desde o primeiro dia é o compromisso de ser honesto sobre o que cabe no seu bolso, mesmo quando isso significa indicar o plano mais simples. Comenta aqui embaixo se você já passou por atendimento sem essa honestidade.", "cta": "Me chama no direct e me conta sua experiência"},
+
+{"id": "d11", "day": 11, "week": 2, "data": "23/10 · sex", "formato": "Reel", "pilar": "Motivação e desejo", "tema": "Você não quer uma moto, você quer a liberdade que ela traz", "objetivo": "Reforçar frase de posicionamento já validada no perfil, roteiro falado.", "gancho": "Você não quer uma moto, você quer a liberdade que ela traz", "visual": "Deixa eu te contar uma coisa que eu percebi atendendo aqui todos os dias: ninguém de verdade sonha com motor, carenagem ou cor da moto. O que a pessoa sonha é com sair de casa na hora que ela quiser, sem depender de horário de ônibus, sem pagar preço de app em dia de chuva, sem pedir carona de ninguém. A moto é só o meio de chegar nessa liberdade, a ferramenta que leva até o objetivo final. Então quando alguém me pergunta se vale a pena comprar, eu sempre devolvo outra pergunta: o que está te fazendo esperar pra buscar essa liberdade que você já sabe que quer? Às vezes é medo, às vezes é falta de informação, às vezes é só falta de dar o primeiro passo. Me chama no direct e vamos conversar sobre isso.", "legenda": "Ninguém sonha com motor e carenagem, sonha com sair de casa na hora que quiser, sem depender de horário de ônibus ou preço de app. A moto é só o meio de chegar nisso. A pergunta é: o que está te fazendo esperar pra buscar essa liberdade? Me chama no direct e vamos conversar sobre isso.", "cta": "Me chama no direct e vamos conversar sobre isso"},
+
+{"id": "d12", "day": 12, "week": 2, "data": "24/10 · sab", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "O passo a passo de uma simulação de financiamento aqui na loja", "objetivo": "Entregar processo prático e transparente, roteiro detalhando cada etapa.", "gancho": "O passo a passo de uma simulação de financiamento aqui na loja", "visual": "Muita gente evita vir até a loja porque imagina que simular financiamento é algo complicado e demorado. Deixa eu mostrar como funciona de verdade. Primeiro, a gente escolhe juntos o modelo que faz sentido pro seu uso, trabalho, lazer ou os dois. Depois você passa seus dados básicos pra entrar na simulação. A análise de crédito roda, e na maioria das vezes eu já te mostro o resultado na hora, sem precisar voltar outro dia. A partir daí, comparamos as opções de parcela que couberem no seu perfil, sem enrolação nenhuma. Gostando das condições, seguimos direto pra assinatura do contrato, e você já sai de aqui com uma data de entrega marcada. Esse processo todo costuma ser bem mais rápido do que a maioria imagina. Me chama no direct pra simular sem compromisso nenhum.", "legenda": "Simular financiamento aqui é mais rápido do que a maioria imagina, e não tem nenhum compromisso de fechar na hora. Mostrar esse passo a passo é minha forma de tirar o peso da burocracia da sua frente. Me chama no direct pra simular sem compromisso.", "cta": "Me chama no direct pra simular sem compromisso"},
+
+{"id": "d13", "day": 13, "week": 2, "data": "25/10 · dom", "formato": "Reel", "pilar": "Prova social e entregas", "tema": "O que os clientes falam depois que saem com a moto nova", "objetivo": "Reforçar credibilidade com relato genérico de satisfação, roteiro falado.", "gancho": "O que os clientes falam depois que saem com a moto nova", "visual": "Tem uma mensagem que eu recebo com uma frequência que me faz sorrir todas as vezes: achei que ia ser muito mais complicado do que foi. Isso chega depois de quase toda entrega, e confirma o que eu mais busco em cada atendimento, que é simplificar uma decisão que parecia complicada na cabeça do cliente antes de chegar aqui. Às vezes a pessoa vinha carregando meses de dúvida sobre financiamento, sobre nome sujo, sobre parcela, e sai da loja com a sensação de que tudo era mais simples do que ela imaginava. Eu guardo cada mensagem dessas com carinho, porque ela é a prova de que atendimento honesto gera confiança de verdade. Comenta aqui embaixo se você já pensou em fazer sua simulação algum dia.", "legenda": "Relato desse tipo chega com frequência depois de uma entrega, e confirma o que mais busco em cada atendimento: simplificar uma decisão que parecia complicada. Guardo cada mensagem com carinho. Comenta aqui embaixo se você já pensou em fazer sua simulação.", "cta": "Me chama no direct pra simular sua moto"},
+
+{"id": "d14", "day": 14, "week": 2, "data": "26/10 · seg", "formato": "Reel", "pilar": "Humor leve e descontraído", "tema": "Quando o amigo pergunta como foi comprar a moto financiada", "objetivo": "Trazer humor leve conectado a objeção real sobre financiamento, roteiro em tom de conversa.", "gancho": "Quando o amigo pergunta como foi comprar a moto financiada", "visual": "Imagina essa cena: você conta pra um amigo que financiou a moto, e ele já pergunta todo preocupado, meu, mas não foi um processo cheio de letra miúda, análise que demora semana, essas coisas? E você responde, foi bem mais rápido do que imaginei, levei meus documentos, conversei com o vendedor, entendi cada detalhe antes de assinar qualquer coisa, e em pouco tempo já estava com a chave na mão. Essa conversa se repete direto aqui comigo, porque tem gente que ainda carrega essa ideia antiga de financiamento, de trinta anos atrás, cheio de burocracia escondida. A realidade hoje é bem diferente, e eu explico cada passo antes de qualquer assinatura. Se seu amigo também tem essa dúvida, marca ele aqui embaixo ou chama ele pra vir junto simular.", "legenda": "Tem gente que ainda imagina financiamento como um processo cheio de letra miúda e demora. Na prática, a simulação é rápida e eu explico cada detalhe antes de qualquer assinatura. Se seu amigo também tem essa dúvida, marca ele aqui embaixo ou chama ele pra vir junto simular.", "cta": "Marque um amigo que também quer simular"},
+
+{"id": "d15", "day": 15, "week": 3, "data": "27/10 · ter", "formato": "Reel", "pilar": "Quebra de objeção", "tema": "Meu nome está sujo, dá pra comprar moto mesmo assim", "objetivo": "Responder objeção financeira sensível, com cuidado e sem prometer aprovação garantida, roteiro falado.", "gancho": "Meu nome está sujo, dá pra comprar moto mesmo assim", "visual": "Essa dúvida impede muita gente de nem chegar a perguntar o preço, de tão certo que a pessoa já está de que vai ouvir não. Mas vale a pena entender as opções antes de desistir. O consórcio costuma ser uma alternativa pra quem está nessa situação, porque não passa pelo mesmo tipo de análise de crédito do financiamento tradicional. Isso não quer dizer que toda situação vai se resolver do mesmo jeito, cada caso tem suas particularidades, por isso eu prefiro conversar com calma antes de dar qualquer resposta definitiva pra alguém. O que eu não vou fazer é te dizer sim ou não sem conhecer o seu caso de verdade. Me chama no direct, me conta sua situação com detalhes, e vamos ver juntos qual caminho existe pra você.", "legenda": "Essa dúvida impede muita gente de nem perguntar. Consórcio costuma ser uma alternativa pra quem está nessa situação, já que não passa pelo mesmo tipo de análise do financiamento tradicional. Cada caso é diferente, por isso prefiro conversar com calma antes de dar qualquer resposta. Me chama no direct e vemos sua situação juntos.", "cta": "Me chama no direct e vemos sua situação"},
+
+{"id": "d16", "day": 16, "week": 3, "data": "28/10 · qua", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "Linha 160, qual Honda combina com o seu uso do dia a dia", "objetivo": "Educar sobre o catálogo que ela quer destacar (Titan, Fan, Start, Cargo), roteiro falado passando pelos modelos.", "gancho": "Linha 160, qual Honda combina com o seu uso do dia a dia", "visual": "A linha 160 da Honda tem opção pra praticamente todo tipo de rotina, e vale entender a diferença antes de escolher. A Titan 160 é o equilíbrio perfeito entre economia e potência pro uso diário na cidade, serve pra quase todo mundo. A Fan 160 é mais simples e econômica, ótima pra quem está buscando o primeiro contato com moto própria, sem gastar muito. A Start 160 tem aquele visual mais esportivo, estilo street, pra quem curte um toque mais jovem no dia a dia. E a Cargo 160 é reforçada, feita pra quem trabalha com entrega ou carrega carga leve com frequência. Cada uma dessas resolve um tipo de necessidade diferente, não existe a melhor de todas, existe a que combina com você. Na dúvida de qual testar primeiro, me chama no direct que a gente faz o test-drive aqui mesmo.", "legenda": "A linha 160 da Honda tem opção pra cada tipo de rotina, de quem usa só pra ir e voltar do trabalho até quem carrega carga todo dia. Separei o perfil de uso que mais combina com cada modelo. Me chama no direct pra testar qual combina com você.", "cta": "Me chama no direct pra testar qual combina com você"},
+
+{"id": "d17", "day": 17, "week": 3, "data": "29/10 · qui", "formato": "Reel", "pilar": "Bastidores e autoridade", "tema": "Honestidade em cada etapa, mesmo quando o plano mais simples é o certo", "objetivo": "Reforçar diferencial de honestidade declarado no briefing, roteiro falado em tom pessoal.", "gancho": "Honestidade em cada etapa, mesmo quando o plano mais simples é o certo", "visual": "Vou ser bem direto com você agora. Eu prefiro indicar o plano que realmente cabe no seu bolso do que empurrar a parcela mais alta só pra fechar uma venda maior pra mim. Isso às vezes significa recomendar o modelo mais simples da linha, mesmo que o mais caro pareça mais vantajoso na hora da venda. Tem vendedor que empurra o que dá mais comissão, eu prefiro empurrar o que não vai sobrecarregar o seu mês depois que a moto já está na garagem. É assim que eu entendo esse trabalho, porque uma venda que aperta o bolso do cliente depois não é uma venda boa pra ninguém, nem pra ele, nem pra mim no longo prazo. Comenta aqui embaixo o que mais pesa pra você na hora de confiar em quem está te atendendo.", "legenda": "Prefiro indicar o plano que realmente cabe no seu bolso do que empurrar a parcela mais alta só pra fechar venda maior. Isso às vezes significa recomendar o modelo mais simples da linha, e tá tudo bem. Comenta aqui embaixo o que mais pesa pra você na hora de confiar em quem está te atendendo.", "cta": "Me chama no direct e me conta o que pesa pra você"},
+
+{"id": "d18", "day": 18, "week": 3, "data": "30/10 · sex", "formato": "Reel", "pilar": "Motivação e desejo", "tema": "Sua primeira moto começa muito antes da chave chegar na sua mão", "objetivo": "Reforçar frase de posicionamento já validada no perfil, roteiro falado em tom reflexivo.", "gancho": "Sua primeira moto começa muito antes da chave chegar na sua mão", "visual": "Entre o primeiro pensamento de comprar uma moto e o dia em que a chave chega na sua mão, existe uma distância que ninguém mostra direito. Nesse meio tempo tem pesquisa, tem dúvida, tem comparação de preço, tem conversa com amigo que já comprou, tem simulação que às vezes fica guardada no celular por semanas antes da pessoa criar coragem de chamar alguém. Talvez você esteja exatamente nessa fase agora, ainda pesquisando, ainda esperando o momento que pareça perfeito. E tudo bem, esse processo tem o tempo dele. Continue se preparando, lendo, comparando, pensando. E quando sentir que chegou a hora de tirar a dúvida de verdade, com números reais na mão, eu estou por aqui. Me chama no WhatsApp quando sentir que é a sua hora.", "legenda": "Entre o primeiro pensamento de comprar e o dia da entrega, existe pesquisa, simulação, dúvida e decisão. Talvez você esteja exatamente nessa fase agora, ainda pesquisando ou esperando o momento certo. Continue se preparando, e quando quiser simular, estou por aqui. Me chama no WhatsApp quando sentir que é a hora.", "cta": "Me chama no WhatsApp quando sentir que é a hora"},
+
+{"id": "d19", "day": 19, "week": 3, "data": "31/10 · sab", "formato": "Reel", "pilar": "Prova social e entregas", "tema": "Perguntas que mais recebo antes de fechar a simulação", "objetivo": "Reunir dúvidas frequentes do público em roteiro falado, aumentando identificação.", "gancho": "Perguntas que mais recebo antes de fechar a simulação", "visual": "Reuni aqui as perguntas que mais aparecem comigo, antes de qualquer contrato ser assinado. Preciso dar entrada? Depende da opção escolhida, tem plano que sai sem precisar de entrada nenhuma. Quanto tempo demora a aprovação? Na maioria dos casos o resultado sai na hora, você não precisa voltar outro dia. Posso trocar minha moto usada como parte do negócio? Sim, a gente avalia ela e entra como parte do valor. Dá pra mudar de plano depois de começar o processo? Em alguns casos sim, conversamos sobre isso direto na hora. E a pergunta mais importante de todas, por onde eu começo? Você começa pela simulação, sem nenhum compromisso de fechar nada. Se a sua dúvida não estava aqui, me chama no direct que eu respondo na hora.", "legenda": "Reuni aqui as perguntas que mais aparecem na simulação, antes de qualquer contrato ser assinado. Se a sua dúvida não estiver aqui, me chama no direct que eu respondo na hora.", "cta": "Me chama no direct que eu respondo sua dúvida"},
+
+{"id": "d20", "day": 20, "week": 3, "data": "01/11 · dom", "formato": "Reel", "pilar": "Humor leve e descontraído", "tema": "O momento em que a pessoa entende que o plano cabe no bolso", "objetivo": "Trazer leveza sobre a reação comum durante a simulação, roteiro falado.", "gancho": "O momento em que a pessoa entende que o plano cabe no bolso", "visual": "Tem uma mudança de expressão que eu vejo quase toda simulação que faço aqui, e eu já consigo prever o segundo exato em que ela acontece. A pessoa chega meio tensa, já esperando ouvir um valor de parcela impossível, aí eu mostro o número na tela e a cara muda completamente. Vira surpresa, depois vira sorriso, e muitas vezes vem o comentário: achei que ia ser muito mais caro que isso. Esse momento nunca enjoa pra mim, porque mostra como a gente carrega umas ideias erradas sobre o próprio bolso só por nunca ter simulado de verdade. Comenta aqui embaixo se você já imaginou que a parcela seria mais cara do que realmente é.", "legenda": "Tem uma mudança de expressão que vejo quase toda simulação, quando a pessoa percebe que a parcela é bem menor do que ela imaginava antes de perguntar. Esse momento nunca enjoa pra mim. Comenta aqui embaixo se você já imaginou que a parcela seria mais cara do que realmente é.", "cta": "Me chama no direct e me conta sua experiência"},
+
+{"id": "d21", "day": 21, "week": 3, "data": "02/11 · seg", "formato": "Reel", "pilar": "Quebra de objeção", "tema": "Não deixe o medo te fazer perder boas oportunidades", "objetivo": "Reforçar frase de posicionamento já validada no perfil, roteiro falado.", "gancho": "Não deixe o medo te fazer perder boas oportunidades", "visual": "Esperar mais um pouco parece sempre uma escolha segura. Vou esperar o próximo mês, vou esperar juntar mais um pouco, vou esperar sobrar uma condição melhor. Só que muitas vezes esse esperar é só medo disfarçado de cautela, e não planejamento de verdade. Condição boa de pagamento não fica parada te esperando decidir, ela muda, às vezes some, e quem adia demais termina pagando mais caro lá na frente, seja porque o preço subiu, seja porque a promoção acabou. Eu não estou dizendo pra você decidir no impulso, estou dizendo pra você simular agora, enquanto a condição ainda está valendo, e aí sim decidir com calma e com números reais na mão. Me chama no WhatsApp e vamos ver se agora é a sua vez.", "legenda": "Esperar mais um pouco parece seguro, mas às vezes é só medo disfarçado de cautela. Oportunidade boa de condição não fica parada esperando, e quem adia demais acaba pagando mais caro lá na frente. Me chama no WhatsApp e vamos ver se agora é a sua vez.", "cta": "Me chama no WhatsApp e vamos ver se é sua vez"},
+
+{"id": "d22", "day": 22, "week": 4, "data": "03/11 · ter", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "O que é taxa de administração no consórcio e por que ela existe", "objetivo": "Explicar conceito técnico de forma simples, roteiro falado explicando a diferença pro financiamento.", "gancho": "O que é taxa de administração no consórcio e por que ela existe", "visual": "Muita gente escuta taxa de administração no consórcio e já associa automaticamente com juros, mas a lógica aqui é diferente. Diferente do financiamento, o consórcio não cobra juros nenhum, mas tem essa taxa de administração que fica diluída dentro das parcelas ao longo do tempo. Essa taxa existe pra cobrir a gestão do grupo todo, a administradora que organiza os sorteios, os lances, o pagamento de quem é contemplado, tudo isso gera um custo que precisa ser coberto de algum jeito. É importante entender essa diferença antes de comparar as duas opções lado a lado, porque comparar juros com taxa de administração sem entender o que cada coisa significa pode levar a uma decisão errada. Comenta aqui embaixo se você já tinha ouvido falar dessa diferença antes.", "legenda": "Diferente do financiamento, o consórcio não cobra juros, mas tem uma taxa de administração diluída nas parcelas, que cobre a gestão do grupo. É importante entender isso antes de comparar as duas opções lado a lado. Comenta aqui embaixo se você já ouviu falar dessa diferença.", "cta": "Comente se você já ouviu falar dessa diferença"},
+
+{"id": "d23", "day": 23, "week": 4, "data": "04/11 · qua", "formato": "Reel", "pilar": "Bastidores e autoridade", "tema": "O que avaliar antes de escolher onde financiar sua moto", "objetivo": "Educar sobre critérios de confiança na escolha do vendedor, roteiro reforçando autoridade.", "gancho": "O que avaliar antes de escolher onde financiar sua moto", "visual": "Escolher onde financiar sua moto pede mais atenção do que só comparar o valor da parcela de um lugar pro outro. Primeiro ponto, confira se as condições são explicadas com clareza, sem letra miúda escondida no contrato. Segundo, pergunte como funciona o acompanhamento depois da entrega, porque vendedor que some depois da venda é sinal de alerta. Terceiro, peça pra ver todas as opções de pagamento disponíveis, não só a que parece mais vantajosa pra loja fechar. Quarto, dê uma olhada no histórico e na reputação da loja na sua região, converse com quem já comprou lá. E por último, desconfie de quem pressiona por uma decisão rápida sem te deixar pensar com calma. Esses pontos fazem toda a diferença no resultado da sua compra. Salva esse vídeo pra usar como checklist na sua decisão.", "legenda": "Escolher onde financiar pede mais atenção do que só comparar o valor da parcela. Reuni aqui os pontos que considero essenciais antes de fechar qualquer negócio. Salva esse vídeo pra usar como checklist na sua decisão.", "cta": "Salve este vídeo como checklist"},
+
+{"id": "d24", "day": 24, "week": 4, "data": "05/11 · qui", "formato": "Reel", "pilar": "Motivação e desejo", "tema": "A diferença entre esperar o momento certo e deixar passar", "objetivo": "Reforçar urgência saudável sem prometer prazo específico, roteiro falado.", "gancho": "A diferença entre esperar o momento certo e deixar passar", "visual": "Essas duas coisas parecem iguais de fora, mas são bem diferentes na prática. Esperar o momento certo é planejamento, é juntar dinheiro, é organizar o orçamento, é esperar terminar uma dívida pra começar outra conta. Deixar passar é outra coisa, é adiar sem nem ter simulado uma vez, sem saber se o que você imagina que não cabe no bolso, na verdade cabia desde o início. A única forma de saber de qual lado você está é simulando, porque só o número real na mão separa planejamento de adiamento disfarçado. Não estou falando de pressa, estou falando de informação. Comenta aqui embaixo se você já simulou sua moto alguma vez na vida.", "legenda": "Esperar o momento certo é planejamento. Deixar passar sem nem simular é só adiar uma decisão que talvez já coubesse no seu bolso hoje. A única forma de saber a diferença é simulando. Comenta aqui embaixo se você já simulou sua moto alguma vez.", "cta": "Me chama no direct se já simulou ou não"},
+
+{"id": "d25", "day": 25, "week": 4, "data": "06/11 · sex", "formato": "Reel", "pilar": "Prova social e entregas", "tema": "Mais uma entrega realizada, mais um sonho de moto nova", "objetivo": "Reaproveitar formato de prova social em roteiro falado, reforçando ritmo de entregas.", "gancho": "Mais uma entrega realizada, mais um sonho de moto nova", "visual": "Mais uma chave entregue aqui hoje, e cada uma dessas carrega uma simulação que começou de um jeito bem simples, com uma dúvida, uma insegurança, um sonho que parecia distante. Essa aqui começou com uma pergunta tímida sobre se o nome sujo ia impedir a compra, e terminou numa decisão que fez sentido total pro bolso da pessoa. Esse processo, de transformar dúvida em decisão clara, é o que eu mais gosto de fazer nesse trabalho. Não é sobre empurrar venda, é sobre encontrar o caminho certo pra cada situação. Se você também quer viver esse momento de receber a chave da sua moto, me chama no direct e vamos começar.", "legenda": "Cada chave entregue aqui carrega uma simulação que começou com uma dúvida simples e terminou numa decisão que fez sentido pro bolso de cada pessoa. Esse é o trabalho que mais gosto de fazer. Se você também quer viver esse momento, me chama no direct.", "cta": "Me chama no direct e vamos simular a sua"},
+
+{"id": "d26", "day": 26, "week": 4, "data": "07/11 · sab", "formato": "Reel", "pilar": "Educação sobre formas de pagamento", "tema": "O que está incluso quando você fecha sua moto aqui na Revemar", "objetivo": "Detalhar com clareza o processo completo, roteiro reduzindo insegurança antes do primeiro contato.", "gancho": "O que está incluso quando você fecha sua moto aqui na Revemar", "visual": "Uma dúvida comum de quem ainda não veio até a loja é entender exatamente o que está incluso no atendimento. Deixa eu resumir rapidinho. Primeiro, a simulação sem compromisso nenhum, só pra você entender as opções disponíveis. Segundo, explicação clara de cada forma de pagamento, financiamento, consórcio, cartão e à vista, sem pular detalhe. Terceiro, análise de crédito feita na hora, com resultado rápido, sem te fazer voltar outro dia. Quarto, assinatura do contrato com cada condição já esclarecida antes, sem surpresa no papel. E quinto, acompanhamento depois da entrega, caso precise de qualquer coisa relacionada à moto ou ao pagamento. Esse é o processo completo, do início ao fim. Me chama no direct pra entender melhor antes de decidir.", "legenda": "Uma dúvida comum antes de vir até a loja é entender o que realmente está incluso no atendimento. Aqui vai um resumo de como funciona do início ao fim. Me chama no direct pra entender melhor antes de decidir.", "cta": "Me chama no direct pra entender melhor"},
+
+{"id": "d27", "day": 27, "week": 4, "data": "08/11 · dom", "formato": "Reel", "pilar": "Humor leve e descontraído", "tema": "Oi professora, parece que você estava errada", "objetivo": "Reaproveitar narrativa pessoal já validada no perfil, roteiro reforçando conexão humana.", "gancho": "Oi professora, parece que você estava errada", "visual": "Teve professora na minha vida que duvidou, teve gente que achou que vender moto não ia dar em nada sério, que era só um emprego qualquer pra passar o tempo. Hoje, com nove meses de Revemar, já perdi a conta de quantas entregas fiz, de quantas famílias eu ajudei a sair de ônibus pra moto própria. E uma coisa curiosa que eu descobri nesse caminho: quanto mais eu converso com cada cliente, entendendo a situação dele de verdade, mais eu aprendo sobre esse trabalho e mais eu vendo com honestidade. Quem duvidou lá atrás não enxergava isso, mas dedicação transforma qualquer trabalho em algo sério. Comenta aqui embaixo quem também já duvidou de você um dia.", "legenda": "Teve professora que duvidou, teve gente que achou que vender moto não ia dar em nada sério. Hoje em 9 meses já perdi a conta de quantas entregas fiz, e quanto mais eu converso com cliente, mais eu aprendo e mais eu vendo. Comenta aqui embaixo quem também já duvidou de você um dia.", "cta": "Me chama no direct e me conta sua história"},
+
+{"id": "d28", "day": 28, "week": 4, "data": "09/11 · seg", "formato": "Reel", "pilar": "Quebra de objeção", "tema": "Talvez hoje seja só um sonho, mas dá pra começar a preparar agora", "objetivo": "Reforçar frase de posicionamento já validada no perfil, roteiro falado em tom acolhedor.", "gancho": "Talvez hoje seja só um sonho, mas dá pra começar a preparar agora", "visual": "Talvez hoje a moto ainda seja só um sonho pra você, talvez o dinheiro ainda esteja sendo juntado pouco a pouco, talvez você ainda esteja só pesquisando sem coragem de chamar alguém pra conversar. E tudo isso está certo, cada decisão tem o tempo dela. Mas vale lembrar de uma coisa, a primeira moto começa muito antes da chave chegar na sua mão, ela começa na simulação que te mostra o caminho real, com número de verdade, não só com o que você imagina. Não precisa estar com o dinheiro todo pronto hoje pra dar esse primeiro passo, precisa só de clareza sobre onde você está. Me chama no WhatsApp e damos esse primeiro passo juntos, sem compromisso nenhum de fechar nada agora.", "legenda": "Talvez hoje a moto ainda seja só um sonho, talvez o dinheiro ainda esteja sendo juntado, talvez você ainda esteja só pesquisando. Mas a primeira moto começa muito antes da chave chegar na mão, começa na simulação que te mostra o caminho. Me chama no WhatsApp e damos esse primeiro passo juntos.", "cta": "Me chama no WhatsApp e damos o primeiro passo"},
+
+{"id": "d29", "day": 29, "week": 5, "data": "10/11 · ter", "formato": "Reel", "pilar": "Prova social e entregas", "tema": "Recapitulando o que vimos esse mês sobre comprar sua moto", "objetivo": "Consolidar mensagem do mês e converter interesse acumulado em simulação, roteiro falado.", "gancho": "Recapitulando o que vimos esse mês sobre comprar sua moto", "visual": "Esse mês a gente passou por vários pontos importantes aqui juntos. Falamos da diferença entre consórcio e financiamento, das desculpas mais comuns que atrasam a decisão de comprar, do passo a passo completo de uma simulação e de como funciona meu acompanhamento do início ao fim de cada venda. Se em algum momento desse mês você se identificou com algum desses temas, ou ficou pensando será que é a minha vez, esse é exatamente o momento de dar o próximo passo. Não precisa ter tudo resolvido na cabeça antes de me chamar, a simulação existe justamente pra resolver as dúvidas que ainda faltam. Me chama no WhatsApp e vamos simular a sua moto juntos, sem compromisso nenhum de fechar na hora.", "legenda": "Esse mês passamos por vários pontos importantes: a diferença entre consórcio e financiamento, as desculpas que mais atrasam a decisão, o passo a passo de uma simulação e como funciona o acompanhamento do início ao fim. Se em algum momento você se identificou com algum desses temas, esse é o momento de dar o próximo passo. Me chama no WhatsApp e vamos simular a sua moto.", "cta": "Me chama no WhatsApp e vamos simular sua moto"},
+
+{"id": "d30", "day": 30, "week": 5, "data": "11/11 · qua", "formato": "Reel", "pilar": "Fechamento", "tema": "Tudo que você precisa saber antes de fechar sua moto", "objetivo": "Fechar o ciclo de 30 dias com recapitulação completa e CTA forte de simulação, roteiro falado.", "gancho": "Tudo que você precisa saber antes de fechar sua moto", "visual": "Fechando esse mês de conteúdo, quero reunir num só lugar o que mais importa antes de você fechar a sua moto. Primeiro, entender qual forma de pagamento cabe no seu bolso, financiamento, consórcio, cartão em várias vezes ou à vista, cada uma serve pra um momento diferente da vida. Segundo, conhecer bem a linha 160, porque ela tem modelo pra cada tipo de uso, do trabalho ao lazer. Terceiro, lembrar que a simulação não tem compromisso nenhum de fechar negócio na hora, ela só te mostra o caminho. E por último, saber que o acompanhamento continua depois da entrega da chave, sempre que você precisar de alguma coisa. Se depois desse mês inteiro você sentiu que chegou a sua hora, me chama. Eu leio e respondo pessoalmente cada mensagem.", "legenda": "Fechando esse mês de conteúdo, quis reunir num só lugar o que mais importa antes de fechar sua moto: entender qual forma de pagamento cabe no seu bolso, conhecer a linha 160 e contar com acompanhamento honesto do início ao fim. Se depois desse mês você sentiu que é hora de simular, me chama. Eu leio e respondo pessoalmente.", "cta": "Manda mensagem no WhatsApp e vamos simular"}
+]
+;
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt==='Reel') return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Reel' ? 'Roteiro falado (até 1 min)' : 'Sugestão visual'}</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-alexhonda-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
