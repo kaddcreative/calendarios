@@ -1,0 +1,1100 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Diagnosis & Calendar · Stúdio Marina Ribeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>MARKETING AGENCY</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnosis</a>
+    <a href="#posicionamento">Positioning</a>
+    <a href="#editorial">Editorial Line</a>
+    <a href="#calendario">Calendar</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Strategic portfolio · Instagram · 2026</span>
+  <h1>Full diagnosis and <em>30-day calendar</em> for @marinaribeiro.esteticabh</h1>
+  <p class="lead">This document brings together the profile analysis, the brand positioning for the Studio and the editorial plan for the next 30 days. Every calendar card is interactive: check off what has been produced and follow your progress. For carousels, the text of each slide is already written and ready to copy and paste.</p>
+  <div class="hero-meta">
+    <span class="chip">Client <b>Marina Ribeiro · Stúdio Marina Ribeiro</b></span>
+    <span class="chip">Niche <b>Body aesthetics · drainage and post-op care</b></span>
+    <span class="chip">Location <b>Savassi · Belo Horizonte, Brazil</b></span>
+    <span class="chip">Period <b>30 days · 2026</b></span>
+  </div>
+</div>
+
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Profile diagnosis</h2></div>
+  <p class="section-intro">An analysis of what the profile communicates today, comparing the briefing Marina sent with the screenshots of her bio, highlights and grid.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Current positioning</span>
+    <p>The profile presents a specialist in lymphatic drainage and post-operative care with a lot of social proof: 850 posts, 5,845 followers, a consistent rosé identity, before and after photos with an individual-results notice, and a bio that already mentions years of experience, more than 10 thousand lives and the A.P® method. What weakens the perception is the mix of conversations in the same feed: posts for the end client, posts for fellow professionals and personal humor content. Services listed in the briefing, such as lipedema, cryolipolysis and facial cleansing, barely appear in the grid, so a first-time visitor takes a while to understand everything the Studio offers.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Critical blockers</span>
+    <ul>
+      <li><b>Two audiences in one feed:</b> the briefing speaks to women looking for care, but some posts are aimed at aesthetics professionals, like the one about the Pecquet cistern and the one about friends who do not support the business.</li>
+      <li><b>Strong clinical images without preparation:</b> the post with the open wound near the navel and the video about the taping injury sit in the grid. They can scare someone who is still deciding about surgery. Use a neutral cover and a sensitive content notice.</li>
+      <li><b>Conflicting years of experience:</b> the briefing says 12 years, the bio says 13 and one video mentions 12 years in the clinic. Standardize to "over 12 years" until Marina confirms the exact number.</li>
+      <li><b>Briefing services with low visibility:</b> lipedema, complications care, cryolipolysis and facial cleansing hardly show up in posts or in the profile name, which only mentions drainage and post-op care.</li>
+      <li><b>Too many before and afters in the grid:</b> social proof is a strength, but several in a row turn the feed into a body showcase. Keep the individual-results notice, keep client authorization and mix in educational content.</li>
+      <li><b>Result comparisons:</b> the post with "without Marina" and "with Marina" can sound like a promise. Replace it with supportive wording, such as "before and after X sessions".</li>
+      <li><b>Location highlight in the middle of the row:</b> the highlight with the location pin exists, in fifth position. Moving it to the first positions helps visitors see Savassi and the address right away.</li>
+      <li><b>Followers to following ratio:</b> 5,845 followers against 2,600 following suggests part of the base came from follow-backs, which tends to lower organic reach. Worth confirming in Insights.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Visible audience pains</span><ul>
+      <li>"I am so swollen after surgery."</li>
+      <li>"Is what I have lipedema or cellulite?"</li>
+      <li>"I do not know how many drainage sessions I need."</li>
+      <li>"I want a safe place to take care of my body."</li></ul></div>
+    <div class="card"><span class="tag">Hidden audience pains</span><ul>
+      <li>Fear of complications after surgery.</li>
+      <li>Shame about the body and pressure to match a standard.</li>
+      <li>The feeling of having tried everything without understanding what happens in the body.</li>
+      <li>Worry about spending money on someone who does not offer safety.</li></ul></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Emotional desires</span><ul>
+      <li>To feel heard and welcomed.</li>
+      <li>To recognize her own body and feel good in it.</li>
+      <li>To know she is in good hands.</li></ul></div>
+    <div class="card"><span class="tag">Practical desires</span><ul>
+      <li>Recovery guided by someone who understands post-op care.</li>
+      <li>A clear session plan with a realistic timeline.</li>
+      <li>A reserved time slot and care without rushing.</li>
+      <li>Care that respects the doctor's instructions.</li></ul></div>
+  </div>
+
+  <span class="tag">Objections that hold back the booking decision</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item"><div class="o-head"><span>"Will it work for my case?"</span><span class="o-num">01</span></div><p>The logic behind it: doubt about individual results. Content needs to explain how the assessment works and that results are individual.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"I am afraid of pain or of making my recovery worse"</span><span class="o-num">02</span></div><p>The logic behind it: insecurity about an operated body. Content needs to show medical clearance, gentle technique and close follow-up.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Another professional charges less"</span><span class="o-num">03</span></div><p>The logic behind it: comparison by price. Content needs to show what Marina delivers beyond the session: assessment, method, safety and years of experience.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"I do not know how many sessions I will need"</span><span class="o-num">04</span></div><p>The logic behind it: fear of spending without an end date. Content needs to explain that the plan is built after a conversation and an assessment of the case.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"I do not have my doctor's clearance yet"</span><span class="o-num">05</span></div><p>The logic behind it: doubt about the right moment to start. Content needs to cover the surgeon's clearance and how to plan before surgery.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Market opportunity</span>
+    <p>Few professionals combine lymphatic drainage, post-operative care, lipedema and body aesthetics with a welcoming voice and a stated focus on safety. Marina has experience, a method, testimonials and a recognizable visual identity. The opportunity for the next 30 days is to organize the feed by service, separate the conversation with clients from the conversation with colleagues and lead every post to a WhatsApp chat.</p>
+  </div>
+</section>
+
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Brand positioning</h2></div>
+  <p class="section-intro">One clear axis: aesthetics that look after the body and respect health, with Marina guiding every stage.</p>
+  <div class="quote-block">"Safe aesthetics, done with health in mind and close follow-up."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card"><h3>Brand territory</h3><p>One business name: Stúdio Marina Ribeiro, serving Savassi, in Belo Horizonte. The territory is safe body aesthetics, where lymphatic drainage, post-operative care and lipedema are handled with technique, listening and respect for medical guidance, in the welcoming and relaxed tone Marina asked for.</p></div>
+    <div class="card"><h3>Brand archetype</h3><p><b>Primary: Caregiver.</b> Shows warmth, safety and close follow-up.<br><b>Secondary: Sage.</b> Explains what happens in the body clearly, always in simple language.</p></div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">New strategic bio · 109 characters, limit of 150</div>
+    <pre>Lymphotherapist for 12+ years
+Lymphatic drainage and lipedema care
+Savassi, Belo Horizonte
+Book on WhatsApp 👇</pre>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3>Recommended profile adjustments</h3><ul>
+    <li>Keep the Name field as: Marina Ribeiro | Drenagem e Pós-Operatório BH. It sits outside the 150 characters of the bio and helps search.</li>
+    <li>Location in the bio: Savassi, Belo Horizonte, already included in the third line of the new bio above.</li>
+    <li>Move the location highlight (pin) to the first positions and check that it shows the Studio's address and map.</li>
+    <li>Create a "Lipedema" highlight and a "Facial cleansing" highlight, since the briefing lists these services and today they have no highlight of their own.</li>
+    <li>Swap the cover of strong clinical posts for a neutral cover with a sensitive content notice.</li></ul></div>
+</section>
+
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Editorial line and communication</h2></div>
+  <p class="section-intro">Six pillars organize the month's content, covering identification, authority and decision.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Lymphatic drainage</h4><p>Explains what it is, who it is for and how a session works.</p><span class="fun">Top of funnel</span></div>
+    <div class="pillar" data-n="02"><h4>Post-op recovery</h4><p>Informs about recovery phases, fibrosis, complications and medical clearance.</p><span class="fun">Middle of funnel</span></div>
+    <div class="pillar" data-n="03"><h4>Lipedema and health</h4><p>Educates about signs, medical diagnosis and manual care as support.</p><span class="fun">Middle of funnel</span></div>
+    <div class="pillar" data-n="04"><h4>Aesthetics with health</h4><p>Cryolipolysis, localized fat and facial cleansing, with a focus on safety.</p><span class="fun">Top of funnel</span></div>
+    <div class="pillar" data-n="05"><h4>Marina and behind the scenes</h4><p>Gives the brand a face with Marina's experience and the Studio's atmosphere.</p><span class="fun">Middle of funnel</span></div>
+    <div class="pillar" data-n="06"><h4>Results and questions</h4><p>Real results with authorization, answers to objections and a walkthrough of the first session.</p><span class="fun">Bottom of funnel</span></div>
+  </div>
+
+  <span class="tag">Tone by format</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels</h3><p><b>A 7-second reel, one take.</b> How to shoot it: film a single scene of about 7 seconds, with no cuts and nobody talking to the camera. The hook goes in as on-screen text, written like a direct headline, with upbeat music in the background. The caption is what converts.<br><br><b>Want to record yourself talking?</b> Use the caption text as your script! It was written to build authority and convert!</p></div>
+    <div class="card"><h3>Carousel</h3><p>Educational, one short idea per slide, simple and welcoming language, closing with an invitation to save or message on WhatsApp.</p></div>
+    <div class="card"><h3>Static post</h3><p>Main phrase highlighted, little text and the rosé palette the profile has already built.</p></div>
+    <div class="card"><h3>Stories</h3><p>Studio behind the scenes, question boxes about drainage and post-op care and reposts of clients with authorization.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do"><h4>Always do</h4><ul>
+      <li>Write the hook as a direct headline, with the subject clear from the first words.</li>
+      <li>Cover one service per post and point to WhatsApp (31) 99591-3617 in most pieces.</li>
+      <li>Mention the surgeon's clearance whenever the topic is post-op care.</li>
+      <li>Publish before and afters only with authorization and the individual-results notice.</li></ul></div>
+    <div class="rule-dont"><h4>Never do</h4><ul>
+      <li>Promise guaranteed results, a cure or weight loss.</li>
+      <li>Give a diagnosis or medical advice: diagnosis always belongs to the doctor.</li>
+      <li>Mix talk to clients and talk to fellow professionals in the same post.</li>
+      <li>Publish a strong clinical image without a neutral cover and a notice.</li></ul></div>
+  </div>
+
+  <span class="tag">Feeling palette by funnel stage</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Top</h5><p>Identification, curiosity and the sense of being understood.</p></div>
+    <div class="funnel-col meio"><h5>Middle</h5><p>Trust in the technique and in the safety of every procedure.</p></div>
+    <div class="funnel-col fundo"><h5>Bottom</h5><p>Calm to start a conversation and book the first session.</p></div>
+  </div>
+</section>
+
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>30-day calendar</h2></div>
+  <p class="section-intro">3 reels · 2 carousels · 2 static posts per week, starting on October 12, 2026. Tap each card to open the full script, and tick the check when you publish. For carousels, the text of each slide comes ready to copy and paste. Your progress is saved automatically.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progress <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reset checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Monthly goal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Growth goal for this 30-day cycle</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">With 5,845 followers and a base of social proof already built, the goal for this cycle is to turn reach into qualified WhatsApp conversations. The numbers below are a starting reference, not a promise of results, and should be reviewed with Insights data at the end of the first week.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+5%</div><div class="g-lbl">followers in the cycle, about 290 new</div></div>
+      <div class="goal-item"><div class="g-num">25+</div><div class="g-lbl">WhatsApp conversations coming from Instagram</div></div>
+      <div class="goal-item"><div class="g-num">8+</div><div class="g-lbl">first sessions booked</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produced by NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Strategy · Creativity · Connection · Results</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progress saved</div>
+
+<script>
+const CAL_DATA = [
+{
+"id": "d01",
+"day": 1,
+"week": 1,
+"data": "Oct 12 · Mon",
+"formato": "Reel",
+"pilar": "Lymphatic drainage",
+"tema": "What lymphatic drainage is",
+"objetivo": "Open the cycle by explaining the main service in plain language.",
+"gancho": "Lymphatic drainage: what it is and what it does",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: Marina's hands gliding slowly along a client's leg on the treatment table, fixed camera in a close shot. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Lymphatic drainage is a massage with gentle, rhythmic movements that stimulate the flow of lymph, the fluid that helps the body clear out excess. Many people know the name, but few know how it really works.<br><br>It is often recommended for people who feel swelling and heaviness in the legs, and also after surgery, always with the surgeon's clearance. Each session respects your body and where you are right now.<br><br>Want to know if it fits you? Message us on WhatsApp (31) 99591-3617 and talk to Marina.",
+"cta": "Want to know if it fits you? Message us on WhatsApp (31) 99591-3617 and talk to Marina"
+},
+{
+"id": "d02",
+"day": 2,
+"week": 1,
+"data": "Oct 13 · Tue",
+"formato": "Carousel",
+"pilar": "Post-op recovery",
+"tema": "The first weeks after surgery",
+"objetivo": "Educate about the early recovery phase and reinforce the core service.",
+"gancho": "After surgery: what to expect in the first weeks",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Recovery after surgery is a phase when the body asks for care and patience. The slides show what usually happens in the first weeks and where drainage comes in.<br><br>Your surgeon's clearance comes before any session. From there, the plan takes into account the type of surgery, your recovery time and how your body responds to each visit.<br><br>Save this carousel and message us on WhatsApp (31) 99591-3617 to talk about your case.",
+"cta": "Save this carousel and message us on WhatsApp (31) 99591-3617 to talk about your case",
+"slides": [
+"After surgery: what to expect in the first weeks.",
+"Swelling and a feeling of heaviness are common and vary from person to person.",
+"Drainage comes in with your surgeon's clearance and at the right time.",
+"Every body has its own pace, and the session plan respects that.",
+"Following your doctor's and Marina's guidance supports your recovery.",
+"Want to understand your case? Message us on WhatsApp."
+]
+},
+{
+"id": "d03",
+"day": 3,
+"week": 1,
+"data": "Oct 14 · Wed",
+"formato": "Static",
+"pilar": "Marina and behind the scenes",
+"tema": "Marina Ribeiro and care for women",
+"objetivo": "Give the brand a face and build authority.",
+"gancho": "Marina Ribeiro: over 12 years in lymphotherapy",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: photo of Marina at the Studio, smiling, with the phrase highlighted in the brand's rosé tone.",
+"legenda": "Behind the Studio is Marina Ribeiro, a lymphotherapist with more than 12 years of experience in lymphatic drainage and body care. She sees women at every stage of life, with listening and technique.<br><br>Every visit starts with a conversation: Marina wants to understand your history and what you feel before building your plan. For her, aesthetics always goes hand in hand with health.<br><br>Want to get to know the Studio? Message us on Instagram or WhatsApp (31) 99591-3617.",
+"cta": "Want to get to know the Studio? Message us on Instagram or WhatsApp (31) 99591-3617"
+},
+{
+"id": "d04",
+"day": 4,
+"week": 1,
+"data": "Oct 15 · Thu",
+"formato": "Reel",
+"pilar": "Lipedema and health",
+"tema": "Lipedema and care",
+"objetivo": "Introduce lipedema as a health topic and position Marina as a reference.",
+"gancho": "Lipedema: what it is and when to seek help",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a tracking sheet being filled in with a pen, close detail of the hand and the paper. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Lipedema is a condition in which fat builds up out of proportion, mainly in the legs and hips, and it often comes with pain and sensitivity to touch. Many women live with it for years believing it is only a matter of weight.<br><br>Diagnosis is made by a doctor, and manual care comes in as a complement. At the Studio, Marina cares for this audience respecting medical guidance and following your case closely.<br><br>If this sounds familiar, message us on WhatsApp (31) 99591-3617 and talk to Marina.",
+"cta": "If this sounds familiar, message us on WhatsApp (31) 99591-3617 and talk to Marina"
+},
+{
+"id": "d05",
+"day": 5,
+"week": 1,
+"data": "Oct 16 · Fri",
+"formato": "Carousel",
+"pilar": "Lipedema and health",
+"tema": "Signs of lipedema",
+"objetivo": "Educate about signs and lead people to a doctor and to Marina.",
+"gancho": "Lipedema: signs to watch for",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Recognizing the signs helps you find the right professional sooner. The slides gather what tends to show up in lipedema.<br><br>These signs do not replace a medical appointment. If you recognized yourself, the first step is to talk to a doctor and, alongside that, build a care plan with Marina.<br><br>Save it and send it to a friend who needs to see this.",
+"cta": "Save it and send it to a friend who needs to see this",
+"slides": [
+"Lipedema: signs to watch for.",
+"Legs and hips with volume out of proportion to the upper body.",
+"Pain or sensitivity to touch, even mild.",
+"Bruises that appear easily.",
+"A feeling of heaviness in the legs at the end of the day.",
+"Only a doctor can confirm the diagnosis. Marina supports the care."
+]
+},
+{
+"id": "d06",
+"day": 6,
+"week": 1,
+"data": "Oct 17 · Sat",
+"formato": "Static",
+"pilar": "Aesthetics with health",
+"tema": "Aesthetics with health",
+"objetivo": "Reinforce the brand's differentiator.",
+"gancho": "Aesthetics with health: Marina's way of caring",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: main phrase highlighted in the brand's rosé tone, with a discreet water drop icon.",
+"legenda": "At the Studio, aesthetics and health go together. Marina works with achievable results and puts safety first in every procedure.<br><br>That means talking first, respecting your limit and explaining each stage of the treatment. Caring for the body also involves mind and heart, and the service makes room for that.<br><br>Want care like this? Message us on WhatsApp (31) 99591-3617.",
+"cta": "Want care like this? Message us on WhatsApp (31) 99591-3617"
+},
+{
+"id": "d07",
+"day": 7,
+"week": 1,
+"data": "Oct 18 · Sun",
+"formato": "Reel",
+"pilar": "Marina and behind the scenes",
+"tema": "The Studio atmosphere",
+"objetivo": "Show the space and its location.",
+"gancho": "Meet Stúdio Marina Ribeiro in Savassi",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: the Studio door opening and the camera moving slowly into the treatment room, soft light. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "The Studio is in Savassi, in Belo Horizonte, and was designed as a welcoming space. The room is private, the table is comfortable and the mood is light from the moment you arrive.<br><br>The address is Rua Professor Moraes, 714. If it is your first time, you can arrive without rushing and ask Marina all your questions before you start.<br><br>Book through WhatsApp (31) 99591-3617.",
+"cta": "Book through WhatsApp (31) 99591-3617"
+},
+{
+"id": "d08",
+"day": 8,
+"week": 2,
+"data": "Oct 19 · Mon",
+"formato": "Reel",
+"pilar": "Post-op recovery",
+"tema": "When to start drainage after surgery",
+"objetivo": "Answer a central question for people about to have surgery.",
+"gancho": "When to start drainage after surgery",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: an open planner with a session date circled in pen. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Many people ask when they can start drainage after surgery. The answer always goes through your surgeon's clearance, and every case has its own timing.<br><br>After clearance, Marina builds the session schedule with you. In general, follow-up is more frequent at the start and spaces out as recovery moves forward.<br><br>Already have a surgery date? Message us on WhatsApp (31) 99591-3617 and plan your recovery.",
+"cta": "Already have a surgery date? Message us on WhatsApp (31) 99591-3617 and plan your recovery"
+},
+{
+"id": "d09",
+"day": 9,
+"week": 2,
+"data": "Oct 20 · Tue",
+"formato": "Carousel",
+"pilar": "Lymphatic drainage",
+"tema": "Care before and after drainage",
+"objetivo": "Prepare the client and earn saves.",
+"gancho": "Before and after a drainage session: basic care",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Small habits make the session more comfortable and help you get more out of the visit. The slides cover the basics for before and after.<br><br>Each person has different needs, so Marina gives guidance specific to your case, especially after surgery. Always confirm everything with your doctor.<br><br>Save it to check on the day of your session.",
+"cta": "Save it to check on the day of your session",
+"slides": [
+"Care before and after a drainage session.",
+"Drink water through the day, before and after the visit.",
+"Come in comfortable clothes, nothing tight.",
+"Skip very heavy meals right before the session.",
+"Afterwards, follow the guidance Marina gives for your case.",
+"Still have a question? Message us on WhatsApp."
+]
+},
+{
+"id": "d10",
+"day": 10,
+"week": 2,
+"data": "Oct 21 · Wed",
+"formato": "Static",
+"pilar": "Results and questions",
+"tema": "How many sessions",
+"objetivo": "Answer a common question and drive comments.",
+"gancho": "How many drainage sessions do I need?",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: main phrase highlighted on a light rosé background, with the short answer.",
+"legenda": "The number of sessions depends on your goal, your starting point and where you are in life. For everyday swelling, the plan tends to be shorter. After surgery, follow-up goes at the pace of recovery.<br><br>That is why Marina sets the number together with you, after talking and understanding your case. Every plan belongs to one person.<br><br>Comment here what you most want to understand about drainage.",
+"cta": "Comment here what you most want to understand about drainage"
+},
+{
+"id": "d11",
+"day": 11,
+"week": 2,
+"data": "Oct 22 · Thu",
+"formato": "Reel",
+"pilar": "Aesthetics with health",
+"tema": "Cryolipolysis",
+"objetivo": "Introduce a body aesthetics service.",
+"gancho": "Cryolipolysis: how a session works",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: cryolipolysis device next to the treatment table in a close detail shot, nobody in frame. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Cryolipolysis uses controlled cold to act on areas of localized fat. The session is done with an applicator that stays in place over the chosen area for a set time.<br><br>It works on localized fat in specific areas. Results appear gradually over the weeks and vary from person to person.<br><br>Want to know if it makes sense for you? Message us on WhatsApp (31) 99591-3617.",
+"cta": "Want to know if it makes sense for you? Message us on WhatsApp (31) 99591-3617"
+},
+{
+"id": "d12",
+"day": 12,
+"week": 2,
+"data": "Oct 23 · Fri",
+"formato": "Carousel",
+"pilar": "Aesthetics with health",
+"tema": "Cryolipolysis: questions",
+"objetivo": "Answer objections and earn saves.",
+"gancho": "Cryolipolysis: common questions answered",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "I gathered the most common questions from people thinking about cryolipolysis. Each slide has a short, direct answer.<br><br>Before any procedure, Marina talks with you about what is achievable and whether it is right for your case. Safe aesthetics always comes first.<br><br>Message us on WhatsApp (31) 99591-3617 and ask your questions.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and ask your questions",
+"slides": [
+"Cryolipolysis: common questions answered.",
+"How does it work? Controlled cold acts on localized fat.",
+"Does it hurt? You feel cold at first, and then the area goes numb.",
+"How long is a session? It depends on the area and the equipment.",
+"When do results show up? Gradually, over the weeks.",
+"Want to ask your question? Message us on WhatsApp."
+]
+},
+{
+"id": "d13",
+"day": 13,
+"week": 2,
+"data": "Oct 24 · Sat",
+"formato": "Static",
+"pilar": "Results and questions",
+"tema": "Achievable results",
+"objetivo": "Reinforce safety and realistic expectations.",
+"gancho": "Safe aesthetics, achievable results",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: main phrase highlighted; can come with a before and after photo and the caption Individual results, published with the client's authorization.",
+"legenda": "Every body responds differently, and Marina works with realistic goals for each person. The before and afters on the profile show real cases, with each client's own timeline and sessions.<br><br>All records are published with authorization, and results are individual. A conversation with Marina shows what is possible in your case.<br><br>Want to assess your case? Message us on Instagram.",
+"cta": "Want to assess your case? Message us on Instagram"
+},
+{
+"id": "d14",
+"day": 14,
+"week": 2,
+"data": "Oct 25 · Sun",
+"formato": "Reel",
+"pilar": "Marina and behind the scenes",
+"tema": "Welcoming care",
+"objetivo": "Show the mood of the visit.",
+"gancho": "Welcoming care at Stúdio Marina Ribeiro",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a steaming cup of tea beside the treatment table with a lit candle, fixed camera. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "The visit at the Studio starts before the session, with conversation and a space that puts you at ease. The idea is that you arrive light and leave even lighter.<br><br>Each session has a reserved time and room for your questions. A warm welcome is part of the care.<br><br>Reserve your time through WhatsApp (31) 99591-3617.",
+"cta": "Reserve your time through WhatsApp (31) 99591-3617"
+},
+{
+"id": "d15",
+"day": 15,
+"week": 3,
+"data": "Oct 26 · Mon",
+"formato": "Reel",
+"pilar": "Post-op recovery",
+"tema": "Complications after surgery",
+"objetivo": "Present a specific service that few offer.",
+"gancho": "Complications after surgery: what they are",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a notebook and pen next to a phone with a WhatsApp chat open. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "A complication is any unexpected situation during recovery from surgery, such as fluid build-up or a change in healing.<br><br>If you notice any unusual sign, the first contact is always your surgeon. Marina handles complications together with medical guidance and follows the progress closely.<br><br>Recovering from surgery and have questions? Message us on WhatsApp (31) 99591-3617.",
+"cta": "Recovering from surgery and have questions? Message us on WhatsApp (31) 99591-3617"
+},
+{
+"id": "d16",
+"day": 16,
+"week": 3,
+"data": "Oct 27 · Tue",
+"formato": "Carousel",
+"pilar": "Post-op recovery",
+"tema": "Fibrosis after surgery",
+"objetivo": "Educate on a common topic and earn saves.",
+"gancho": "Fibrosis after surgery: what it is and how to care for it",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Fibrosis is one of the most common questions from people who had plastic surgery. The slides explain what it is and how care works.<br><br>Each case needs its own assessment. Marina talks with you, understands what your surgeon advised and builds the session plan.<br><br>Save this carousel and message us on WhatsApp (31) 99591-3617.",
+"cta": "Save this carousel and message us on WhatsApp (31) 99591-3617",
+"slides": [
+"Fibrosis after surgery: what it is.",
+"Hardened areas that can appear in the operated region.",
+"They form as the body heals and the tissue becomes firmer.",
+"They are usually monitored by the surgeon and the care team.",
+"Manual therapy can be part of that follow-up.",
+"Want to understand your case? Message us on WhatsApp."
+]
+},
+{
+"id": "d17",
+"day": 17,
+"week": 3,
+"data": "Oct 28 · Wed",
+"formato": "Static",
+"pilar": "Aesthetics with health",
+"tema": "Facial cleansing",
+"objetivo": "Highlight a briefing service with low visibility.",
+"gancho": "Facial cleansing at Stúdio Marina Ribeiro",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: close detail of skincare products in rosé tones, with the phrase highlighted.",
+"legenda": "Facial cleansing helps remove impurities and leaves the skin ready for your daily care. At the Studio it is part of complete care for your aesthetics.<br><br>Each skin needs a different protocol, so the session starts with an assessment of what your skin needs that day. The care has the same welcoming mood as every other session.<br><br>Book your facial cleansing through WhatsApp (31) 99591-3617.",
+"cta": "Book your facial cleansing through WhatsApp (31) 99591-3617"
+},
+{
+"id": "d18",
+"day": 18,
+"week": 3,
+"data": "Oct 29 · Thu",
+"formato": "Reel",
+"pilar": "Aesthetics with health",
+"tema": "Localized fat",
+"objetivo": "Introduce the localized fat treatment.",
+"gancho": "Localized fat treatment at the Studio",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a tray with organized products and bottles, a hand choosing one bottle. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Localized fat sits in specific areas of the body, such as the abdomen and thighs, and often stays even with a healthy routine.<br><br>The treatment is planned after a conversation and an assessment of your body. Marina combines techniques according to your goal and explains each step.<br><br>Message us on WhatsApp (31) 99591-3617 and tell us your goal.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and tell us your goal"
+},
+{
+"id": "d19",
+"day": 19,
+"week": 3,
+"data": "Oct 30 · Fri",
+"formato": "Carousel",
+"pilar": "Results and questions",
+"tema": "First session",
+"objetivo": "Ease the worry of a first visit and lead to booking.",
+"gancho": "Your first session at the Studio: step by step",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Walking into a new place gives you butterflies, and knowing how everything works helps a lot. The slides show the first session from start to finish.<br><br>You can come without rushing and bring your questions written down. If you had surgery, bring your doctor's instructions too.<br><br>Book yours through WhatsApp (31) 99591-3617.",
+"cta": "Book yours through WhatsApp (31) 99591-3617",
+"slides": [
+"Your first session at the Studio, step by step.",
+"You message us on WhatsApp and pick the best time.",
+"You arrive, see the space and talk with Marina.",
+"She learns your history and what you want to care for.",
+"Together you define the session plan.",
+"Message us on WhatsApp and book yours."
+]
+},
+{
+"id": "d20",
+"day": 20,
+"week": 3,
+"data": "Oct 31 · Sat",
+"formato": "Static",
+"pilar": "Marina and behind the scenes",
+"tema": "Body, mind and heart",
+"objetivo": "Reinforce the brand's differentiator.",
+"gancho": "Aesthetics of body, mind and heart",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: phrase highlighted in rosé tone, with a detail of hands in motion.",
+"legenda": "For Marina, aesthetics comes from caring for the whole person. Body, mind and heart go together, and the service is designed that way.<br><br>You can see it in the details: listening before the session, respect for your time and safety in every procedure.<br><br>Want to experience this care? Message us on WhatsApp (31) 99591-3617.",
+"cta": "Want to experience this care? Message us on WhatsApp (31) 99591-3617"
+},
+{
+"id": "d21",
+"day": 21,
+"week": 3,
+"data": "Nov 1 · Sun",
+"formato": "Reel",
+"pilar": "Lymphatic drainage",
+"tema": "After drainage",
+"objetivo": "Guide the client and reinforce post-session care.",
+"gancho": "What to do after lymphatic drainage",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a water bottle and glass on the table beside the treatment table, fixed camera. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "After the session, the body keeps working. Drinking water through the day supports hydration, and following Marina's guidance completes the care.<br><br>If you are recovering from surgery, follow your surgeon's recommendations as well. Any question after the session, just let us know on WhatsApp.<br><br>Message us on WhatsApp (31) 99591-3617 and book your session.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and book your session"
+},
+{
+"id": "d22",
+"day": 22,
+"week": 4,
+"data": "Nov 2 · Mon",
+"formato": "Reel",
+"pilar": "Lymphatic drainage",
+"tema": "A feeling of lightness",
+"objetivo": "Build desire for the session through a concrete sensation.",
+"gancho": "The lightness you feel after lymphatic drainage",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a client's feet slipping into a shoe beside the treatment table, low camera. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Many clients say they leave the session with lighter legs and a sense of well-being. Everyone feels it differently, and drainage is also a moment to pause.<br><br>Because it is gentle, it can be part of a care routine with follow-up and, when medically indicated, with clearance.<br><br>Tag a friend who deserves a pause like this.",
+"cta": "Tag a friend who deserves a pause like this"
+},
+{
+"id": "d23",
+"day": 23,
+"week": 4,
+"data": "Nov 3 · Tue",
+"formato": "Carousel",
+"pilar": "Lymphatic drainage",
+"tema": "Questions about drainage",
+"objetivo": "Answer common questions and earn saves.",
+"gancho": "Lymphatic drainage: common questions answered",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "Lymphatic drainage raises a lot of curiosity. The slides answer the questions of people thinking about starting.<br><br>If your question is not here, send it on WhatsApp. Marina answers calmly and points to the best path for your case.<br><br>Ask us on WhatsApp (31) 99591-3617.",
+"cta": "Ask us on WhatsApp (31) 99591-3617",
+"slides": [
+"Lymphatic drainage: common questions answered.",
+"Does it hurt? The pressure is light and the session should be comfortable.",
+"How long does it last? Marina will tell you the time when you book.",
+"Who can have it? It depends on the assessment and, in some cases, on medical clearance.",
+"When will I feel the effect? Many people report lightness the same day.",
+"Have a question? Ask us on WhatsApp."
+]
+},
+{
+"id": "d24",
+"day": 24,
+"week": 4,
+"data": "Nov 4 · Wed",
+"formato": "Static",
+"pilar": "Lipedema and health",
+"tema": "Lipedema with medical follow-up",
+"objetivo": "Build authority with responsibility.",
+"gancho": "Lipedema calls for medical follow-up and manual care",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: phrase highlighted on a rosé background, with a discreet water drop icon.",
+"legenda": "Lipedema is diagnosed by a doctor, and treatment usually involves more than one front. Manual therapy comes in as support, aiming to ease discomfort and look after well-being.<br><br>At the Studio, Marina follows your case respecting your doctor's guidance and adjusts the sessions to what your body needs at each phase.<br><br>Message us on WhatsApp (31) 99591-3617 and talk about your case.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and talk about your case"
+},
+{
+"id": "d25",
+"day": 25,
+"week": 4,
+"data": "Nov 5 · Thu",
+"formato": "Reel",
+"pilar": "Post-op recovery",
+"tema": "Late post-op care",
+"objetivo": "Show that it is still possible to take care.",
+"gancho": "Late post-op care: there is still time to take care",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a wall clock showing the time, camera fixed on the empty treatment room. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Months or years have passed since your surgery and you still feel swelling or hardened areas? Late post-operative care is also possible.<br><br>Each case goes through an assessment to understand what can be worked on and how long it may take. Results vary from person to person.<br><br>Message us on WhatsApp (31) 99591-3617 and book a conversation.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and book a conversation"
+},
+{
+"id": "d26",
+"day": 26,
+"week": 4,
+"data": "Nov 6 · Fri",
+"formato": "Carousel",
+"pilar": "Post-op recovery",
+"tema": "Before and after surgery",
+"objetivo": "Attract people about to have surgery and earn saves.",
+"gancho": "Before and after surgery: how to prepare",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "People who get organized before surgery reach recovery feeling calmer. The slides gather points to plan for this phase.<br><br>Marina sees clients before and after surgery and can help you understand how to fit sessions into your recovery schedule.<br><br>Message us on WhatsApp (31) 99591-3617 and plan your recovery.",
+"cta": "Message us on WhatsApp (31) 99591-3617 and plan your recovery",
+"slides": [
+"Surgery scheduled? Here is how to prepare.",
+"Talk with your surgeon about every instruction.",
+"Arrange ahead of time who will help you in the first days.",
+"Plan the start of drainage with medical clearance.",
+"Organize your recovery with time, without rushing.",
+"Want help with planning? Message us on WhatsApp."
+]
+},
+{
+"id": "d27",
+"day": 27,
+"week": 4,
+"data": "Nov 7 · Sat",
+"formato": "Static",
+"pilar": "Results and questions",
+"tema": "Client testimonial",
+"objetivo": "Show social proof in the client's own words.",
+"gancho": "What clients say about the Studio",
+"visual": "Static art in the brand's rosé palette, main phrase highlighted and little text: screenshot of a client message, with authorization and no personal data, in the brand's rosé tone.",
+"legenda": "The messages that arrive after sessions show what care does in each woman's routine. This note was published with authorization, and we are grateful for the trust.<br><br>Results and sensations are individual. What ties every visit together is listening and safety in the procedures.<br><br>Want to live your own visit? Message us on Instagram.",
+"cta": "Want to live your own visit? Message us on Instagram"
+},
+{
+"id": "d28",
+"day": 28,
+"week": 4,
+"data": "Nov 8 · Sun",
+"formato": "Reel",
+"pilar": "Marina and behind the scenes",
+"tema": "A time slot just for you",
+"objetivo": "Show reserved, unhurried care.",
+"gancho": "Your time for self-care at the Studio",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: a clean sheet being smoothed over the treatment table, close shot on the hands. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "People who look after everyone else often leave their own care for later. At the Studio, the time slot is reserved for you.<br><br>You can fit the session into your week in advance, choosing the day that works best. Tell us, and Marina arranges it.<br><br>Reserve your time through WhatsApp (31) 99591-3617.",
+"cta": "Reserve your time through WhatsApp (31) 99591-3617"
+},
+{
+"id": "d29",
+"day": 29,
+"week": 5,
+"data": "Nov 9 · Mon",
+"formato": "Reel",
+"pilar": "Marina and behind the scenes",
+"tema": "One month of care",
+"objetivo": "Close the cycle with gratitude and an invitation.",
+"gancho": "One month of care at Stúdio Marina Ribeiro",
+"visual": "Video of about 7 seconds, single take, nobody talking to the camera: hands folding white towels and arranging them on the treatment table, fixed camera. Hook as on-screen text, clean and direct lettering, upbeat background music.",
+"legenda": "Another month of visits, conversations and stories here in Savassi. Thank you to every woman who trusted the Studio with her care.<br><br>If you want to start a care plan next month, just message us to talk about available times.<br><br>Message us on WhatsApp (31) 99591-3617.",
+"cta": "Message us on WhatsApp (31) 99591-3617"
+},
+{
+"id": "d30",
+"day": 30,
+"week": 5,
+"data": "Nov 10 · Tue",
+"formato": "Carousel",
+"pilar": "Wrap-up",
+"tema": "Your next month of care",
+"objetivo": "Turn the end of the cycle into contact.",
+"gancho": "Your next month of care with Marina",
+"visual": "6 slides in the brand's rosé palette, one idea per slide and little text. Last slide with a final invitation.",
+"legenda": "A new month is a good time to organize your care. The slides sum up how to get started with Marina.<br><br>The first step is a conversation on WhatsApp. From there, Marina learns what you need and points the way with safety.<br><br>Message us on WhatsApp (31) 99591-3617.",
+"cta": "Message us on WhatsApp (31) 99591-3617",
+"slides": [
+"Your next month of care starts with a conversation.",
+"Lymphatic drainage and post-op follow-up.",
+"Tell Marina what you need.",
+"She builds a safe, realistic plan with you.",
+"Visits in Savassi, in Belo Horizonte.",
+"Message us on WhatsApp (31) 99591-3617."
+]
+}
+];
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt==='Reel') return 'reel';
+  if(fmt==='Carousel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Week ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Mark as done">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pillar · Strategic goal</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carousel' ? 'Carousel title' : 'On-screen hook'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Visual suggestion</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carousel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Text for each slide (copy and paste)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Caption</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Gold';
+  else if(pct >= 50) badge = 'Silver';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-marinaribeiro-en-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reset the whole calendar checklist?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
+
+</body></html>
