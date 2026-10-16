@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · Patz Houz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+    <a href="#stories">Bônus Stories</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @patzhouz</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o novo posicionamento do Patz Houz como coliving na Barra da Lagoa e o plano editorial dos próximos 30 dias. O foco é atrair nômades digitais do Brasil e de fora, com atenção especial às mulheres, e levar mais pessoas a reservar os planos mensais. O calendário tem mais reels falados, com script de 1 minuto para os voluntários de mídias sociais da casa gravarem, e poucos reels de 7 segundos. Entram também posts de aniversário, de diária de fim de semana e de feriado. Cada card é interativo: marque o que já foi produzido e acompanhe o progresso.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Patz Houz · Patricia Weber (Pat)</b></span>
+    <span class="chip">Nicho <b>Coliving e hostel para nômades digitais</b></span>
+    <span class="chip">Local <b>Barra da Lagoa · Florianópolis-SC</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise do que o perfil comunica hoje, cruzando o briefing, o texto do site e os prints da bio, dos destaques e do grid.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>O perfil tem 22,4 mil seguidores, 798 posts e uma identidade visual muito consistente, com títulos em mostarda, azul e verde. A série de relatos de hóspede, com Cheryl, Santiago, Paty, Sierra e Sean, e as perguntas «Qual foi a sua primeira vez no Patz Houz» mostram uma comunidade real, com rostos e histórias. Os reels de rotina, como o teste de ruído, o café da manhã, a trilha do Gravatá e os jantares, comprovam estrutura e vida social. O posicionamento escrito, por outro lado, ainda diz «Digital Nomad Hostel», e a direção nova é coliving. Nos posts visíveis, o plano mensal não aparece como oferta, e é ele que o cliente quer vender mais.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>Nome e bio ainda dizem hostel:</b> o campo Nome traz «Patz Houz :: Digital Nomad Hostel». Quem chega pelo perfil entende uma hospedagem de diária, e a casa agora quer receber quem fica semanas ou meses.</li>
+      <li><b>Plano mensal sem oferta no grid:</b> nos posts visíveis, a mensagem é de vibe e de comunidade. Falta um conteúdo que explique como funciona o mês, quanto tempo vale ficar e como reservar.</li>
+      <li><b>Caminho até a reserva com um passo extra:</b> o link da bio leva ao Linktree. O ideal é o plano mensal aparecer primeiro nessa lista, ou o link ir direto para ele.</li>
+      <li><b>Sem um rosto fixo da casa:</b> a Pat não vai aparecer nos vídeos, e os vídeos são feitos por voluntários de mídias sociais. Para manter a confiança de quem decide por um mês, a voz da casa precisa ser sempre a mesma («a gente»), e os relatos de hóspedes ganham ainda mais peso.</li>
+      <li><b>Mulheres e comunidade LGBT+ sem mensagem própria:</b> o quarto feminino, com jacuzzi, varanda e armários com chave, só aparece no site. A boas-vindas LGBT+ aparece em uma bandeira ao fundo de um reel, sem fala nem texto.</li>
+      <li><b>Fim de semana e feriado sem oferta:</b> o único post de data é o de baixa temporada, com «últimas vagas». Faltam chamadas para escapadas de fim de semana e para os feriadões.</li>
+      <li><b>Aniversário aparece só em foto:</b> a casa já recebeu uma comemoração, com faixa, bolo e mesa posta, e isso ainda não virou uma proposta com chamada.</li>
+      <li><b>Informação do café da manhã diferente entre canais:</b> o site diz que o café é incluso nas diárias avulsas e opcional nos pacotes coliving, e o briefing trata o café como um plano à parte. Vale padronizar o texto em todos os canais para evitar reclamação.</li>
+      <li><b>Idioma sem padrão:</b> a bio está em inglês, e os posts alternam português, espanhol e inglês. Para atrair gringos e brasileiros ao mesmo tempo, vale definir uma regra, como a legenda em português com uma linha em inglês.</li>
+      <li><b>Destaques com pouco espaço:</b> são três, Feedbacks, Digital Nomad e Barra da Lagoa. Faltam destaques para quartos e valores, planos mensais, café da manhã e aniversário.</li>
+      <li><b>Imagem de hóspedes:</b> os relatos mostram rostos e nomes. Vale manter o registro de autorização de cada pessoa.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Dores visíveis do público</span><ul>
+      <li>"Dá para trabalhar de verdade em um hostel?"</li>
+      <li>"Vou ficar sozinha(o) no mês inteiro?"</li>
+      <li>"Quanto fica um mês?"</li>
+      <li>"É seguro para mulher viajando só?"</li></ul></div>
+    <div class="card"><span class="tag">Dores ocultas do público</span><ul>
+      <li>Medo de escolher mal e perder semanas de trabalho.</li>
+      <li>Solidão de morar longe de casa, mesmo com a agenda cheia.</li>
+      <li>Receio de não ser bem recebida ou bem recebido pelo grupo.</li>
+      <li>Cansaço de apartamento bonito sem ninguém para conversar.</li></ul></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Desejos emocionais</span><ul>
+      <li>Ter companhia sem pressão para conviver.</li>
+      <li>Ser bem recebida ou bem recebido como é.</li>
+      <li>Fazer amizades que continuem depois da viagem.</li></ul></div>
+    <div class="card"><span class="tag">Desejos práticos</span><ul>
+      <li>Mesa firme, cadeira boa e internet confiável.</li>
+      <li>Cozinha, lavanderia e praia perto.</li>
+      <li>Saber o valor do mês antes de decidir.</li>
+      <li>Reservar sem burocracia, falando com uma pessoa.</li></ul></div>
+  </div>
+
+  <span class="tag">Objeções que seguram a reserva do mês</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item"><div class="o-head"><span>"Hostel é barulhento e não dá para trabalhar"</span><span class="o-num">01</span></div><p>A lógica por trás: a imagem de hostel como lugar de festa. O conteúdo precisa mostrar as áreas de trabalho, o teste de ruído e a rotina de quem trabalha ali.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Um mês inteiro em hostel cansa"</span><span class="o-num">02</span></div><p>A lógica por trás: falta de privacidade e de rotina. O conteúdo precisa mostrar as suítes privativas, o quarto feminino, as cozinhas e a lavanderia.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Vou ficar sozinha ou sozinho"</span><span class="o-num">03</span></div><p>A lógica por trás: medo de não se encaixar. O conteúdo precisa mostrar as jantas, as atividades e a mesa do café, sem forçar convivência.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Prefiro alugar um apartamento"</span><span class="o-num">04</span></div><p>A lógica por trás: o apartamento parece mais prático. A resposta da casa é a que o próprio site dá: apartamento bonito tem internet boa e ninguém para conversar.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Reservar um mês é muito compromisso"</span><span class="o-num">05</span></div><p>A lógica por trás: medo de se arrepender. O conteúdo precisa mostrar o caminho de começar com poucos dias e estender, e a conversa com a Pat antes de reservar.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de comunicação</span>
+    <p>O Patz Houz já tem o ativo mais difícil de construir, uma comunidade real que aparece nos relatos, nos reels e nas avaliações. Uma hóspede registrou que viveu cinco meses na casa em 2025 e voltou para mais três, e esse tipo de prova é o argumento mais forte para o plano mensal. O que falta é transformar a vibe em decisão: dar voz à casa com vídeos falados pelos voluntários, explicar como funciona o mês e dar datas concretas para agir, como feriados, fins de semana e aniversários. Os próximos 30 dias fazem esse movimento, em português e em inglês.</p>
+  </div>
+</section>
+
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de comunicação</h2></div>
+  <p class="section-intro">Um eixo claro: coliving na Barra da Lagoa, para quem quer trabalhar de manhã e ir à praia no fim do dia, com gente por perto.</p>
+  <div class="quote-block">"Patz Houz: um mês em Floripa com mesa firme, internet boa e gente para ir à praia."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card"><h3>Território de marca</h3><p>Nome comercial: Patz Houz. O território é o do coliving na Barra da Lagoa, com estrutura de trabalho, comunidade sem pressão e praia a cinco minutos. A voz é a da casa, descontraída e acolhedora, que conhece a região e confere como cada hóspede se sente. A Pat segue como contato no WhatsApp. Mulheres e comunidade LGBT+ são convidadas de forma explícita, e os homens entram como parte natural da casa.</p></div>
+    <div class="card"><h3>Arquétipo de marca</h3><p><b>Principal: Anfitriã.</b> Recebe, conversa desde a reserva e cuida de quem chega só.<br><b>Secundário: Explorador.</b> Conhece as trilhas e indica o que o hóspede nem sabia que existia.</p></div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Nova bio estratégica · 116 caracteres, limite de 150</div>
+    <pre>Coliving na Barra da Lagoa, Floripa 🏝️
+Chegue só, saia com a turma
+Work + community · 150+ nomads
+Planos mensais 👇</pre>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3>Ajustes de perfil recomendados</h3><ul>
+    <li>Campo Nome: «Patz Houz | Coliving Floripa», que fica fora dos 150 caracteres da bio e ajuda na busca.</li>
+    <li>Localização: a Barra da Lagoa já está na primeira linha da nova bio, e o endereço do perfil continua visível.</li>
+    <li>Link da bio: colocar os planos mensais como primeiro item do Linktree, ou apontar o link direto para eles.</li>
+    <li>Destaque «Barra da Lagoa»: se ele mostra onde fica e como chegar, mover para a primeira posição, com o endereço e o link do mapa.</li>
+    <li>Criar o destaque «Coliving mensal», com o reel «Mês de coliving ou apartamento» e o carrossel de como reservar o mês.</li>
+    <li>Criar o destaque «Quartos e valores», com o quarto feminino, as suítes privativas e os quartos mistos.</li>
+    <li>Criar o destaque «Café da manhã», com o texto padronizado sobre o plano à parte.</li>
+    <li>Criar o destaque «Aniversário», com os posts desta série.</li>
+    <li>Fixar no topo do grid o post «Hostel x Coliving» que a casa já tem, o carrossel de como reservar o mês e um relato de hóspede de longa estadia.</li>
+    <li>Padronizar a legenda: português primeiro e uma linha em inglês no fim.</li></ul></div>
+</section>
+
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares organizam o mês, da curiosidade sobre Floripa até a mensagem de reserva no WhatsApp.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Coliving mensal</h4><p>Como funciona o mês, a estrutura de trabalho, os planos e como reservar.</p><span class="fun">Meio e fundo de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Comunidade e conexão</h4><p>Café, jantas, atividades e a regra de que ninguém é obrigado a participar.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Mulheres e todo mundo</h4><p>Quarto feminino, viajar sozinha e boas-vindas à comunidade LGBT+.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Barra da Lagoa e a vida lá fora</h4><p>Praia, piscinas naturais, trilhas e o ritmo de um bairro tranquilo.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Prova social e bastidores</h4><p>Relatos de hóspedes, avaliações reais e o dia a dia da casa.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Datas, fim de semana e aniversário</h4><p>Feriadões, diárias de sexta a domingo e comemorações na casa.</p><span class="fun">Fundo de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels de 7 segundos</h3><p><b>Reel de 7 segundos, um take só.</b> Como fazer: grave uma única cena de cerca de 7 segundos, sem cortes e sem ninguém falando pra câmera. Gancho em texto na tela, escrito como título direto, e música animada. Quem converte é a legenda.<br><br><b>Quer gravar falando?</b> Use o texto da legenda para falar! O texto já foi feito de forma que traga autoridade e converta!</p></div>
+    <div class="card"><h3>Reels falados de 1 minuto</h3><p><b>Quem do time de voluntários estiver gravando fala direto pra câmera, ou narra em voz em off sobre imagens da casa, com o script pronto.</b> Como fazer: grave na vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. O script tem 5 blocos, do gancho ao convite final, e dá cerca de 1 minuto lendo em ritmo natural. Pode gravar em um take ou em poucos cortes. O gancho vai em texto na tela nos primeiros 3 segundos, e as legendas automáticas ficam ligadas. Fale do seu jeito, o script é um guia, e as palavras podem ser as suas. Os scripts em inglês devem ser gravados por um voluntário ou voluntária que fale inglês com segurança.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Guias e comparações, uma ideia por slide, com linguagem simples. Fecha com o convite para falar com a Pat no WhatsApp.</p></div>
+    <div class="card"><h3>Estático</h3><p>Frase principal em destaque, com a paleta mostarda, azul e verde que o perfil já usa. Foto real da casa, nunca banco de imagem.</p></div>
+    <div class="card"><h3>Idioma</h3><p>Todas as legendas têm português primeiro e uma linha em inglês no fim. Três reels falados são em inglês, com legenda em português no vídeo, para os nômades de fora.</p></div>
+    <div class="card"><h3>Stories</h3><p>Enquete «hostel ou coliving», caixinha «qual a sua dúvida sobre o mês em Floripa» e bastidores do dia da casa, com autorização de quem aparece.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do"><h4>Sempre fazer</h4><ul>
+      <li>Dizer que o café da manhã é um plano à parte, e destacar que ele é completo e delicioso.</li>
+      <li>Citar valores sempre como «a partir de», conforme o site, sujeitos à data e à disponibilidade.</li>
+      <li>Convidar mulheres e a comunidade LGBT+ de forma explícita, e tratar os homens como parte natural da casa.</li>
+      <li>Falar sempre em nome da casa, com «a gente», e deixar a Pat como contato no WhatsApp.</li>
+      <li>Fechar com o WhatsApp (48) 98873-0558.</li></ul></div>
+    <div class="rule-dont"><h4>Nunca fazer</h4><ul>
+      <li>Escrever que o café da manhã é incluso.</li>
+      <li>Prometer serviço de aniversário que a Pat ainda não confirmou.</li>
+      <li>Criar urgência falsa, como «últimas vagas», sem checar a disponibilidade.</li>
+      <li>Usar frases prontas de hospedagem, como «sinta-se em casa» ou «experiência única».</li>
+      <li>Publicar rosto ou nome de hóspede sem autorização.</li></ul></div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Curiosidade e vontade: «quero um mês assim em Floripa».</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Segurança: «dá para trabalhar, e eu não vou ficar sozinha».</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Ação: «vou mandar mensagem para a Pat com as minhas datas».</p></div>
+  </div>
+</section>
+
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">15 reels falados com script de 1 minuto, 4 reels de 7 segundos, 6 carrosséis e 5 estáticos, começando em 17/10/2026. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos reels falados, o script já vem pronto, e nos carrosséis o texto de cada slide também. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com 22,4 mil seguidores e uma comunidade real já visível nos relatos, a meta do ciclo é transformar a vibe da casa em reservas de planos mensais e em escapadas de fim de semana e de feriado. Os números abaixo são uma referência de partida, sem promessa de resultado, e devem ser revistos com os dados de Insights ao fim da primeira semana.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+3%</div><div class="g-lbl">seguidores no ciclo, cerca de 670 novos</div></div>
+      <div class="goal-item"><div class="g-num">25+</div><div class="g-lbl">conversas de WhatsApp vindas do Instagram</div></div>
+      <div class="goal-item"><div class="g-num">5+</div><div class="g-lbl">reservas de plano mensal</div></div>
+    </div>
+
+
+
+
+
+
+<section class="block" id="stories" style="padding-top:60px;">
+  <div class="kicker"><span class="num">05</span><h2>Bônus · Stories diários</h2></div>
+  <p class="section-intro">Um plano de stories para os mesmos 30 dias, cortesia da NexusK. São 3 stories por dia, sempre ligados ao post do dia: o primeiro abre o assunto, o segundo faz a pessoa interagir e o terceiro leva para o WhatsApp ou para o site. Toque em cada dia para ver o roteiro e marque quando publicar.</p>
+  <div class="grid2" style="margin-bottom:24px;">
+    <div class="card"><h3>Como funciona o dia</h3><ul>
+      <li><b>Story 1, abertura:</b> uma imagem ou um vídeo curto de 3 segundos, com uma frase na tela.</li>
+      <li><b>Story 2, interação:</b> um sticker que gera resposta, como enquete, quiz, controle deslizante ou caixinha de perguntas.</li>
+      <li><b>Story 3, conversão:</b> o post do dia compartilhado ou o link do WhatsApp (48) 98873-0558, com uma chamada curta.</li>
+      <li>Sugestão de horário: o primeiro story de manhã, o de interação no meio do dia e o de conversão no fim da tarde.</li></ul></div>
+    <div class="card"><h3>Regras para quem grava</h3><ul>
+      <li>Gravar na vertical, com texto curto na tela e a paleta mostarda, azul e verde do perfil.</li>
+      <li>Quem aparece precisa autorizar a imagem. Na dúvida, filme o espaço e deixe a pessoa fora do quadro.</li>
+      <li>Responder cada pergunta recebida e salvar as melhores respostas em um destaque «Dúvidas».</li>
+      <li>Reaproveitar cenas dos reels já gravados, para reduzir o trabalho dos voluntários.</li>
+      <li>Café da manhã sempre como plano à parte, e valores sempre como «a partir de», conforme o site.</li>
+      <li>Nada de urgência falsa: só chamar de «últimas vagas» depois de conferir a disponibilidade.</li></ul></div>
+  </div>
+  <div class="progress-wrap" style="position:static;margin:0 0 18px;">
+    <div class="progress-inner">
+      <span class="progress-label">Stories <b id="st-count">0/30</b></span>
+      <div class="progress-track"><div class="progress-fill" id="st-fill"></div></div>
+    </div>
+  </div>
+  <div id="st-container"></div>
+</section>
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{
+"id": "d01",
+"day": 1,
+"week": 1,
+"data": "17/10 · sab",
+"formato": "Reel falado",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Comemore seu aniversário aqui",
+"objetivo": "Abrir o ciclo com a oferta de aniversário, a partir de uma comemoração real da casa.",
+"gancho": "Comemore o seu aniversário no Patz Houz",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Seu aniversário pode ser na Barra da Lagoa. Já teve comemoração no Patz Houz, com mesa posta e bolo, e a turma toda.<br><br>A casa tem pátio, duas cozinhas e gente de vários países, e a praia fica a cinco minutos. Conte como você imagina o dia, e a Pat confere o que a casa consegue oferecer na sua data.<br><br>Conte a sua data e o número de pessoas no WhatsApp (48) 98873-0558.<br><br>EN: Celebrate your birthday at Patz Houz, in Barra da Lagoa. We have already hosted birthdays here, with a set table and a cake, and the whole group. Message Pat with your date.",
+"cta": "Conte a sua data e o número de pessoas no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Comemore o seu aniversário no Patz Houz, na Barra da Lagoa.",
+"5 a 20s · Bloco 1: A casa tem pátio, duas cozinhas e gente de vários países, e já recebeu aniversário com mesa posta e bolo, e a turma toda reunida.",
+"20 a 40s · Bloco 2: Você pode comemorar com quem veio junto ou com quem conheceu aqui. A praia fica a cinco minutos da porta, boa para começar o dia ou para fechar a noite com um mergulho.",
+"40 a 52s · Bloco 3: O jeito de comemorar depende de você: um jantar na mesa grande ou uma tarde na praia. A Pat confere o que a casa consegue fazer na sua data e combina os detalhes com você.",
+"52 a 60s · Convite final: Chama a Pat no WhatsApp, o número está na bio, e conta a data e quantas pessoas vão."
+]
+},
+{
+"id": "d02",
+"day": 2,
+"week": 1,
+"data": "18/10 · dom",
+"formato": "Carrossel",
+"pilar": "Coliving mensal",
+"tema": "Qual quarto combina com você",
+"objetivo": "Mostrar as opções de quarto para quem decide por mais tempo.",
+"gancho": "Qual quarto do Patz Houz combina com você",
+"visual": "7 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Quem fica mais tempo precisa escolher bem o quarto. Reuni as cinco opções da casa, com as principais características de cada uma.<br><br>Os valores são a partir de, conforme o site, e variam por data e por disponibilidade. Para o plano mensal, a Pat ajuda a escolher o quarto.<br><br>Salve este carrossel e mande para quem vai dividir a viagem com você.<br><br>EN: Five room options at Patz Houz, from private suites to shared rooms, with prices from R$ 109 per night as listed on our website. Save this and send it to your travel mate.",
+"cta": "Salve este carrossel e mande para quem vai dividir a viagem com você",
+"slides": [
+"Qual quarto do Patz Houz combina com você.",
+"Suíte privativa Baleia: cama queen, banheiro próprio e bancada de trabalho ao lado da cama, para até duas pessoas trabalhando. A partir de R$ 260 por noite.",
+"Suíte privativa Tartaruga: cama queen e duas bancadas de trabalho, para até duas pessoas trabalhando. A partir de R$ 230 por noite.",
+"Suíte feminina compartilhada: armários com chave, tomadas USB, luz individual, varanda, banheiro estilo camarim e jacuzzi. A partir de R$ 139 por noite.",
+"Quarto misto para 4: armário individual com chave e banheiro no corredor, em frente ao quarto. A partir de R$ 129 por noite.",
+"Quarto misto para 6: no térreo, bem amplo, com armário individual com chave. A partir de R$ 109 por noite.",
+"Valores do site, sujeitos à data e à disponibilidade. Para o plano mensal, chame a Pat no WhatsApp (48) 98873-0558."
+]
+},
+{
+"id": "d03",
+"day": 3,
+"week": 1,
+"data": "19/10 · seg",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Dá para trabalhar de verdade",
+"objetivo": "Quebrar a objeção mais forte do plano mensal.",
+"gancho": "Dá para trabalhar de verdade em um hostel",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Dá para trabalhar de verdade na casa. Tem mesa firme e cadeira ergonômica, com internet confiável, e o vídeo mostra como funciona.<br><br>Quem prefere mais privacidade tem as suítes privativas, com bancada de trabalho ao lado da cama. Quem prefere gente por perto trabalha nas áreas comuns.<br><br>Quer ver os espaços? Olhe o destaque da bio ou chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: Can you really work in a hostel? Our work areas have firm tables, ergonomic chairs and reliable internet, and the private suites have a desk next to the bed.",
+"cta": "Quer ver os espaços? Olhe o destaque da bio ou chame a Pat no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Dá para trabalhar de verdade em um hostel? A gente te mostra como resolve aqui.",
+"5 a 20s · Bloco 1: O Patz Houz tem áreas dedicadas ao trabalho, com mesa firme e cadeira ergonômica, com internet confiável. A gente já fez até um teste de ruído, porque som de ligação e de reunião importa.",
+"20 a 40s · Bloco 2: Tem quem trabalhe na bancada ao lado da cama, nas suítes privativas, e quem prefira uma mesa comum com gente trabalhando ao redor. Cada um escolhe o que rende mais.",
+"40 a 52s · Bloco 3: Depois do expediente a casa muda de ritmo. Alguém vai para a praia, alguém cozinha, alguém chama para a trilha. Você só entra se quiser.",
+"52 a 60s · Convite final: Quer ver os espaços? Dá uma olhada no destaque da bio, ou chama a Pat no WhatsApp que ela te mostra."
+]
+},
+{
+"id": "d04",
+"day": 4,
+"week": 1,
+"data": "20/10 · ter",
+"formato": "Estático",
+"pilar": "Coliving mensal",
+"tema": "Uma noite é muito pouco",
+"objetivo": "Direcionar para os planos mensais.",
+"gancho": "Uma noite é muito pouco",
+"visual": "Arte estática com a paleta mostarda, azul e verde do perfil, com pouco texto: arte com a frase em destaque e uma foto real de alguém trabalhando na área comum, paleta mostarda, azul e verde.",
+"legenda": "Uma noite é pouco para conhecer a Barra da Lagoa. Em um mês você cria rotina: trabalha de manhã e vai à praia no fim do dia.<br><br>Os planos mensais do Patz Houz estão no site, e a Pat ajuda a escolher o quarto e o plano.<br><br>Veja os planos mensais no link da bio.<br><br>EN: One night is not enough. In a month you build a routine: work in the morning, beach in the afternoon. Monthly plans are in the bio link.",
+"cta": "Veja os planos mensais no link da bio"
+},
+{
+"id": "d05",
+"day": 5,
+"week": 1,
+"data": "21/10 · qua",
+"formato": "Reel falado",
+"pilar": "Mulheres e todo mundo",
+"tema": "Viajar sozinha",
+"objetivo": "Acolher mulheres e mostrar o quarto feminino e as suítes.",
+"gancho": "Viajar sozinha: como o Patz Houz cuida de quem chega só",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Vai viajar ou morar um tempo em Floripa sozinha? A gente conversa com muita mulher que chega com essa dúvida.<br><br>O Patz Houz tem um quarto feminino com armários com chave, tomadas USB, luz individual em cada cama, varanda e jacuzzi. Também tem suítes privativas, para quem prefere mais privacidade.<br><br>Quer conhecer o quarto feminino? Chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: Traveling or working from Floripa on your own? We have a women's shared room with lockers, USB sockets, a reading light on every bed, a balcony and a jacuzzi, plus private suites.",
+"cta": "Quer conhecer o quarto feminino? Chame a Pat no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Vai viajar ou morar um tempo em Floripa sozinha? A gente conversa com muita mulher que chega com essa dúvida.",
+"5 a 20s · Bloco 1: O Patz Houz tem um quarto feminino com armário com chave, tomada USB e luz individual em cada cama. Tem varanda com vista para o morro da Barra e até jacuzzi. Também tem suítes privativas, para quem prefere mais privacidade.",
+"20 a 40s · Bloco 2: O bairro é residencial e tranquilo, e as pessoas que ficam aqui estão no mesmo ritmo. A equipe conversa com você desde a reserva e confere como você está se sentindo, porque a gente quer saber se você está bem.",
+"40 a 52s · Bloco 3: Muita gente chega com receio de ficar só, e nos primeiros dias já tem companhia para a trilha e para o jantar. Quem prefere sossego também encontra: a casa tem espaço para os dois jeitos.",
+"52 a 60s · Convite final: Quer conhecer o quarto feminino? Chama a Pat no WhatsApp, o número está na bio, e ela te conta tudo."
+]
+},
+{
+"id": "d06",
+"day": 6,
+"week": 1,
+"data": "22/10 · qui",
+"formato": "Carrossel",
+"pilar": "Coliving mensal",
+"tema": "Como reservar o seu mês",
+"objetivo": "Reduzir o atrito para reservar um plano mensal.",
+"gancho": "Como reservar o seu mês no Patz Houz",
+"visual": "7 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Reservar um mês parece mais complicado do que é. Resumi o caminho em cinco passos.<br><br>Os planos mensais e a disponibilidade estão no site, e a Pat ajuda em qualquer dúvida.<br><br>Salve este carrossel e mande para quem está planejando uma temporada em Floripa.<br><br>EN: How to book your month at Patz Houz in five steps: message Pat, tell her your dates, pick a room and plan, book on the website and arrive.",
+"cta": "Salve este carrossel e mande para quem está planejando uma temporada em Floripa",
+"slides": [
+"Como reservar o seu mês no Patz Houz.",
+"Passo 1: chame a Pat no WhatsApp.",
+"Passo 2: conte quando quer vir, quanto tempo quer ficar e o que quer fazer.",
+"Passo 3: veja o quarto e o plano mensal que combinam com você.",
+"Passo 4: reserve no site.",
+"Passo 5: chegue e conheça a casa e a turma.",
+"Chame a Pat no WhatsApp (48) 98873-0558."
+]
+},
+{
+"id": "d07",
+"day": 7,
+"week": 1,
+"data": "23/10 · sex",
+"formato": "Reel falado",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Diária de fim de semana",
+"objetivo": "Vender a escapada de fim de semana e abrir a porta para estender a estadia.",
+"gancho": "Fim de semana em Floripa: diária de sexta a domingo",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Fim de semana na Barra da Lagoa: chega na sexta, praia no sábado, trilha ou piscina natural no domingo.<br><br>Quartos compartilhados a partir de R$ 109 por noite e suítes privativas a partir de R$ 230, conforme o site. Os valores variam por data e por disponibilidade.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Weekend in Floripa: arrive Friday, beach on Saturday, a trail or tide pool on Sunday. Shared rooms from R$ 109 per night and private suites from R$ 230, as listed on our website. Prices vary by date and availability. Send your dates on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Dois dias livres e vontade de sair da rotina? Dá para passar o fim de semana em Floripa.",
+"5 a 20s · Bloco 1: O Patz Houz fica na Barra da Lagoa. Você chega na sexta, deixa a mala e já está a cinco minutos da praia. No sábado, uma trilha ou uma piscina natural. No domingo, praia e um dia sem pressa.",
+"20 a 40s · Bloco 2: A diária de fim de semana é para quem quer escapar sem planejar muito. Os quartos compartilhados começam em R$ 109 por noite, e as suítes privativas em R$ 230, conforme o site. Os valores mudam por data e por disponibilidade.",
+"40 a 52s · Bloco 3: E se você gostar, dá para estender a estadia. Muita gente que chega para um fim de semana acaba ficando mais tempo do que planejou.",
+"52 a 60s · Convite final: Chama a Pat no WhatsApp com as datas, que ela vê a disponibilidade para você."
+]
+},
+{
+"id": "d08",
+"day": 8,
+"week": 2,
+"data": "24/10 · sab",
+"formato": "Reel 7s",
+"pilar": "Barra da Lagoa e a vida lá fora",
+"tema": "Praia a cinco minutos",
+"objetivo": "Mostrar a proximidade com a praia.",
+"gancho": "A praia fica a cinco minutos da porta",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: caminhada da porta do Patz Houz até a Praia da Barra, câmera na altura do peito, um take só, sem ninguém falando. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Da porta do Patz Houz até a areia são cinco minutos. Dá para fechar o notebook e estar na praia em seguida.<br><br>A Praia da Barra e a Moçambique têm mar aberto e surf nos dias bons.<br><br>Salve este vídeo e mande para quem sonha em trabalhar perto da praia.<br><br>EN: Close the laptop and you are on the sand in five minutes.",
+"cta": "Salve este vídeo e mande para quem sonha em trabalhar perto da praia"
+},
+{
+"id": "d09",
+"day": 9,
+"week": 2,
+"data": "25/10 · dom",
+"formato": "Reel falado",
+"pilar": "Mulheres e todo mundo",
+"tema": "Uma casa para todo mundo",
+"objetivo": "Convidar a comunidade LGBT+ e todos que chegam com respeito.",
+"gancho": "Patz Houz é uma casa para todo mundo",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "A comunidade LGBT+ é muito bem-vinda no Patz Houz, e todo mundo que chega com respeito também é.<br><br>Os quartos são femininos ou mistos, e as suítes são privativas. A equipe conversa desde a reserva para saber como você se sente.<br><br>Conte para a Pat o que você precisa pelo WhatsApp (48) 98873-0558.<br><br>EN: LGBT+ guests are very welcome at Patz Houz, and so is everyone who arrives with respect. Shared rooms are women only or mixed, plus private suites.",
+"cta": "Conte para a Pat o que você precisa pelo WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Uma casa para todo mundo: é assim que a gente quer que o Patz Houz funcione.",
+"5 a 20s · Bloco 1: A comunidade LGBT+ é muito bem-vinda aqui, e as mulheres que viajam sozinhas também. Todo mundo que chega com respeito tem lugar na casa.",
+"20 a 40s · Bloco 2: Aqui a regra é simples: cada pessoa é tratada com respeito, e ninguém precisa explicar quem é para ser bem recebido. A gente conversa desde a reserva, para saber como você se sente e o que gostaria de fazer.",
+"40 a 52s · Bloco 3: Os quartos compartilhados são femininos ou mistos, e as suítes são privativas. Você escolhe o que te deixa mais confortável, e a equipe ajuda nessa escolha.",
+"52 a 60s · Convite final: Se você quer ser bem recebido, chama a Pat no WhatsApp, o número está na bio, e conta o que você precisa."
+]
+},
+{
+"id": "d10",
+"day": 10,
+"week": 2,
+"data": "26/10 · seg",
+"formato": "Reel falado",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Feriadão de Finados",
+"objetivo": "Chamada para o feriadão de 31/10 a 2/11 com a diária de fim de semana.",
+"gancho": "Feriadão de Finados em Floripa: 31/10 a 2/11",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Feriadão de Finados na Barra da Lagoa: sábado, domingo e segunda com praia a cinco minutos.<br><br>Quartos compartilhados a partir de R$ 109 por noite e suítes privativas a partir de R$ 230, conforme o site. Os valores variam por data e por disponibilidade.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Long weekend in Floripa, Oct 31 to Nov 2. Shared rooms from R$ 109 per night and private suites from R$ 230, as listed on our website. Prices vary by date and availability. Send your dates on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Feriadão de Finados chegando: sábado, domingo e segunda livres para curtir a Barra da Lagoa.",
+"5 a 20s · Bloco 1: Se você quer fugir da rotina nesses três dias, vale planejar agora. O Patz Houz fica a cinco minutos da Praia da Barra e perto de trilhas e do Projeto Tamar.",
+"20 a 40s · Bloco 2: A diária de fim de semana começa em R$ 109 no quarto compartilhado e em R$ 230 na suíte privativa, conforme o site. Em feriado a procura costuma subir, então vale perguntar a disponibilidade com antecedência.",
+"40 a 52s · Bloco 3: Se você trabalha remoto, dá para emendar: chega antes, trabalha com mesa firme e internet confiável, e vive o feriado sem pressa.",
+"52 a 60s · Convite final: Manda as suas datas para a Pat no WhatsApp, o número está na bio, que ela confere a disponibilidade."
+]
+},
+{
+"id": "d11",
+"day": 11,
+"week": 2,
+"data": "27/10 · ter",
+"formato": "Carrossel",
+"pilar": "Barra da Lagoa e a vida lá fora",
+"tema": "Barra da Lagoa: programas perto da casa",
+"objetivo": "Mostrar a vida do fim do expediente na região.",
+"gancho": "Barra da Lagoa: 4 programas perto do Patz Houz",
+"visual": "7 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Quem fica um mês precisa de programa para o fim do expediente. A Barra da Lagoa tem mais do que a praia.<br><br>Os slides mostram quatro lugares perto da casa, e a Pat conhece o caminho de cada um.<br><br>Salve este carrossel para o seu roteiro em Floripa.<br><br>EN: Four things to do near Patz Houz in Barra da Lagoa: the beach, tide pools, Projeto Tamar and trails. Save it for your Floripa plan.",
+"cta": "Salve este carrossel para o seu roteiro em Floripa",
+"slides": [
+"Barra da Lagoa: 4 programas perto do Patz Houz.",
+"Praia da Barra e Moçambique: mar aberto e surf nos dias bons, a cinco minutos da porta.",
+"Prainha e piscinas naturais: uma caminhada curta pelas pedras leva às piscinas calmas que a maré enche.",
+"Projeto Tamar: o centro de conservação das tartarugas marinhas fica dentro da vila. É pequeno e vale a visita.",
+"Trilhas: a região tem trilhas com vista para o mar, e a Pat conhece o caminho.",
+"Tudo isso na região de uma casa com mesa firme e internet confiável.",
+"Planos mensais no site. Chame a Pat no WhatsApp (48) 98873-0558."
+]
+},
+{
+"id": "d12",
+"day": 12,
+"week": 2,
+"data": "28/10 · qua",
+"formato": "Estático",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Feriadão de Finados: arte",
+"objetivo": "Reforçar a chamada do feriadão com uma arte salvável.",
+"gancho": "31/10 a 2/11: feriadão na Barra da Lagoa",
+"visual": "Arte estática com a paleta mostarda, azul e verde do perfil, com pouco texto: arte com as datas em destaque, paleta mostarda, azul e verde, e uma foto real da praia da Barra.",
+"legenda": "Feriadão de Finados na Barra da Lagoa: sábado, domingo e segunda, com a praia a cinco minutos.<br><br>Quartos compartilhados a partir de R$ 109 por noite e suítes privativas a partir de R$ 230, conforme o site. Os valores variam por data e por disponibilidade.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Oct 31 to Nov 2 in Barra da Lagoa. Shared rooms from R$ 109 per night and private suites from R$ 230, as listed on our website. Prices vary by date and availability. Send your dates on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558"
+},
+{
+"id": "d13",
+"day": 13,
+"week": 2,
+"data": "29/10 · qui",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Coliving ou apartamento",
+"objetivo": "Responder a objeção do apartamento e vender o plano mensal.",
+"gancho": "Um mês em Floripa: coliving ou apartamento",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Apartamento ou coliving para um mês em Floripa? Cada um serve a um tipo de rotina, e a escolha depende do que você precisa.<br><br>No coliving, mesa firme, internet confiável, cozinhas e lavanderia já estão prontas, e a casa tem gente por perto. Quem quer privacidade tem as suítes privativas.<br><br>Veja os planos mensais no link da bio.<br><br>EN: Apartment or coliving for a month in Floripa? In a coliving the desk, internet, kitchens and laundry are ready, and there are people around. Private suites are available for privacy.",
+"cta": "Veja os planos mensais no link da bio",
+"script": [
+"0 a 5s · Gancho: Apartamento ou coliving para um mês em Floripa? A gente compara com os dois lados.",
+"5 a 20s · Bloco 1: O apartamento tem privacidade total e uma cozinha só sua, e isso agrada muita gente. Em geral você cuida da internet, da lavanderia e da limpeza por conta própria, e quase sempre trabalha sozinho.",
+"20 a 40s · Bloco 2: No coliving você tem mesa firme e cadeira ergonômica, internet confiável, duas cozinhas e lavanderia no local, tudo pronto. E tem gente por perto, que é o que o apartamento mais pede depois da primeira semana.",
+"40 a 52s · Bloco 3: Se você quer privacidade dentro do coliving, existem suítes privativas com bancada de trabalho. Se quer mais convivência, os quartos compartilhados têm a vida da casa por perto.",
+"52 a 60s · Convite final: Conta para a Pat no WhatsApp quando você quer vir e quanto tempo pretende ficar, e ela te ajuda a escolher."
+]
+},
+{
+"id": "d14",
+"day": 14,
+"week": 2,
+"data": "30/10 · sex",
+"formato": "Reel 7s",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Sexta antes do feriadão",
+"objetivo": "Gerar urgência real na véspera do feriado.",
+"gancho": "Sexta-feira: o feriadão começa amanhã",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mala de rodinhas sendo deixada junto à porta do hostel, câmera parada em plano baixo, sem mostrar o rosto. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Sexta chegando, mala pronta e a praia a cinco minutos da porta.<br><br>Feriadão de Finados, de 31/10 a 2/11. Veja a disponibilidade para o fim de semana.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Friday, bag packed, the beach five minutes from the door. Long weekend Oct 31 to Nov 2: check availability on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558"
+},
+{
+"id": "d15",
+"day": 15,
+"week": 3,
+"data": "31/10 · sab",
+"formato": "Carrossel",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Comemore seu aniversário aqui: guia",
+"objetivo": "Detalhar a oferta de aniversário para quem está planejando.",
+"gancho": "Comemore o seu aniversário no Patz Houz",
+"visual": "7 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Seu aniversário pode ser em um lugar com praia e pátio, e com gente de vários países. Já teve comemoração aqui, e a Pat ajuda a montar a sua.<br><br>Conte como você imagina o dia e quantas pessoas vão, e a Pat confere o que a casa consegue oferecer na sua data.<br><br>Salve para lembrar quando a sua data se aproximar.<br><br>EN: Celebrate your birthday at Patz Houz: a patio, two kitchens, the beach five minutes away and a house full of people from different countries. Message Pat with your date.",
+"cta": "Salve para lembrar quando a sua data se aproximar",
+"slides": [
+"Comemore o seu aniversário no Patz Houz, na Barra da Lagoa.",
+"Uma casa com pátio e gente de vários países.",
+"Já teve aniversário comemorado aqui, com mesa posta e a turma toda.",
+"A praia fica a cinco minutos, boa para começar ou terminar o dia.",
+"Você pode comemorar com quem veio junto ou com quem conheceu na casa.",
+"Quer um jantar na mesa grande ou um dia de praia? Conte para a Pat como imagina.",
+"Chame a Pat no WhatsApp (48) 98873-0558 e informe a data e o número de pessoas."
+]
+},
+{
+"id": "d16",
+"day": 16,
+"week": 3,
+"data": "01/11 · dom",
+"formato": "Estático",
+"pilar": "Prova social e bastidores",
+"tema": "Avaliação de longa estadia",
+"objetivo": "Usar a prova social mais forte para o plano mensal.",
+"gancho": "Vivi cinco meses aqui e voltei para mais três",
+"visual": "Arte estática com a paleta mostarda, azul e verde do perfil, com pouco texto: arte com a frase da avaliação em destaque, o nome «Tamires G.» e a origem «avaliação no Google», paleta mostarda e azul.",
+"legenda": "Esta é uma avaliação real de uma hóspede no Google: «Vivi cinco meses aqui em 2025 e voltei pra uma segunda temporada de pelo menos três meses, porque esse hostel é casa, lar e trabalho pra mim.»<br><br>Todas as avaliações estão no perfil do Patz Houz no Google.<br><br>Quer viver a sua temporada? Chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: A real Google review from a guest who lived here for five months in 2025 and came back for at least three more. All reviews are on our Google profile.",
+"cta": "Quer viver a sua temporada? Chame a Pat no WhatsApp (48) 98873-0558"
+},
+{
+"id": "d17",
+"day": 17,
+"week": 3,
+"data": "02/11 · seg",
+"formato": "Reel falado",
+"pilar": "Comunidade e conexão",
+"tema": "Primeira semana no coliving",
+"objetivo": "Mostrar o que esperar do começo da estadia e reduzir o medo de reservar um mês.",
+"gancho": "Como é a primeira semana em um coliving",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Como é a primeira semana em um coliving? A gente conta o que costuma acontecer.<br><br>No começo você descobre a casa e conhece o pessoal. Depois de alguns dias a rotina se forma, e cada um monta o seu ritmo.<br><br>Quer começar a sua primeira semana? Chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: What is the first week in a coliving like? You learn the house, meet people, and after a few days a routine forms. Message Pat to start yours.",
+"cta": "Quer começar a sua primeira semana? Chame a Pat no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Como é a primeira semana em um coliving? A gente conta o que costuma acontecer.",
+"5 a 20s · Bloco 1: No começo você descobre a casa: onde sentar para trabalhar, qual horário fica mais silencioso, onde fica a lavanderia e como funcionam as duas cozinhas.",
+"20 a 40s · Bloco 2: Também é quando você conhece o pessoal. Muita gente chega sozinha, e a conversa começa na cozinha, na área de trabalho ou na ida para a praia, sem hora marcada.",
+"40 a 52s · Bloco 3: Depois de alguns dias a rotina se forma: expediente de manhã, praia ou trilha no fim da tarde e, uma noite por semana, a turma reunida. Cada um monta o seu ritmo.",
+"52 a 60s · Convite final: Quer começar a sua primeira semana? Chama a Pat no WhatsApp, o número está na bio, e conta quando quer vir."
+]
+},
+{
+"id": "d18",
+"day": 18,
+"week": 3,
+"data": "03/11 · ter",
+"formato": "Estático",
+"pilar": "Barra da Lagoa e a vida lá fora",
+"tema": "Fora da alta temporada",
+"objetivo": "Usar a baixa temporada como gatilho para o mês de trabalho.",
+"gancho": "Floripa fora de temporada: praia com mais espaço",
+"visual": "Arte estática com a paleta mostarda, azul e verde do perfil, com pouco texto: arte com a frase em destaque e uma foto real da praia da Barra em um dia de sol.",
+"legenda": "Fora da alta temporada, a Barra da Lagoa fica com mais espaço na areia.<br><br>É um bom momento para planejar um mês de trabalho remoto com a praia por perto.<br><br>Veja os planos mensais no link da bio.<br><br>EN: Outside high season, Barra da Lagoa has more room on the sand. A good time to plan a month of remote work by the beach.",
+"cta": "Veja os planos mensais no link da bio"
+},
+{
+"id": "d19",
+"day": 19,
+"week": 3,
+"data": "04/11 · qua",
+"formato": "Reel falado",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Birthday far from home",
+"objetivo": "Atrair gringos para comemorar aniversário na casa.",
+"gancho": "Birthday far from home? Celebrate it in Floripa",
+"visual": "Voluntário ou voluntária com inglês seguro falando direto pra câmera (ou voz em off em inglês sobre imagens da casa), em vertical, com luz natural e a casa ao fundo. Gancho em texto na tela nos primeiros 3 segundos e legendas em português ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Your birthday is coming and you are far from home? Celebrate it in Florianópolis, at Patz Houz.<br><br>We have a patio and a house full of people from different countries, and the beach is five minutes away. Message Pat with your date.<br><br>Send Pat your date on WhatsApp (48) 98873-0558.<br><br>PT: Seu aniversário está chegando e você está longe de casa? Comemore no Patz Houz, com pátio e gente de vários países. Conte para a Pat a sua data.",
+"cta": "Send Pat your date on WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Your birthday is coming up and you are far from home? Celebrate it in Florianópolis.",
+"5 a 20s · Bloco 1: We are Patz Houz, a coliving in Barra da Lagoa. We have a patio and a house full of people from different countries. A birthday here comes with a big table and a crowd.",
+"20 a 40s · Bloco 2: We have already hosted birthdays at the house, with a cake and a decorated table, and the whole group joined in. The beach is five minutes away, so you can start the day with a swim.",
+"40 a 52s · Bloco 3: Tell Pat how you imagine your day: a dinner at the big table or an afternoon on the beach. She will check what the house can do for your date.",
+"52 a 60s · Convite final: Send Pat a message on WhatsApp with your date and how many people are coming. The link is in the bio."
+]
+},
+{
+"id": "d20",
+"day": 20,
+"week": 3,
+"data": "05/11 · qui",
+"formato": "Reel 7s",
+"pilar": "Comunidade e conexão",
+"tema": "Café da manhã",
+"objetivo": "Destacar o café como completo e delicioso, deixando claro que é um plano à parte.",
+"gancho": "O café da manhã do Patz Houz",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mesa do café posta com fruta da época, tapioca, ovos e café sendo servido em uma xícara, câmera parada em plano superior. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "O café da manhã do Patz Houz é completo e delicioso, e é na mesa dele que muita gente conhece o pessoal.<br><br>Tem fruta da época, ovo, tapioca, pão, granola, iogurte, suco natural e café passado na hora, das 8h às 10h. O café é um plano à parte, e a Pat explica como adicionar à sua reserva.<br><br>Pergunte pelo plano de café no WhatsApp (48) 98873-0558.<br><br>EN: Breakfast here is complete and delicious: seasonal fruit, eggs, tapioca, granola and fresh coffee, from 8 to 10 am. It is a separate plan, and Pat explains how to add it to your booking.",
+"cta": "Pergunte pelo plano de café no WhatsApp (48) 98873-0558"
+},
+{
+"id": "d21",
+"day": 21,
+"week": 3,
+"data": "06/11 · sex",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Hostel ou coliving",
+"objetivo": "Explicar a diferença e empurrar a decisão para o plano mensal.",
+"gancho": "Hostel ou coliving: qual a diferença de verdade",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Quando você fica uma noite ou duas, o hostel resolve. Quando fica um mês, as perguntas mudam, e o coliving responde a elas.<br><br>No Patz Houz você escolhe entre diária e planos mensais, e a estrutura da casa é a mesma. O plano mensal foi pensado para quem fica mais tempo.<br><br>Veja os planos no link da bio ou chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: Hostel or coliving? For one or two nights, a hostel does the job. For a month, you need a place to work and people around you. See the monthly plans in the bio link.",
+"cta": "Veja os planos no link da bio ou chame a Pat no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Hostel ou coliving? A gente explica a diferença do jeito que a casa funciona.",
+"5 a 20s · Bloco 1: Quando você fica uma noite ou duas, o hostel resolve: cama e banho. Quando você fica um mês, as perguntas mudam. Onde eu trabalho? Tem mesa firme? Quem vai estar aqui comigo? Posso lavar roupa e cozinhar?",
+"20 a 40s · Bloco 2: O coliving responde a essas perguntas. Tem estrutura para trabalhar, cozinha, lavanderia e uma rotina de casa, com atividades durante a semana, como jantas, aula de dança e nomad talks.",
+"40 a 52s · Bloco 3: No Patz Houz você escolhe entre a diária e os planos mensais, e a estrutura da casa é a mesma. O plano mensal foi pensado para quem fica mais tempo e quer criar rotina.",
+"52 a 60s · Convite final: Quer ver os planos? O link está na bio, ou chama a Pat no WhatsApp que ela te ajuda a escolher."
+]
+},
+{
+"id": "d22",
+"day": 22,
+"week": 4,
+"data": "07/11 · sab",
+"formato": "Carrossel",
+"pilar": "Coliving mensal",
+"tema": "O que a casa oferece",
+"objetivo": "Mostrar a estrutura do coliving para quem decide por um mês.",
+"gancho": "Coliving na Barra da Lagoa: o que a casa oferece",
+"visual": "8 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Quem fica um mês quer saber o que a casa tem além da cama. Resumi nos slides.<br><br>A estrutura é a mesma para quem fica mais tempo, e os planos mensais estão no site.<br><br>Salve este carrossel para comparar com outros lugares.<br><br>EN: Desks, fast internet, two kitchens, laundry, community dinners and a five-minute walk to the beach. Save this and compare.",
+"cta": "Salve este carrossel para comparar com outros lugares",
+"slides": [
+"Coliving na Barra da Lagoa: o que a casa oferece.",
+"Trabalhar: áreas dedicadas, mesas firmes, cadeiras ergonômicas e internet confiável.",
+"Cozinhar: duas cozinhas completas, para quem quiser.",
+"Descansar: lavanderia no local e um bairro tranquilo e seguro.",
+"Se conectar: gente no mesmo ritmo que o seu, sem forçar.",
+"Participar: jantas comunitárias, aulas de dança ou culinária e nomad talks.",
+"Se mover: trilhas, surf, escalada, mergulho, stand up e canoa havaiana na região.",
+"Planos mensais no site. Chame a Pat no WhatsApp (48) 98873-0558."
+]
+},
+{
+"id": "d23",
+"day": 23,
+"week": 4,
+"data": "08/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Aniversário no pátio",
+"objetivo": "Mostrar a possibilidade de comemorar na casa.",
+"gancho": "Aniversário no pátio do Patz Houz",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mesa grande no pátio com bolo, velas acesas e copos, luz do fim de tarde, câmera parada, sem ninguém falando. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "O pátio do Patz Houz já recebeu aniversário com mesa posta e a turma toda.<br><br>Se a sua data está chegando, conte para a Pat como você imagina a comemoração.<br><br>Chame a Pat no WhatsApp (48) 98873-0558 com a sua data.<br><br>EN: Our patio has hosted birthdays with a set table and the whole crowd. If your date is coming, tell Pat how you imagine it.",
+"cta": "Chame a Pat no WhatsApp (48) 98873-0558 com a sua data"
+},
+{
+"id": "d24",
+"day": 24,
+"week": 4,
+"data": "09/11 · seg",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Working remotely from Floripa",
+"objetivo": "Atrair nômades de fora com o resumo do coliving em inglês.",
+"gancho": "Working remotely from Floripa: how a coliving works",
+"visual": "Voluntário ou voluntária com inglês seguro falando direto pra câmera (ou voz em off em inglês sobre imagens da casa), em vertical, com luz natural e a casa ao fundo. Gancho em texto na tela nos primeiros 3 segundos e legendas em português ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Working remotely from Florianópolis? This is how a coliving works at Patz Houz.<br><br>Desks, reliable internet, two kitchens, laundry, the beach five minutes away and a community of nomads from Brazil and abroad. Monthly plans are on our website.<br><br>Send Pat your dates on WhatsApp (48) 98873-0558.<br><br>PT: Quer trabalhar de Floripa? Mesa firme, internet confiável, duas cozinhas, lavanderia e praia a cinco minutos. Os planos mensais estão no site. Fale com a Pat no WhatsApp.",
+"cta": "Send Pat your dates on WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Thinking about working remotely from Florianópolis? Here is how a coliving works, in one minute.",
+"5 a 20s · Bloco 1: We are Patz Houz, a coliving in Barra da Lagoa, five minutes from the beach. You get a bed, a work area with a firm table and an ergonomic chair, and reliable internet.",
+"20 a 40s · Bloco 2: There are two full kitchens and a laundry room, and a house full of people who work remotely like you. They come from Brazil and from all over the world, so you will find someone to talk to at breakfast.",
+"40 a 52s · Bloco 3: We also have house activities, like community dinners and nomad talks. You join when you feel like it, and nobody pushes you.",
+"52 a 60s · Convite final: If you want to stay a month or more, send Pat a message on WhatsApp with your dates, and she will help you pick a plan. The link is in the bio."
+]
+},
+{
+"id": "d25",
+"day": 25,
+"week": 4,
+"data": "10/11 · ter",
+"formato": "Carrossel",
+"pilar": "Coliving mensal",
+"tema": "Perguntas antes de reservar",
+"objetivo": "Responder as objeções mais comuns em um só post.",
+"gancho": "Perguntas que as pessoas fazem antes de reservar",
+"visual": "7 slides com a paleta mostarda, azul e verde do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Estas são as perguntas que chegam com mais frequência antes de uma reserva. Respondi todas nos slides.<br><br>Se a sua dúvida não está aqui, a Pat responde pelo WhatsApp.<br><br>Salve este carrossel e mande para quem está em dúvida.<br><br>EN: The questions we hear most before a booking: can I work here, is it a party hostel, how far is the beach, what about breakfast, how much is a month.",
+"cta": "Salve este carrossel e mande para quem está em dúvida",
+"slides": [
+"Perguntas que as pessoas fazem antes de reservar.",
+"Dá para trabalhar de verdade? Sim. Tem áreas dedicadas com mesa firme e cadeira ergonômica, com internet confiável.",
+"É hostel de festa? Tem agito aqui e ali, e ninguém é obrigado a participar.",
+"A praia é longe? São cinco minutos até a areia.",
+"E o café da manhã? Ele é completo e delicioso, e é um plano à parte. A Pat explica como adicionar.",
+"Quanto fica o mês? Os planos mensais estão no site, e a Pat ajuda a escolher o quarto.",
+"Mais dúvidas? Chame a Pat no WhatsApp (48) 98873-0558."
+]
+},
+{
+"id": "d26",
+"day": 26,
+"week": 4,
+"data": "11/11 · qua",
+"formato": "Reel falado",
+"pilar": "Comunidade e conexão",
+"tema": "Singles' Day: arrive alone",
+"objetivo": "Usar o 11/11 para reforçar o lema da casa em inglês.",
+"gancho": "11/11: arrive alone, leave with a group",
+"visual": "Voluntário ou voluntária com inglês seguro falando direto pra câmera (ou voz em off em inglês sobre imagens da casa), em vertical, com luz natural e a casa ao fundo. Gancho em texto na tela nos primeiros 3 segundos e legendas em português ligadas. Duração de cerca de 1 minuto.",
+"legenda": "It is 11/11, Singles' Day, and we have a plan for solo travelers: arrive alone, leave with a group.<br><br>At Patz Houz, many people arrive on their own and meet the group at the breakfast table. Join the community dinners, or work in peace.<br><br>Send Pat your dates on WhatsApp (48) 98873-0558.<br><br>PT: 11/11, Dia do Solteiro: chegue sozinho e saia com uma turma. No Patz Houz muita gente chega só e conhece o grupo na mesa do café. Mande as suas datas para a Pat.",
+"cta": "Send Pat your dates on WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: It is 11/11, Singles' Day, and we have a plan for solo travelers: arrive alone and leave with a group.",
+"5 a 20s · Bloco 1: We are Patz Houz, a coliving in Florianópolis. Many people here arrive on their own, and many stay longer than they planned.",
+"20 a 40s · Bloco 2: The house is built for that. There are community dinners, and nomad talks too. The breakfast table is where people start talking. You can join in, or work in peace, because nobody pushes you.",
+"40 a 52s · Bloco 3: We have shared rooms, women only or mixed, and also private suites. Everyone is welcome, and the LGBT+ community is very welcome.",
+"52 a 60s · Convite final: If you plan to work from Floripa for a month or more, send Pat a message on WhatsApp with your dates. The link is in the bio."
+]
+},
+{
+"id": "d27",
+"day": 27,
+"week": 4,
+"data": "12/11 · qui",
+"formato": "Reel falado",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Feriadão da Consciência Negra",
+"objetivo": "Chamada para o feriadão de 20 a 22/11 e para estender com home office.",
+"gancho": "Feriadão de 20 a 22/11 em Floripa",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "A Consciência Negra cai na sexta, e o feriadão vai de 20 a 22 de novembro na Barra da Lagoa.<br><br>Quartos compartilhados a partir de R$ 109 por noite e suítes privativas a partir de R$ 230, conforme o site. Os valores variam por data e por disponibilidade.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Long weekend in Floripa, Nov 20 to 22. Shared rooms from R$ 109 per night and private suites from R$ 230, as listed on our website. Prices vary by date and availability. Send your dates on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Feriadão chegando: o dia 20 de novembro, Consciência Negra, cai na sexta, e vale planejar desde já.",
+"5 a 20s · Bloco 1: O Patz Houz fica na Barra da Lagoa. São três dias para a praia e para a trilha, ou mais, se você emendar com home office.",
+"20 a 40s · Bloco 2: Os quartos compartilhados começam em R$ 109 por noite, e as suítes privativas em R$ 230, conforme o site. Os valores e a disponibilidade mudam por data, e feriado costuma ter mais procura.",
+"40 a 52s · Bloco 3: Se você trabalha remoto, dá para chegar na quarta, trabalhar na quarta e na quinta com a estrutura da casa e deixar o feriado começar na sexta, com a praia ao lado.",
+"52 a 60s · Convite final: Manda as suas datas para a Pat no WhatsApp, o número está na bio, que ela confere a disponibilidade."
+]
+},
+{
+"id": "d28",
+"day": 28,
+"week": 4,
+"data": "13/11 · sex",
+"formato": "Estático",
+"pilar": "Datas, fim de semana e aniversário",
+"tema": "Feriadão 20 a 22/11: arte",
+"objetivo": "Reforçar a chamada com arte salvável.",
+"gancho": "20 a 22/11: feriadão na Barra da Lagoa",
+"visual": "Arte estática com a paleta mostarda, azul e verde do perfil, com pouco texto: arte com as datas em destaque, paleta mostarda, azul e verde, e uma foto real do pôr do sol da Barra.",
+"legenda": "Feriadão de 20 a 22 de novembro na Barra da Lagoa, com a praia a cinco minutos da porta.<br><br>Quartos compartilhados a partir de R$ 109 por noite e suítes privativas a partir de R$ 230, conforme o site. Os valores variam por data e por disponibilidade.<br><br>Mande as suas datas pelo WhatsApp (48) 98873-0558.<br><br>EN: Nov 20 to 22 in Barra da Lagoa. Shared rooms from R$ 109 per night and private suites from R$ 230, as listed on our website. Prices vary by date and availability. Send your dates on WhatsApp.",
+"cta": "Mande as suas datas pelo WhatsApp (48) 98873-0558"
+},
+{
+"id": "d29",
+"day": 29,
+"week": 5,
+"data": "14/11 · sab",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Fica mais um mês",
+"objetivo": "Converter diária em plano mensal.",
+"gancho": "Chegou por uma semana e ficou um mês: como estender",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Muita gente chega ao Patz Houz para uma semana e acaba ficando mais. O vídeo explica como funciona.<br><br>Se você gostou da primeira semana, dá para migrar para um plano mensal. A estrutura da casa é a mesma, e a Pat ajuda a ver as opções.<br><br>Fale com a Pat pelo WhatsApp (48) 98873-0558.<br><br>EN: Many guests arrive for a week and stay longer. If you like the first week, you can move to a monthly plan. Pat helps with the options.",
+"cta": "Fale com a Pat pelo WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Muita gente chega no Patz Houz para uma semana e acaba ficando mais. A gente explica como funciona.",
+"5 a 20s · Bloco 1: Na primeira semana você descobre se a rotina funciona: onde sentar para trabalhar, que horário a casa fica mais calma e quem vai com você para a praia.",
+"20 a 40s · Bloco 2: Se você gostou, dá para migrar para um plano mensal. A estrutura é a mesma, e o plano mensal foi pensado para quem fica mais tempo. Conte para a Pat como foi a sua semana, e ela te ajuda a ver as opções de plano.",
+"40 a 52s · Bloco 3: Uma hóspede ficou cinco meses aqui em 2025 e voltou para mais três. Ela deixou isso registrado em uma avaliação no Google.",
+"52 a 60s · Convite final: Se você já está aqui, ou está planejando, chama a Pat no WhatsApp e combinem o seu plano."
+]
+},
+{
+"id": "d30",
+"day": 30,
+"week": 5,
+"data": "15/11 · dom",
+"formato": "Reel falado",
+"pilar": "Coliving mensal",
+"tema": "Seu mês em Floripa começa com uma mensagem",
+"objetivo": "Fechar o ciclo e converter em mensagem.",
+"gancho": "Seu mês em Floripa começa com uma mensagem",
+"visual": "Voluntário ou voluntária do time de mídias sociais falando direto pra câmera (ou voz em off sobre imagens da casa), em vertical, com luz natural e a casa ao fundo, como o pátio ou a área de trabalho. Gancho em texto na tela nos primeiros 3 segundos, legendas automáticas ligadas, com versão opcional de legenda em inglês. Duração de cerca de 1 minuto.",
+"legenda": "Foi um mês falando de coliving e de comunidade. Agora falta a sua parte: uma mensagem para a Pat.<br><br>Conte quando quer vir, quanto tempo pretende ficar e o que gostaria de fazer por aqui. A Pat ajuda a escolher o quarto e o plano mensal.<br><br>Chame a Pat no WhatsApp (48) 98873-0558.<br><br>EN: Your month in Floripa starts with a message. Tell Pat when you want to come, how long you plan to stay and what you would like to do.",
+"cta": "Chame a Pat no WhatsApp (48) 98873-0558",
+"script": [
+"0 a 5s · Gancho: Foi um mês falando de coliving e de comunidade. Agora falta a sua parte.",
+"5 a 20s · Bloco 1: Se você trabalha remoto e quer passar um mês ou mais na Barra da Lagoa, o primeiro passo é uma mensagem para a Pat.",
+"20 a 40s · Bloco 2: Conte quando você quer vir, quanto tempo pretende ficar e o que gostaria de fazer por aqui. A Pat ajuda a escolher o quarto e o plano mensal.",
+"40 a 52s · Bloco 3: Você vai ter mesa firme, internet confiável, duas cozinhas, a praia a cinco minutos e uma casa cheia de gente no mesmo ritmo que o seu. O café da manhã é um plano à parte, completo e delicioso, e a Pat explica como adicionar.",
+"52 a 60s · Convite final: Chama a Pat no WhatsApp, o número está na bio, e comecem o seu planejamento."
+]
+}
+];
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt.indexOf('Reel')===0) return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          ${(Array.isArray(d.script) && d.script.length) ? `<div class="field"><div class="f-label">Script do vídeo (cerca de 1 minuto, para ler em ritmo natural)</div><div class="f-value">${d.script.map(s=>`<div style="margin-bottom:9px;">${s.replace(/^([^:]+):/,'<b>$1:</b>')}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-patzhouz-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+
+<script>
+(function(){
+  const ST_DATA = [{"id": "s01", "day": 1, "data": "17/10 · sab", "tema": "Seu aniversário cabe aqui?", "feed": "Reel falado · Comemore seu aniversário aqui", "f1": "Foto ou vídeo curto do pátio vazio, com luz natural. Texto na tela: «Seu aniversário caberia aqui?»", "f2": "Enquete: «Aniversário com muita gente ou com poucos?». Opções: «Muita gente» e «Poucos».", "f3": "Compartilhe o reel de hoje e coloque o sticker de link do WhatsApp (48) 98873-0558, com o texto «Conte a sua data».", "en": "Would your birthday fit here?"}, {"id": "s02", "day": 2, "data": "18/10 · dom", "tema": "Quarto do dia", "feed": "Carrossel · Qual quarto combina com você", "f1": "Foto do quarto feminino, com a varanda aparecendo. Texto: «Quarto do dia: feminino».", "f2": "Quiz: «Qual quarto tem jacuzzi e varanda?». Opções: «Quarto feminino» e «Quarto misto». Resposta certa: quarto feminino.", "f3": "Compartilhe o carrossel de hoje com o texto «Qual combina com você?» e o sticker de perguntas.", "en": "Room of the day: the women's room, with jacuzzi and balcony."}, {"id": "s03", "day": 3, "data": "19/10 · seg", "tema": "Segunda de expediente", "feed": "Reel falado · Dá para trabalhar de verdade", "f1": "Vídeo curto da área de trabalho com a mesa livre e a luz da manhã. Texto: «Segunda-feira, mesa livre».", "f2": "Enquete: «Você trabalha melhor de manhã ou à tarde?». Opções: «Manhã» e «Tarde».", "f3": "Compartilhe o reel «Dá para trabalhar de verdade» com o texto «Veja como funciona».", "en": "Monday, the desk is free."}, {"id": "s04", "day": 4, "data": "20/10 · ter", "tema": "Uma noite é pouco", "feed": "Estático · Uma noite é muito pouco", "f1": "Foto da praia da Barra com o texto «1 noite?» riscado e «30 noites» em destaque.", "f2": "Controle deslizante com emoji de onda: «Quanto você quer ficar em Floripa?».", "f3": "Sticker de link para o site com os planos mensais e o texto «Planos mensais aqui».", "en": "One night is not enough."}, {"id": "s05", "day": 5, "data": "21/10 · qua", "tema": "Viajar sozinha", "feed": "Reel falado · Viajar sozinha", "f1": "Foto da varanda do quarto feminino. Texto: «Viajando sozinha? Olha essa varanda».", "f2": "Caixinha de perguntas: «Qual é a sua dúvida sobre viajar sozinha?».", "f3": "Compartilhe o reel de hoje. No dia seguinte, responda às dúvidas em stories.", "en": "Traveling solo? Look at this balcony."}, {"id": "s06", "day": 6, "data": "22/10 · qui", "tema": "Reserva do mês", "feed": "Carrossel · Como reservar o seu mês", "f1": "Texto sobre fundo mostarda: «Reservar um mês em 5 passos».", "f2": "Enquete: «Você já reservou um mês fora de casa?». Opções: «Já» e «Ainda não».", "f3": "Compartilhe o carrossel de hoje e coloque o sticker de link do WhatsApp.", "en": "Booking a month in 5 steps."}, {"id": "s07", "day": 7, "data": "23/10 · sex", "tema": "Sexta de escapada", "feed": "Reel falado · Diária de fim de semana", "f1": "Mala aberta sobre a cama. Texto: «Fim de semana em Floripa?».", "f2": "Enquete: «Praia ou trilha no sábado?». Opções: «Praia» e «Trilha».", "f3": "Compartilhe o reel «Diária de fim de semana» com o link do WhatsApp e o texto «Pergunte a disponibilidade deste fim de semana».", "en": "Weekend in Floripa?"}, {"id": "s08", "day": 8, "data": "24/10 · sab", "tema": "Sábado de praia", "feed": "Reel 7s · Praia a cinco minutos", "f1": "Vídeo de 3 segundos da caminhada até a praia. Texto: «A praia é perto».", "f2": "Enquete: «Você prefere praia de manhã ou no fim da tarde?». Opções: «Manhã» e «Fim da tarde».", "f3": "Compartilhe o reel de hoje.", "en": "The beach is close."}, {"id": "s09", "day": 9, "data": "25/10 · dom", "tema": "Aqui cabe todo mundo", "feed": "Reel falado · Uma casa para todo mundo", "f1": "Foto de um espaço comum da casa com luz natural. Texto: «Aqui cabe todo mundo».", "f2": "Controle deslizante: «Quanto você gosta de conhecer gente nova?».", "f3": "Compartilhe o reel de hoje com o texto «Dúvida? Chame a Pat no WhatsApp».", "en": "There is room for everyone."}, {"id": "s10", "day": 10, "data": "26/10 · seg", "tema": "Contagem do feriadão", "feed": "Reel falado · Feriadão de Finados", "f1": "Foto da praia com o texto «Finados: 31/10 a 2/11».", "f2": "Sticker de contagem regressiva até 31/10, com o nome «Feriadão na Barra».", "f3": "Sticker de link para o WhatsApp com o texto «Veja a disponibilidade».", "en": "Long weekend countdown."}, {"id": "s11", "day": 11, "data": "27/10 · ter", "tema": "Programa do dia", "feed": "Carrossel · Barra da Lagoa: programas perto da casa", "f1": "Vídeo curto de uma trilha da região, como a do Gravatá. Texto: «Programa do dia».", "f2": "Enquete: «Praia ou trilha?». Opções: «Praia» e «Trilha».", "f3": "Compartilhe o carrossel de hoje.", "en": "Plan of the day."}, {"id": "s12", "day": 12, "data": "28/10 · qua", "tema": "Arte do feriadão", "feed": "Estático · Feriadão de Finados: arte", "f1": "Compartilhe a arte do feriadão com o texto «Salve as datas».", "f2": "Enquete: «Você já tem plano para o feriadão?». Opções: «Já tenho» e «Ainda não».", "f3": "Sticker de link do WhatsApp com o texto «Mande as suas datas».", "en": "Save the dates."}, {"id": "s13", "day": 13, "data": "29/10 · qui", "tema": "Coliving ou apartamento", "feed": "Reel falado · Coliving ou apartamento", "f1": "Duas fotos lado a lado, a mesa de trabalho do coliving e a cozinha. Texto: «O que você precisa para um mês?».", "f2": "Enquete: «Coliving ou apartamento?». Opções: «Coliving» e «Apartamento».", "f3": "Compartilhe o reel de hoje.", "en": "What do you need for a month?"}, {"id": "s14", "day": 14, "data": "30/10 · sex", "tema": "Véspera do feriadão", "feed": "Reel 7s · Sexta antes do feriadão", "f1": "Vídeo de uma mala sendo deixada na porta. Texto: «O feriadão começa amanhã».", "f2": "Enquete: «Praia ou trilha no feriadão?». Opções: «Praia» e «Trilha».", "f3": "Sticker de link do WhatsApp com o texto «Pergunte pela disponibilidade».", "en": "The long weekend starts tomorrow."}, {"id": "s15", "day": 15, "data": "31/10 · sab", "tema": "Aniversário na Barra", "feed": "Carrossel · Comemore seu aniversário aqui: guia", "f1": "Foto do pátio. Texto: «Aniversário na Barra da Lagoa».", "f2": "Caixinha de perguntas: «Como você imagina o seu aniversário?».", "f3": "Compartilhe o carrossel de hoje e coloque o link do WhatsApp.", "en": "Birthday in Barra da Lagoa."}, {"id": "s16", "day": 16, "data": "01/11 · dom", "tema": "Avaliação real", "feed": "Estático · Avaliação de longa estadia", "f1": "Compartilhe a arte da avaliação com o texto «Avaliação real no Google».", "f2": "Enquete: «Você já ficou mais de um mês no mesmo lugar?». Opções: «Já» e «Nunca».", "f3": "Sticker de link para o site com os planos mensais.", "en": "A real Google review."}, {"id": "s17", "day": 17, "data": "02/11 · seg", "tema": "Segunda de feriado na casa", "feed": "Reel falado · Primeira semana no coliving", "f1": "Vídeo de 3 segundos da cozinha em uso, com autorização de quem aparece. Texto: «Segunda de feriado na casa».", "f2": "Caixinha de perguntas: «O que você quer saber sobre a primeira semana?».", "f3": "Compartilhe o reel de hoje.", "en": "Holiday Monday at the house."}, {"id": "s18", "day": 18, "data": "03/11 · ter", "tema": "Praia com espaço", "feed": "Estático · Fora da alta temporada", "f1": "Foto da praia com poucas pessoas. Texto: «Praia com espaço».", "f2": "Controle deslizante: «Quanto você gosta de praia tranquila?».", "f3": "Sticker de link para os planos mensais.", "en": "A quiet beach."}, {"id": "s19", "day": 19, "data": "04/11 · qua", "tema": "Birthday in Floripa", "feed": "Reel falado · Birthday far from home", "f1": "Foto do pátio. Texto em inglês: «Birthday in Floripa?».", "f2": "Enquete em inglês: «Birthday dinner or beach day?». Opções: «Dinner» e «Beach day».", "f3": "Compartilhe o reel em inglês e coloque o link do WhatsApp.", "en": "Os textos já estão em inglês hoje."}, {"id": "s20", "day": 20, "data": "05/11 · qui", "tema": "Café da manhã", "feed": "Reel 7s · Café da manhã", "f1": "Foto do café da manhã servido. Texto: «Café da manhã completo e delicioso».", "f2": "Enquete: «Qual é o seu café da manhã ideal?». Opções: «Doce» e «Salgado».", "f3": "Texto: «O café é um plano à parte. Pergunte como adicionar» e sticker de link do WhatsApp.", "en": "Complete, delicious breakfast. It is a separate plan."}, {"id": "s21", "day": 21, "data": "06/11 · sex", "tema": "Hostel ou coliving", "feed": "Reel falado · Hostel ou coliving", "f1": "Foto da casa com o texto «Hostel ou coliving?».", "f2": "Enquete: «Quanto tempo você fica em uma viagem?». Opções: «Até 3 dias» e «Um mês ou mais».", "f3": "Compartilhe o reel de hoje e coloque o link dos planos mensais.", "en": "Hostel or coliving?"}, {"id": "s22", "day": 22, "data": "07/11 · sab", "tema": "O que tem na casa", "feed": "Carrossel · O que a casa oferece", "f1": "Vídeo curto da cozinha e da lavanderia, sem pessoas. Texto: «O que tem na casa».", "f2": "Enquete: «O que você mais usa em uma casa compartilhada?». Opções: «Cozinha» e «Lavanderia».", "f3": "Compartilhe o carrossel de hoje.", "en": "What the house has."}, {"id": "s23", "day": 23, "data": "08/11 · dom", "tema": "Mesa pronta?", "feed": "Reel 7s · Aniversário no pátio", "f1": "Vídeo do pátio. Texto: «Mesa pronta?».", "f2": "Enquete: «Você já comemorou aniversário viajando?». Opções: «Já» e «Nunca».", "f3": "Sticker de link do WhatsApp com o texto «Conte a sua data».", "en": "The table is set."}, {"id": "s24", "day": 24, "data": "09/11 · seg", "tema": "Remote work", "feed": "Reel falado · Working remotely from Floripa", "f1": "Foto da área de trabalho. Texto em inglês: «Remote work, five minutes from the beach».", "f2": "Quiz em inglês: «What do you need most in a month away?». Opções: «Fast internet» e «People».", "f3": "Compartilhe o reel em inglês e coloque o link do WhatsApp.", "en": "Os textos já estão em inglês hoje."}, {"id": "s25", "day": 25, "data": "10/11 · ter", "tema": "Pergunte o que quiser", "feed": "Carrossel · Perguntas antes de reservar", "f1": "Texto sobre fundo mostarda: «Pergunte o que quiser sobre o mês em Floripa».", "f2": "Caixinha de perguntas: «Qual a sua dúvida antes de reservar?».", "f3": "Compartilhe o carrossel de perguntas e responda às dúvidas nos stories seguintes.", "en": "Ask us anything."}, {"id": "s26", "day": 26, "data": "11/11 · qua", "tema": "Singles' Day", "feed": "Reel falado · Singles' Day: arrive alone", "f1": "Foto de um espaço comum da casa. Texto em inglês: «11/11: arrive alone».", "f2": "Enquete em inglês: «Traveling alone or with friends?». Opções: «Alone» e «With friends».", "f3": "Compartilhe o reel em inglês.", "en": "Os textos já estão em inglês hoje."}, {"id": "s27", "day": 27, "data": "12/11 · qui", "tema": "Contagem do feriadão de novembro", "feed": "Reel falado · Feriadão da Consciência Negra", "f1": "Foto da praia com o texto «20 a 22/11».", "f2": "Sticker de contagem regressiva até 20/11, com o nome «Feriadão na Barra».", "f3": "Sticker de link do WhatsApp com o texto «Mande as suas datas».", "en": "Long weekend, Nov 20 to 22."}, {"id": "s28", "day": 28, "data": "13/11 · sex", "tema": "Arte do feriadão de novembro", "feed": "Estático · Feriadão 20 a 22/11: arte", "f1": "Compartilhe a arte do feriadão.", "f2": "Enquete: «Você emenda o feriado com home office?». Opções: «Sim» e «Não».", "f3": "Sticker de link do WhatsApp com o texto «Veja a disponibilidade».", "en": "Save the dates."}, {"id": "s29", "day": 29, "data": "14/11 · sab", "tema": "Era para ser uma semana", "feed": "Reel falado · Fica mais um mês", "f1": "Foto de alguém trabalhando de costas, com vista para a praia e com autorização. Texto: «Era para ser uma semana».", "f2": "Enquete: «Você já ficou mais do que planejou em uma viagem?». Opções: «Já» e «Nunca».", "f3": "Compartilhe o reel de hoje e coloque o link dos planos mensais.", "en": "It was supposed to be a week."}, {"id": "s30", "day": 30, "data": "15/11 · dom", "tema": "30 dias de Patz Houz", "feed": "Reel falado · Seu mês em Floripa começa com uma mensagem", "f1": "Mosaico com as melhores fotos do mês, só de quem autorizou. Texto: «30 dias de Patz Houz».", "f2": "Caixinha de perguntas: «Qual conteúdo você quer ver no próximo mês?».", "f3": "Sticker de link do WhatsApp com o texto «Seu mês em Floripa começa com uma mensagem».", "en": "Your month in Floripa starts with a message."}];
+  const KEY='nk-cal-patzhouz-stories-progress';
+  let stState={};
+  try{ const r=localStorage.getItem(KEY); if(r) stState=JSON.parse(r)||{}; }catch(e){}
+  const box=document.getElementById('st-container');
+  function upd(){
+    const n=Object.values(stState).filter(Boolean).length;
+    document.getElementById('st-count').textContent=n+'/30';
+    document.getElementById('st-fill').style.width=Math.round(n/30*100)+'%';
+  }
+  function draw(){
+    box.innerHTML='';
+    ST_DATA.forEach(d=>{
+      const done=!!stState[d.id];
+      const c=document.createElement('div');
+      c.className='day-card'+(done?' done':'');
+      c.id='st-'+d.id;
+      c.innerHTML=`
+        <div class="day-head" data-st="${d.id}">
+          <div class="day-num">D${d.day}</div>
+          <div class="day-meta">
+            <div class="d-top"><span class="fmt-badge estatico">Stories</span><span class="date-label">${d.data}</span></div>
+            <div class="day-title">${d.tema}</div>
+          </div>
+          <button class="check-btn ${done?'checked':''}" data-stc="${d.id}" aria-label="Marcar como feito">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="day-body"><div class="day-body-inner">
+          <div class="field"><div class="f-label">Post do dia no feed</div><div class="f-value">${d.feed}</div></div>
+          <div class="field"><div class="f-label">Story 1 · Abertura</div><div class="f-value">${d.f1}</div></div>
+          <div class="field"><div class="f-label">Story 2 · Interação</div><div class="f-value">${d.f2}</div></div>
+          <div class="field"><div class="f-label">Story 3 · Conversão</div><div class="f-value">${d.f3}</div></div>
+          <div class="field"><div class="f-label">Texto em inglês (opcional)</div><div class="f-value">${d.en}</div></div>
+        </div></div>`;
+      box.appendChild(c);
+    });
+    box.querySelectorAll('[data-st]').forEach(h=>h.addEventListener('click',e=>{
+      if(e.target.closest('[data-stc]')) return;
+      document.getElementById('st-'+h.dataset.st).classList.toggle('open');
+    }));
+    box.querySelectorAll('[data-stc]').forEach(b=>b.addEventListener('click',e=>{
+      e.stopPropagation();
+      const id=b.dataset.stc;
+      stState[id]=!stState[id];
+      b.classList.toggle('checked',stState[id]);
+      document.getElementById('st-'+id).classList.toggle('done',stState[id]);
+      try{ localStorage.setItem(KEY,JSON.stringify(stState)); }catch(err){}
+      upd();
+    }));
+    upd();
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
