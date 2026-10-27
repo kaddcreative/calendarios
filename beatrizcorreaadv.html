@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · Beatriz Corrêa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @beatrizcorreaadv</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o posicionamento da Beatriz como a advogada que traduz o juridiquês para quem empreende no digital e o plano editorial dos próximos 30 dias. O foco é o registro de marca, o carro-chefe do escritório, e a assessoria jurídica mensal. O calendário tem mais reels falados, com script de 1 minuto, para dar rosto e voz ao perfil, e mantém os carrosséis informativos que já funcionam. Todo o conteúdo foi pensado para ser informativo e sóbrio, como pede a publicidade na advocacia. Cada card é interativo: marque o que já foi produzido e acompanhe o progresso.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Beatriz Corrêa dos Santos · Advogada</b></span>
+    <span class="chip">Nicho <b>Registro de marca e jurídico para negócios digitais</b></span>
+    <span class="chip">Local <b>Campinas · SP</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise do que o perfil comunica hoje, cruzando o briefing com os prints da bio, dos destaques e do grid.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>O perfil tem 626 seguidores, 24 posts e 876 seguindo. O grid é bonito e consistente, com fundo preto, detalhes em dourado e bege e letras com serifa, que passam a ideia de escritório sério. Os carrosséis mostram domínio do assunto: tipos de marca registrável no INPI, quanto tempo leva o registro, uso do nome pessoal ou do CPF, mitos e benefícios do registro. A apresentação «Dra. Beatriz» e o post «meus serviços» estão fixados no topo. Por outro lado, o briefing pede uma advogada que fala como em um café, leve e próxima, e o grid ainda soa mais técnico e mais sombrio do que essa promessa. Vários títulos trabalham pelo susto, como «já pensou em perder todo investimento feito até agora?» e «alguém copiou a minha marca, e agora?». O grid é quase todo de carrosséis e estáticos, com poucos vídeos e pouca presença da Beatriz falando, e a «amiga inteligente» do briefing precisa de rosto e de voz.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>Bio sem o serviço principal:</b> «Tenha um jurídico para chamar de seu!» é uma boa frase de marca, mas a bio não diz que o carro-chefe é o registro de marca. Esse termo só aparece no campo Nome. O rótulo do perfil também está no masculino, «Advogado de propriedade intelectual».</li>
+      <li><b>Cidade ausente:</b> Campinas/SP não aparece na bio, e quem chega não sabe se o atendimento é local ou para todo o Brasil. Vale deixar isso claro: informar a cidade na bio e dizer, no destaque «Comece aqui», se o atendimento é online para todo o Brasil.</li>
+      <li><b>Destaques sem identidade:</b> são quatro, com capas lisas em mostarda, bege, vinho e vermelho, cores que não conversam com o preto e o dourado do grid. Os nomes seguem padrões diferentes, como «• eventos •», «depoimentos», «comece aqui» e «• bastidores •». Faltam destaques para o registro de marca e para as dúvidas frequentes.</li>
+      <li><b>Tom de alerta:</b> os títulos de perda e de cópia chamam atenção, mas o briefing pede leveza e prevenção. O calendário muda o foco de «problema» para «construir com segurança», sem apagar o que já foi publicado.</li>
+      <li><b>Pouca presença da Beatriz:</b> a foto dela aparece em poucos posts, e quase não há vídeo falado. Para vender uma assessoria consultiva, a confiança vem da pessoa, e isso se constrói falando para a câmera.</li>
+      <li><b>Caminho até o contato com um passo extra:</b> o link da bio leva ao Linktree, e a bio convida com «Bora tomar um café?». O ideal é o WhatsApp ser o primeiro item da lista, e cada post fechar com um convite claro para a conversa. Vale conferir se todas as legendas já fecham com esse convite e corrigir as que não fecham.</li>
+      <li><b>Depoimentos e a OAB:</b> existe um destaque «depoimentos». A publicidade na advocacia é informativa e sóbria, e o uso de depoimentos de clientes e de resultados de casos vale confirmar as regras da OAB-SP sobre depoimentos e, se necessário, ajustar ou retirar esse destaque.</li>
+      <li><b>Número da OAB:</b> o Código de Ética da OAB pede que a publicidade profissional traga o nome e o número de inscrição. Vale confirmar na OAB-SP o formato exigido e colocar o número no perfil, por exemplo no Linktree ou no destaque «Comece aqui».</li>
+      <li><b>Mais seguindo do que seguidores:</b> são 876 seguindo e 626 seguidores. Para um perfil de autoridade, vale deixar de seguir contas sem relação com o público e priorizar empreendedoras, para o feed e as sugestões falarem com o ICP.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Dores visíveis do público</span><ul>
+      <li>"Será que o nome do meu negócio já é usado por outra pessoa?"</li>
+      <li>"Quanto tempo demora para registrar uma marca?"</li>
+      <li>"Preciso registrar se o meu negócio ainda é pequeno?"</li>
+      <li>"Advogado é só para empresa grande?"</li></ul></div>
+    <div class="card"><span class="tag">Dores ocultas do público</span><ul>
+      <li>Medo de investir muito em uma marca que pode ser perdida.</li>
+      <li>Insegurança por não entender o juridiquês.</li>
+      <li>Vergonha de fazer perguntas que parecem básicas.</li>
+      <li>Cansaço de decidir tudo sozinha, sem alguém de confiança ao lado.</li></ul></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Desejos emocionais</span><ul>
+      <li>Ter tranquilidade para investir no negócio.</li>
+      <li>Sentir que existe alguém ao lado, como um braço direito.</li>
+      <li>Entender o que está sendo feito pela marca dela.</li></ul></div>
+    <div class="card"><span class="tag">Desejos práticos</span><ul>
+      <li>Saber os passos do registro, do início ao fim.</li>
+      <li>Contratos claros, em linguagem simples.</li>
+      <li>Resposta rápida pelo WhatsApp.</li>
+      <li>Um jurídico que acompanhe o crescimento do negócio.</li></ul></div>
+  </div>
+
+  <span class="tag">Objeções que seguram o primeiro contato</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item"><div class="o-head"><span>"Advogado é só para empresa grande"</span><span class="o-num">01</span></div><p>A lógica por trás: a ideia de que o jurídico é um luxo de quem já fatura muito. O conteúdo precisa mostrar negócios digitais pequenos e o jurídico entrando no começo, junto com o plano.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Registrar marca é demorado e complicado"</span><span class="o-num">02</span></div><p>A lógica por trás: medo do processo e do juridiquês. O conteúdo precisa mostrar o passo a passo em linguagem simples e deixar claro que a advogada acompanha cada fase.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Já tenho CNPJ, Instagram e domínio, então já estou protegida"</span><span class="o-num">03</span></div><p>A lógica por trás: confundir existir com estar protegida. O conteúdo precisa explicar, sem susto, o que o CNPJ e o perfil garantem e o que só o registro no INPI protege.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Deve ser muito caro"</span><span class="o-num">04</span></div><p>A lógica por trás: o custo percebido do jurídico. Como a publicidade na advocacia não pode divulgar preço, o conteúdo trabalha o jurídico como parte do crescimento, e o valor é tratado na conversa particular.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Eu resolvo quando o problema aparecer"</span><span class="o-num">05</span></div><p>A lógica por trás: o hábito de chamar advogado só na urgência. O conteúdo precisa mostrar, com exemplos do dia a dia, os momentos em que olhar antes deixa tudo mais tranquilo.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de comunicação</span>
+    <p>A Beatriz já tem o ativo que muita advogada demora para construir: conteúdo técnico claro sobre registro de marca e um visual com cara de escritório de confiança. O que falta é a pessoa por trás do perfil e o convite para a conversa. Os próximos 30 dias levam a Beatriz para a frente da câmera, mantêm os carrosséis que ensinam e fecham cada conteúdo com um convite leve para o WhatsApp. Entram também datas que fazem sentido para quem empreende, como a Black Friday e o planejamento de 2027. O Dia Mundial do Empreendedorismo Feminino, em 19/11, também ganha um post.</p>
+  </div>
+</section>
+
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de comunicação</h2></div>
+  <p class="section-intro">Um eixo claro: a advogada que explica o registro de marca e o jurídico do negócio digital em linguagem de café, para quem quer crescer com segurança.</p>
+  <div class="quote-block">"Tenha um jurídico para chamar de seu: construa o seu negócio com uma advogada ao seu lado."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card"><h3>Território de marca</h3><p>Nome comercial: Beatriz Corrêa, advogada de marcas e contratos. O território é o da proteção que acompanha o crescimento do negócio, com registro de marca como porta de entrada e a assessoria mensal como relacionamento. A voz é a de uma amiga inteligente que traduz o juridiquês com calma. O jurídico aparece como aliado de quem constrói o negócio, presente desde o começo.</p></div>
+    <div class="card"><h3>Arquétipo de marca</h3><p><b>Principal: Amiga inteligente.</b> Explica com calma e fala a língua da empreendedora.<br><b>Secundário: Guardiã.</b> Cuida do que a cliente construiu e ajuda a prevenir o problema antes de ele aparecer.</p></div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Nova bio estratégica · 146 caracteres, limite de 150</div>
+    <pre>Advogada de marcas e contratos · Campinas/SP
+Registro de marca no INPI e jurídico para negócios digitais
+Tenha um jurídico para chamar de seu ☕👇</pre>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3>Ajustes de perfil recomendados</h3><ul>
+    <li>Campo Nome: «Beatriz Corrêa | Advogada de Marcas», que fica fora dos 150 caracteres da bio e ajuda na busca por «registro de marca».</li>
+    <li>Categoria do perfil: se houver a opção no feminino, trocar para «Advogada».</li>
+    <li>Localização: Campinas/SP já aparece na primeira linha da nova bio. Dizer no destaque «Comece aqui» se o atendimento é online para todo o Brasil.</li>
+    <li>Link da bio: colocar o WhatsApp como primeiro item do Linktree, seguido do material sobre registro de marca. Incluir ali também o número de inscrição na OAB, no formato que a OAB-SP exige.</li>
+    <li>Destaques: trocar as capas por ícones simples nas cores do grid, preto, dourado e bege, e padronizar os nomes sem os pontos, como «Comece aqui», «Registro de marca», «Dúvidas», «Bastidores» e «Eventos».</li>
+    <li>Criar o destaque «Registro de marca», com o passo a passo do dia 2 e o carrossel de classes do dia 17.</li>
+    <li>Criar o destaque «Dúvidas», com o carrossel de perguntas frequentes e as respostas às caixinhas dos stories.</li>
+    <li>Confirmar as regras da OAB-SP sobre depoimentos e ajustar ou retirar o destaque «depoimentos», se necessário.</li>
+    <li>Fixar o reel «Sua marca é sua no papel?», do dia 1, junto com a apresentação e o post «meus serviços».</li>
+    <li>Responder dúvidas de caso concreto só no WhatsApp, nunca nos comentários.</li></ul></div>
+</section>
+
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares organizam o mês, da curiosidade sobre o registro de marca até a conversa no WhatsApp.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Registro de marca</h4><p>O que é, como funciona, as classes, a validade e as dúvidas mais comuns.</p><span class="fun">Topo e meio de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Jurídico que acompanha o negócio</h4><p>Assessoria mensal, prevenção e os momentos certos para chamar uma advogada.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Erros comuns e riscos do dia a dia</h4><p>Nome parecido, CNPJ e Instagram, verificações antes de lançar, sem susto.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Bastidores e a advogada</h4><p>Como é a primeira conversa e o dia a dia de quem registra marcas.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Contratos e negócio digital</h4><p>Contrato com cliente, termos do site, privacidade e parcerias.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Datas e momentos do negócio</h4><p>Black Friday, empreendedorismo feminino, planejamento de 2027 e virada de ano.</p><span class="fun">Fundo de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels de 7 segundos</h3><p><b>Reel de 7 segundos, um take só.</b> Como fazer: grave uma única cena de cerca de 7 segundos, sem cortes e sem ninguém falando pra câmera. Gancho em texto na tela, escrito como título direto, e música animada. Quem converte é a legenda.<br><br><b>Quer gravar falando?</b> Use o texto da legenda para falar! O texto já foi feito de forma que traga autoridade e converta!</p></div>
+    <div class="card"><h3>Reels falados de 1 minuto</h3><p><b>A Beatriz fala direto pra câmera, com o script pronto.</b> Como fazer: grave na vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. O script tem 5 blocos, do gancho ao convite final, e dá cerca de 1 minuto lendo em ritmo natural. Pode gravar em um take ou em poucos cortes. O gancho vai em texto na tela nos primeiros 3 segundos, e as legendas automáticas ficam ligadas. Fale do seu jeito, o script é um guia, e as palavras podem ser as suas. Quando o script citar um prazo ou uma regra, confira se continua valendo no dia da gravação.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Guias e passo a passo, uma ideia por slide, com linguagem simples. Sempre explique a sigla na primeira vez, como INPI e classe. Fecha com o convite para conversar no WhatsApp.</p></div>
+    <div class="card"><h3>Estático</h3><p>Frase principal em destaque, com a paleta preto, dourado e bege e a letra com serifa que o perfil já usa. Foto real da Beatriz sempre que possível, com tom leve.</p></div>
+    <div class="card"><h3>Publicidade na advocacia</h3><p>O conteúdo segue o Código de Ética e o Provimento 205/2021 da OAB: informativo e sóbrio. Por isso o calendário não traz preço, promoção, promessa de resultado nem caso de cliente. Vale confirmar as regras da OAB-SP antes de publicar e ajustar o que for preciso.</p></div>
+    <div class="card"><h3>Stories</h3><p>Enquete «você já conferiu se o nome do seu negócio está livre no INPI?», caixinha «qual a sua dúvida sobre registro de marca?» e bastidores do café e da rotina, com resposta às perguntas em carrossel.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do"><h4>Sempre fazer</h4><ul>
+      <li>Falar em primeira pessoa e em linguagem simples, explicando as siglas na primeira vez.</li>
+      <li>Usar «em regra» e «depende do caso» no lugar de promessas.</li>
+      <li>Manter o conteúdo informativo e sóbrio, com um tom leve de conversa.</li>
+      <li>Fechar com um convite para conversar no WhatsApp (11) 92133-9502.</li>
+      <li>Levar dúvidas de caso concreto para a conversa particular.</li></ul></div>
+    <div class="rule-dont"><h4>Nunca fazer</h4><ul>
+      <li>Prometer resultado ou garantir que o registro será concedido.</li>
+      <li>Divulgar preço, desconto, promoção ou sorteio.</li>
+      <li>Expor cliente, caso ou resultado de processo.</li>
+      <li>Usar medo e sensacionalismo para vender.</li>
+      <li>Usar juridiquês sem explicar o termo.</li></ul></div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Curiosidade: «será que o nome do meu negócio está protegido?».</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Entendimento: «agora eu entendo o processo e não tenho vergonha de perguntar».</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Ação: «vou chamar a Beatriz no WhatsApp para conversar».</p></div>
+  </div>
+</section>
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">11 reels falados com script de 1 minuto, 5 reels de 7 segundos, 8 carrosséis e 6 estáticos, começando em 27/10/2026. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos reels falados, o script já vem pronto, e nos carrosséis o texto de cada slide também. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com 626 seguidores e um grid técnico já bem construído, a meta do ciclo é dar rosto e voz à Beatriz e transformar o conteúdo em conversas de WhatsApp sobre registro de marca e assessoria mensal. Os números abaixo são uma referência de partida, sem promessa de resultado, e devem ser revistos com os dados de Insights ao fim da primeira semana.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+8%</div><div class="g-lbl">seguidores no ciclo, cerca de 50 novos</div></div>
+      <div class="goal-item"><div class="g-num">10+</div><div class="g-lbl">conversas de WhatsApp vindas do Instagram</div></div>
+      <div class="goal-item"><div class="g-num">3+</div><div class="g-lbl">conversas sobre registro de marca ou assessoria mensal</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{
+"id": "d01",
+"day": 1,
+"week": 1,
+"data": "27/10 · ter",
+"formato": "Reel falado",
+"pilar": "Registro de marca",
+"tema": "Sua marca é sua no papel?",
+"objetivo": "Abrir o ciclo com a pergunta central do ICP e apresentar a Beatriz.",
+"gancho": "Você construiu a sua marca há anos. Ela já é sua no papel?",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você investiu tempo e dinheiro na sua marca. Mas ela já é sua no papel?<br><br>Em regra, o direito sobre a marca vem do registro no INPI, e quem registra primeiro tem a vantagem. Eu explico isso com calma no vídeo.<br><br>Quer saber como está a situação do seu nome? Me chama no WhatsApp (11) 92133-9502 e vamos conversar.",
+"cta": "Quer saber como está a situação do seu nome? Me chama no WhatsApp (11) 92133-9502 e vamos conversar.",
+"script": [
+"0 a 5s · Gancho: Você investiu tempo e dinheiro na sua marca. Mas ela já é sua no papel?",
+"5 a 20s · Bloco 1: Aqui no Brasil, em regra, o direito sobre a marca vem do registro no INPI, o Instituto Nacional da Propriedade Industrial. Ou seja, quem registra primeiro tem a vantagem.",
+"20 a 40s · Bloco 2: O Instagram e o CNPJ ajudam o negócio a existir, mas a proteção da marca em todo o país vem do registro. Sem ele, fica mais difícil impedir que alguém use um nome igual ou parecido com o seu.",
+"40 a 52s · Bloco 3: Eu sou a Beatriz, advogada de marcas. Eu gosto de fazer esse caminho com você em linguagem simples: a gente olha o seu nome e confere o risco antes de você investir mais.",
+"52 a 60s · Convite final: Quer saber como está a sua marca? Me chama no WhatsApp, o número está na bio, e a gente conversa como num café."
+]
+},
+{
+"id": "d02",
+"day": 2,
+"week": 1,
+"data": "28/10 · qua",
+"formato": "Carrossel",
+"pilar": "Registro de marca",
+"tema": "Registro de marca no INPI: o passo a passo",
+"objetivo": "Ensinar o caminho do registro e reduzir o medo do processo.",
+"gancho": "Registro de marca no INPI: o passo a passo em linguagem simples",
+"visual": "8 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Registrar uma marca parece complicado, mas o caminho tem etapas claras. Neste carrossel eu resumi cada uma delas.<br><br>O prazo de cada fase varia, e o resultado depende da análise do INPI. Por isso cada caso é conversado individualmente.<br><br>Salve este carrossel e, se quiser falar sobre o seu registro, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve este carrossel e, se quiser falar sobre o seu registro, me chama no WhatsApp (11) 92133-9502",
+"slides": [
+"Registro de marca no INPI: o passo a passo em linguagem simples.",
+"1. Busca: antes de pedir, pesquise no banco do INPI se já existe marca igual ou parecida no seu ramo.",
+"2. Classe: escolha em quais produtos ou serviços a sua marca será protegida.",
+"3. Pedido: o pedido é protocolado no INPI e passa por um exame formal.",
+"4. Publicação: o pedido sai na Revista da Propriedade Industrial, e outras pessoas têm 60 dias para se opor.",
+"5. Exame: o INPI analisa o pedido e decide se concede ou não o registro.",
+"6. Concessão: com a taxa paga, o registro vale por 10 anos e pode ser renovado.",
+"Cada caso é um caso. Fale comigo no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d03",
+"day": 3,
+"week": 1,
+"data": "29/10 · qui",
+"formato": "Reel 7s",
+"pilar": "Bastidores e a advogada",
+"tema": "Registro de marca em linguagem de café",
+"objetivo": "Apresentar o jeito leve da Beatriz e reforçar o convite da bio.",
+"gancho": "Registro de marca explicado em um café",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: uma mesa com notebook aberto e uma xícara de café sendo servida. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Registro de marca é assunto para conversa de café, e eu gosto de explicar assim, em linguagem simples.<br><br>Aqui no perfil eu falo de marca e de contrato para quem empreende no digital, sempre como em um bate-papo.<br><br>Siga o perfil e, se quiser conversar sobre a sua marca, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Siga o perfil e, se quiser conversar sobre a sua marca, me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d04",
+"day": 4,
+"week": 1,
+"data": "30/10 · sex",
+"formato": "Estático",
+"pilar": "Registro de marca",
+"tema": "Antes de investir mais",
+"objetivo": "Levar a pessoa a pensar na proteção antes de um investimento maior.",
+"gancho": "Antes de investir mais na sua marca, confira se ela está protegida",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: frase principal em dourado sobre fundo preto, com a foto da Beatriz em tom bege ao lado.",
+"legenda": "Antes de investir em um novo logo ou em uma campanha, vale olhar para a proteção da marca.<br><br>O registro no INPI ajuda a proteger o nome que você construiu e reduz o risco de conflito com marcas anteriores.<br><br>Quer conversar sobre isso? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer conversar sobre isso? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d05",
+"day": 5,
+"week": 1,
+"data": "31/10 · sab",
+"formato": "Reel falado",
+"pilar": "Erros comuns e riscos do dia a dia",
+"tema": "CNPJ e Instagram protegem a marca?",
+"objetivo": "Esclarecer a diferença entre existir e estar protegida, sem susto.",
+"gancho": "Você tem CNPJ e Instagram com o nome do seu negócio. A marca está protegida?",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Ter CNPJ e Instagram com o nome do seu negócio é um ótimo começo. Mas isso protege a marca?<br><br>O CNPJ registra o nome empresarial na Junta Comercial, e a proteção vale só para o seu estado. O @ garante o seu perfil na rede. Quem protege a marca no país inteiro, dentro da sua classe, é o registro no INPI.<br><br>Quer entender como fica o seu caso? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer entender como fica o seu caso? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Você tem CNPJ e Instagram com o nome do seu negócio. Isso quer dizer que a sua marca está protegida?",
+"5 a 20s · Bloco 1: O CNPJ registra o nome empresarial da sua empresa na Junta Comercial, e essa proteção vale só para o seu estado. Já o @ garante o seu perfil dentro da rede social.",
+"20 a 40s · Bloco 2: Nenhum dos dois dá o direito de impedir que outra pessoa use um nome igual ou parecido, para vender no mesmo ramo que você. Quem dá esse direito é o registro da marca no INPI, que vale no país inteiro, dentro da classe que você escolheu.",
+"40 a 52s · Bloco 3: Por isso eu gosto de conferir isso logo no começo, antes de o nome estar espalhado em embalagem, site, anúncio e contrato.",
+"52 a 60s · Convite final: Se você quer entender como fica o seu caso, me chama no WhatsApp, o número está na bio, e a gente conversa."
+]
+},
+{
+"id": "d06",
+"day": 6,
+"week": 1,
+"data": "01/11 · dom",
+"formato": "Carrossel",
+"pilar": "Jurídico que acompanha o negócio",
+"tema": "O que um jurídico mensal faz",
+"objetivo": "Explicar a assessoria mensal em linguagem simples.",
+"gancho": "O que um jurídico mensal faz pelo seu negócio digital",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Ter um jurídico para chamar de seu quer dizer ter alguém que conhece o seu negócio e acompanha as decisões.<br><br>A minha assessoria mensal reúne contratos, soluções extrajudiciais, proteção digital e proteção da propriedade intelectual.<br><br>Salve para consultar depois. Se quiser entender se faz sentido para o seu negócio, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve para consultar depois. Se quiser entender se faz sentido para o seu negócio, me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"O que um jurídico mensal faz pelo seu negócio digital.",
+"Contratos: o combinado com clientes e fornecedores fica por escrito, em linguagem clara.",
+"Soluções extrajudiciais: quando surge um conflito, a prioridade é buscar um acordo antes do processo.",
+"Proteção digital: termos de uso e política de privacidade do site e das redes.",
+"Propriedade intelectual: registro da marca e cuidado com o uso do seu nome e dos seus conteúdos.",
+"Decisões com segurança: você consulta antes de agir, e o negócio cresce com mais tranquilidade.",
+"Cada negócio pede um formato. Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d07",
+"day": 7,
+"week": 1,
+"data": "02/11 · seg",
+"formato": "Reel falado",
+"pilar": "Jurídico que acompanha o negócio",
+"tema": "Quando chamar uma advogada",
+"objetivo": "Mostrar a prevenção como parte do crescimento do negócio.",
+"gancho": "Quando é a hora de chamar uma advogada para o seu negócio?",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muita gente espera o problema aparecer para chamar uma advogada. O jurídico ajuda mais quando entra antes.<br><br>Antes de lançar o nome, antes de contratar, antes de fechar uma parceria e antes de um investimento maior: esses são os melhores momentos para olhar o jurídico.<br><br>Está em um desses momentos? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Está em um desses momentos? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Quando é a hora de chamar uma advogada para o seu negócio? Muita gente espera o problema aparecer.",
+"5 a 20s · Bloco 1: Mas o jurídico faz mais efeito quando entra antes. A primeira hora boa é antes de lançar o nome da marca, porque ainda dá tempo de conferir se ele já está em uso e se existe risco.",
+"20 a 40s · Bloco 2: A segunda é antes de contratar alguém ou de fechar uma parceria, porque o combinado por escrito evita muita confusão depois. A terceira é antes de um investimento maior, como uma campanha grande ou um estoque novo.",
+"40 a 52s · Bloco 3: Chamar uma advogada cedo é construir o negócio com alguém ao seu lado, e isso deixa as decisões mais leves.",
+"52 a 60s · Convite final: Se você está em um desses momentos agora, me chama no WhatsApp, o número está na bio, e a gente conversa."
+]
+},
+{
+"id": "d08",
+"day": 8,
+"week": 2,
+"data": "03/11 · ter",
+"formato": "Estático",
+"pilar": "Registro de marca",
+"tema": "Quem registra primeiro",
+"objetivo": "Reforçar a lógica do registro com informação correta.",
+"gancho": "Em regra, o direito sobre a marca vem do registro",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: frase principal em dourado, com o fundo preto e a letra com serifa, sem foto.",
+"legenda": "Em regra, quem registra a marca no INPI é quem tem o direito sobre ela.<br><br>Por isso a ordem importa: quanto antes o pedido é feito, menor a chance de outra pessoa chegar primeiro com um nome igual.<br><br>Quer saber como está a situação do seu nome? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer saber como está a situação do seu nome? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d09",
+"day": 9,
+"week": 2,
+"data": "04/11 · qua",
+"formato": "Carrossel",
+"pilar": "Erros comuns e riscos do dia a dia",
+"tema": "4 verificações antes de lançar o nome",
+"objetivo": "Dar uma ferramenta prática para quem está escolhendo o nome do negócio.",
+"gancho": "4 verificações antes de lançar o nome da sua marca",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Escolheu o nome do seu negócio e está quase lançando? Faça estas verificações antes de gastar com logo e embalagem.<br><br>Elas não substituem a análise de uma advogada, mas evitam as dores de cabeça mais comuns.<br><br>Salve e mande para quem está escolhendo um nome. Dúvida sobre o seu? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve e mande para quem está escolhendo um nome. Dúvida sobre o seu? Me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"4 verificações antes de lançar o nome da sua marca.",
+"1. Banco de marcas do INPI: pesquise se existe marca igual ou parecida no seu ramo.",
+"2. Internet e redes sociais: veja se alguém já usa o nome para vender algo parecido.",
+"3. Domínio e @: confira se o endereço do site e o perfil estão livres para você.",
+"4. Junta Comercial: se for abrir empresa, veja se o nome empresarial está disponível no seu estado.",
+"Depois das 4 verificações, converse com uma advogada para analisar o risco.",
+"Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d10",
+"day": 10,
+"week": 2,
+"data": "05/11 · qui",
+"formato": "Reel falado",
+"pilar": "Bastidores e a advogada",
+"tema": "Como é a primeira conversa",
+"objetivo": "Reduzir o medo do primeiro contato e gerar mensagens.",
+"gancho": "Como funciona a primeira conversa para registrar a sua marca",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você quer registrar a sua marca, mas não sabe como é a primeira conversa com uma advogada? Eu te conto no vídeo.<br><br>Eu escuto o seu negócio e pesquiso o nome no banco do INPI, depois explico o risco e as classes em linguagem simples, para você sair da conversa entendendo cada etapa.<br><br>Para marcar a sua conversa, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Para marcar a sua conversa, me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Você quer registrar a sua marca, mas não sabe como é a primeira conversa com uma advogada? Eu te conto.",
+"5 a 20s · Bloco 1: Primeiro eu escuto você: o que o seu negócio vende e onde você quer chegar. Isso ajuda a escolher a melhor forma de proteger o nome.",
+"20 a 40s · Bloco 2: Depois eu faço uma busca no banco de marcas do INPI para ver se já existe algo igual ou parecido, e a gente conversa sobre o risco e sobre as classes em que faz sentido registrar.",
+"40 a 52s · Bloco 3: Tudo isso em linguagem simples, sem juridiquês. A ideia é você sair da conversa entendendo o que vai acontecer em cada etapa.",
+"52 a 60s · Convite final: Para marcar a sua conversa, me chama no WhatsApp. O número está na bio."
+]
+},
+{
+"id": "d11",
+"day": 11,
+"week": 2,
+"data": "06/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Contratos e negócio digital",
+"tema": "Contrato assinado",
+"objetivo": "Mostrar o contrato como parte da tranquilidade do negócio.",
+"gancho": "Contrato assinado, negócio mais tranquilo",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: uma mão assinando um contrato sobre a mesa, com uma xícara de café ao lado. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Combinar por escrito deixa todo mundo na mesma página. Contrato faz parte do crescimento do negócio.<br><br>Eu gosto de contratos em linguagem simples, que a cliente consegue ler e entender sem precisar de tradução.<br><br>Precisa de um contrato para o seu negócio? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Precisa de um contrato para o seu negócio? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d12",
+"day": 12,
+"week": 2,
+"data": "07/11 · sab",
+"formato": "Estático",
+"pilar": "Jurídico que acompanha o negócio",
+"tema": "Uma advogada ao seu lado",
+"objetivo": "Reforçar o diferencial consultivo.",
+"gancho": "Construa o seu negócio com uma advogada ao seu lado",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: frase principal em branco e dourado sobre fundo preto, com a foto da Beatriz sorrindo em tom bege.",
+"legenda": "O jurídico pode entrar no começo do negócio, junto com o plano e o primeiro cliente.<br><br>Quando a advogada acompanha o crescimento, as decisões sobre marca e contratos ficam mais seguras e mais leves.<br><br>Quer ter um jurídico para chamar de seu? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer ter um jurídico para chamar de seu? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d13",
+"day": 13,
+"week": 2,
+"data": "08/11 · dom",
+"formato": "Reel falado",
+"pilar": "Erros comuns e riscos do dia a dia",
+"tema": "Nome parecido com outra marca",
+"objetivo": "Explicar o risco de conflito sem susto.",
+"gancho": "Posso usar um nome parecido com o de outra marca?",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Posso usar um nome parecido com o de outra marca? A resposta depende do ramo e do quanto os nomes se parecem.<br><br>O registro protege a marca dentro da classe em que foi pedido. Se os nomes são parecidos e os negócios são do mesmo ramo, o INPI pode negar o pedido, e o dono da outra marca pode contestar.<br><br>Quer conferir o nome da sua marca antes de investir nele? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer conferir o nome da sua marca antes de investir nele? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Posso usar um nome parecido com o de outra marca? A resposta depende de duas coisas.",
+"5 a 20s · Bloco 1: A primeira é o ramo. O registro protege a marca na classe de produtos ou serviços em que foi pedido, então nomes iguais em ramos bem diferentes às vezes convivem.",
+"20 a 40s · Bloco 2: A segunda é o quanto os nomes se parecem. Se o som, a escrita ou a ideia são próximos e os negócios são do mesmo ramo, o INPI pode negar o seu pedido, e o dono da outra marca pode contestar.",
+"40 a 52s · Bloco 3: Por isso eu nunca escolho um nome só pelo gosto. Antes de gastar com logo e embalagem, eu confiro se existe risco de conflito.",
+"52 a 60s · Convite final: Quer conferir o nome da sua marca antes de investir nele? Me chama no WhatsApp, o número está na bio."
+]
+},
+{
+"id": "d14",
+"day": 14,
+"week": 2,
+"data": "09/11 · seg",
+"formato": "Carrossel",
+"pilar": "Contratos e negócio digital",
+"tema": "O que precisa estar no contrato com o cliente",
+"objetivo": "Entregar um checklist de contrato para prestadoras e infoprodutoras.",
+"gancho": "O que precisa estar escrito no contrato com o seu cliente",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Prestou um serviço ou vendeu um programa e o combinado ficou só na conversa? Um contrato simples já evita muita confusão.<br><br>Cada negócio pede um contrato próprio. Este carrossel mostra os pontos que eu mais olho.<br><br>Salve para consultar depois. Para montar o contrato do seu negócio, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve para consultar depois. Para montar o contrato do seu negócio, me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"O que precisa estar escrito no contrato com o seu cliente.",
+"Quem são as partes: nome completo e documento de quem contrata e de quem presta o serviço.",
+"O que será entregue: descreva o serviço com clareza, para os dois saberem o que esperar.",
+"Prazo e forma de pagamento: datas, valores combinados e o que acontece em caso de atraso.",
+"Cancelamento e reembolso: em que casos pode cancelar e como funciona a devolução.",
+"Uso do material e da imagem: quem pode usar o que foi criado, e por quanto tempo.",
+"Cada negócio é um caso. Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d15",
+"day": 15,
+"week": 3,
+"data": "10/11 · ter",
+"formato": "Reel falado",
+"pilar": "Jurídico que acompanha o negócio",
+"tema": "Investir na marca com segurança",
+"objetivo": "Ligar o jurídico à decisão de investir, como pede o ICP.",
+"gancho": "Como decidir investir na sua marca com mais segurança",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você está prestes a investir mais na sua marca? Antes de gastar, vale conferir algumas coisas.<br><br>Veja se o nome está registrado ou com o pedido feito no INPI e se os contratos com clientes e fornecedores estão claros.<br><br>Quer olhar isso com calma? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer olhar isso com calma? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Você está prestes a investir mais na sua marca? Antes de gastar, vale conferir algumas coisas.",
+"5 a 20s · Bloco 1: O nome está registrado, ou pelo menos com o pedido feito no INPI? Se não está, o dinheiro que você vai colocar em logo, site, anúncio e embalagem pode ficar em cima de um nome que outra pessoa ainda pode registrar.",
+"20 a 40s · Bloco 2: Os seus contratos com clientes e fornecedores estão claros? E o conteúdo que você produz tem autorização de uso de imagem quando envolve outras pessoas?",
+"40 a 52s · Bloco 3: Quando essas respostas estão em ordem, você investe sabendo o que está protegendo, e as decisões ficam mais leves.",
+"52 a 60s · Convite final: Se quiser olhar isso com calma, me chama no WhatsApp, o número está na bio, e a gente faz esse passo a passo."
+]
+},
+{
+"id": "d16",
+"day": 16,
+"week": 3,
+"data": "11/11 · qua",
+"formato": "Estático",
+"pilar": "Bastidores e a advogada",
+"tema": "Bora tomar um café?",
+"objetivo": "Converter com o convite que já existe na bio.",
+"gancho": "Bora tomar um café e falar da sua marca?",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: arte em bege com uma xícara de café em linha dourada e a frase principal em letra com serifa.",
+"legenda": "A conversa sobre a proteção da sua marca pode ser leve, como um café.<br><br>Conte o que o seu negócio vende e onde você quer chegar, e eu explico o caminho para proteger o seu nome.<br><br>Me chama no WhatsApp (11) 92133-9502 e vamos marcar.",
+"cta": "Me chama no WhatsApp (11) 92133-9502 e vamos marcar."
+},
+{
+"id": "d17",
+"day": 17,
+"week": 3,
+"data": "12/11 · qui",
+"formato": "Carrossel",
+"pilar": "Registro de marca",
+"tema": "Classe de marca em linguagem simples",
+"objetivo": "Explicar um conceito que gera dúvida na hora de registrar.",
+"gancho": "Classe de marca no INPI, explicada em linguagem simples",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Quando você registra uma marca, escolhe em quais classes ela será protegida. Parece detalhe, mas define o alcance do seu registro.<br><br>O INPI usa uma classificação internacional com 45 classes, e cada uma reúne produtos ou serviços de um tipo.<br><br>Salve para consultar depois. Para escolher as classes da sua marca, me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve para consultar depois. Para escolher as classes da sua marca, me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"Classe de marca no INPI, explicada em linguagem simples.",
+"Classe é o grupo de produtos ou serviços em que a sua marca fica protegida.",
+"Existem 45 classes, que reúnem desde roupas e cosméticos até cursos e serviços de tecnologia.",
+"Exemplo: uma loja de roupas costuma registrar na classe de vestuário, e um curso online na classe de educação.",
+"O registro protege a marca na classe escolhida, então escolher errado pode deixar o seu negócio sem a proteção que ele precisava.",
+"Muitos negócios usam mais de uma classe, por exemplo quem vende produto e também ensina.",
+"Quer saber quais classes servem para você? Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d18",
+"day": 18,
+"week": 3,
+"data": "13/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Datas e momentos do negócio",
+"tema": "Vai lançar na Black Friday?",
+"objetivo": "Ligar a marca à Black Friday, que é em 27/11.",
+"gancho": "Vai lançar na Black Friday? Confira a sua marca antes",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mãos fechando uma caixa de envio e colando uma etiqueta com o nome da marca. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "A Black Friday coloca o seu nome na frente de muita gente. Vale conferir a proteção dele antes da campanha.<br><br>O registro no INPI ajuda a proteger o nome que você construiu, e o melhor momento para olhar isso é antes de investir em anúncio.<br><br>Vai lançar nesta Black Friday? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Vai lançar nesta Black Friday? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d19",
+"day": 19,
+"week": 3,
+"data": "14/11 · sab",
+"formato": "Reel falado",
+"pilar": "Registro de marca",
+"tema": "Preciso registrar se sou pequena?",
+"objetivo": "Quebrar a objeção de que registro é coisa de empresa grande.",
+"gancho": "Preciso registrar a minha marca se o meu negócio ainda é pequeno?",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Preciso registrar a minha marca se o meu negócio ainda é pequeno? A resposta é: quanto antes, mais simples.<br><br>O nome do seu negócio começa a ter valor nas primeiras vendas. Registrar cedo reduz o risco de outra pessoa pedir um nome igual antes de você.<br><br>Está começando e quer entender o melhor momento? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Está começando e quer entender o melhor momento? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Preciso registrar a minha marca se o meu negócio ainda é pequeno?",
+"5 a 20s · Bloco 1: Muita gente pensa que registro de marca é coisa de empresa grande. Mas o nome do seu negócio começa a ter valor desde as primeiras vendas, e é nessa fase que ele é mais fácil de escolher e de proteger.",
+"20 a 40s · Bloco 2: Se você espera crescer para registrar, corre o risco de outra pessoa pedir o registro de um nome igual antes de você, e aí pode precisar trocar de nome depois de já ter clientes.",
+"40 a 52s · Bloco 3: Registrar cedo também deixa você mais segura para investir em anúncio e em parcerias.",
+"52 a 60s · Convite final: Se você está começando e quer entender o melhor momento, me chama no WhatsApp, o número está na bio."
+]
+},
+{
+"id": "d20",
+"day": 20,
+"week": 3,
+"data": "15/11 · dom",
+"formato": "Carrossel",
+"pilar": "Jurídico que acompanha o negócio",
+"tema": "O que proteger primeiro no seu negócio digital",
+"objetivo": "Mostrar prioridades por tipo de negócio e gerar identificação.",
+"gancho": "O que proteger primeiro no seu negócio digital",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Cada tipo de negócio digital tem um ponto de atenção principal no jurídico. Veja por onde começar no seu.<br><br>A ordem pode mudar conforme o momento, e uma conversa com a advogada ajuda a definir as prioridades.<br><br>Salve e mande para uma amiga que empreende. Quer conversar sobre o seu caso? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve e mande para uma amiga que empreende. Quer conversar sobre o seu caso? Me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"O que proteger primeiro no seu negócio digital.",
+"Infoprodutora: o nome do curso e os termos de uso e de venda do material.",
+"Loja virtual: a marca e a política de troca e devolução do site.",
+"Prestadora de serviço: o contrato com cada cliente e o nome do seu trabalho.",
+"Criadora de conteúdo: o contrato de parcerias e a autorização de uso de imagem.",
+"Em todos os casos, o nome do negócio entra na lista de prioridades.",
+"Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d21",
+"day": 21,
+"week": 3,
+"data": "16/11 · seg",
+"formato": "Estático",
+"pilar": "Registro de marca",
+"tema": "Registro vale por 10 anos",
+"objetivo": "Informar a validade do registro e a renovação.",
+"gancho": "O registro de marca vale por 10 anos e pode ser renovado",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: frase principal em dourado sobre fundo preto, com o número 10 grande ao centro.",
+"legenda": "Registrar a marca é um passo de longo prazo.<br><br>A vigência é de 10 anos, contados da concessão, e o registro pode ser prorrogado por períodos iguais. O pedido de renovação é feito no último ano de vigência.<br><br>Quer entender como funciona para a sua marca? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer entender como funciona para a sua marca? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d22",
+"day": 22,
+"week": 4,
+"data": "17/11 · ter",
+"formato": "Reel falado",
+"pilar": "Datas e momentos do negócio",
+"tema": "Black Friday: revise antes de subir a campanha",
+"objetivo": "Aproveitar a Black Friday (27/11) para gerar conversa sobre marca e contrato.",
+"gancho": "Vai fazer Black Friday? Revise isso antes de subir a campanha",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Vai fazer Black Friday este ano? Antes de subir a campanha, revise quatro coisas: marca, regras da oferta, parceiros e site.<br><br>O que você anunciar precisa ser cumprido, com preço e condições claros. Em compra pela internet, o cliente também pode desistir em até sete dias.<br><br>Quer ajuda para revisar? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer ajuda para revisar? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Vai fazer Black Friday este ano? Antes de subir a campanha, revise quatro coisas.",
+"5 a 20s · Bloco 1: Primeiro, a marca: veja se o nome está registrado ou com o pedido protocolado, porque a Black Friday coloca o seu nome na frente de muita gente.",
+"20 a 40s · Bloco 2: Segundo, as regras da oferta: o que você anunciar precisa ser cumprido, com preço e condições claros. E em compra pela internet, o cliente pode desistir em até sete dias, o direito de arrependimento.",
+"40 a 52s · Bloco 3: Terceiro, os parceiros e influenciadores: combine por escrito o que será postado e como a sua marca pode ser usada. Quarto, o site: confira se os termos e a política de privacidade estão atualizados.",
+"52 a 60s · Convite final: Se quiser ajuda para revisar, me chama no WhatsApp, o número está na bio."
+]
+},
+{
+"id": "d23",
+"day": 23,
+"week": 4,
+"data": "18/11 · qua",
+"formato": "Reel 7s",
+"pilar": "Contratos e negócio digital",
+"tema": "Política de privacidade no site",
+"objetivo": "Apresentar a proteção digital de forma simples.",
+"gancho": "Seu site tem política de privacidade?",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: a tela do notebook mostrando a página de política de privacidade de um site, rolando devagar, com uma xícara de café ao lado. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Se o seu site ou a sua loja coleta nome, e-mail ou telefone de clientes, a lei pede transparência sobre o uso desses dados.<br><br>Os termos de uso e a política de privacidade explicam isso de forma clara e fazem parte da proteção digital do seu negócio.<br><br>Quer revisar os documentos do seu site? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer revisar os documentos do seu site? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d24",
+"day": 24,
+"week": 4,
+"data": "19/11 · qui",
+"formato": "Estático",
+"pilar": "Datas e momentos do negócio",
+"tema": "Dia do Empreendedorismo Feminino",
+"objetivo": "Usar a data de 19/11 para se conectar com o público feminino.",
+"gancho": "Dia Mundial do Empreendedorismo Feminino: quem construiu uma marca pode protegê-la",
+"visual": "Arte estática com a paleta preto, dourado e bege do perfil e letra com serifa, com pouco texto: arte em bege e dourado com a frase principal e a foto da Beatriz.",
+"legenda": "Hoje é o Dia Mundial do Empreendedorismo Feminino, e eu fico feliz de acompanhar tantas empreendedoras construindo marcas.<br><br>Se você construiu um negócio com tempo e reputação, vale cuidar para que a marca esteja protegida.<br><br>Me chama no WhatsApp (11) 92133-9502 e vamos conversar sobre a sua marca.",
+"cta": "Me chama no WhatsApp (11) 92133-9502 e vamos conversar sobre a sua marca."
+},
+{
+"id": "d25",
+"day": 25,
+"week": 4,
+"data": "20/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Datas e momentos do negócio",
+"tema": "Planejamento 2027",
+"objetivo": "Colocar a proteção da marca no planejamento do próximo ano.",
+"gancho": "Planejamento 2027 começa pela marca",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: uma mão escrevendo «2027» em um caderno de planejamento, ao lado de uma xícara de café. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Quem está planejando 2027 pode incluir a proteção da marca na lista de prioridades.<br><br>Pensar nisso com antecedência dá mais tranquilidade para investir ao longo do ano.<br><br>Quer incluir isso no seu planejamento? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer incluir isso no seu planejamento? Me chama no WhatsApp (11) 92133-9502."
+},
+{
+"id": "d26",
+"day": 26,
+"week": 4,
+"data": "21/11 · sab",
+"formato": "Reel falado",
+"pilar": "Bastidores e a advogada",
+"tema": "O que uma advogada de marcas faz",
+"objetivo": "Mostrar os bastidores e gerar confiança.",
+"gancho": "O que uma advogada de marcas faz no dia a dia",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "O que uma advogada de marcas faz no dia a dia? Eu te mostro o que existe por trás de um registro.<br><br>Antes do pedido eu pesquiso o nome no INPI e escolho a classe. Depois eu acompanho cada fase e respondo às exigências dentro do prazo.<br><br>Quer começar o seu processo? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer começar o seu processo? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: O que uma advogada de marcas faz no dia a dia? Eu te mostro o que existe por trás de um registro.",
+"5 a 20s · Bloco 1: Antes de qualquer pedido, eu pesquiso no banco do INPI se existe marca igual ou parecida e entendo o que a pessoa quer vender, para escolher a classe certa.",
+"20 a 40s · Bloco 2: Depois do pedido, eu acompanho cada fase do processo, inclusive a publicação e o prazo para contestações. Se aparece alguma exigência ou oposição, eu respondo dentro do prazo.",
+"40 a 52s · Bloco 3: E no meio disso tudo tem muita conversa e muito café com empreendedoras, porque eu quero que cada cliente entenda o que está sendo feito pela marca dela.",
+"52 a 60s · Convite final: Se você quer começar o seu processo, me chama no WhatsApp, o número está na bio."
+]
+},
+{
+"id": "d27",
+"day": 27,
+"week": 4,
+"data": "22/11 · dom",
+"formato": "Carrossel",
+"pilar": "Registro de marca",
+"tema": "5 perguntas sobre registro de marca",
+"objetivo": "Responder dúvidas frequentes e criar um material para salvar.",
+"gancho": "5 perguntas que eu mais respondo sobre registro de marca",
+"visual": "7 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Separei perguntas que aparecem toda semana na minha caixa de mensagens sobre registro de marca.<br><br>As respostas são gerais, e o seu caso pode ter detalhes que mudam a orientação.<br><br>Salve este carrossel. Ficou com dúvida? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve este carrossel. Ficou com dúvida? Me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"5 perguntas que eu mais respondo sobre registro de marca.",
+"O registro garante que ninguém vai copiar a minha marca? Nenhum registro impede uma cópia por si só. Ele reduz o risco e dá instrumentos jurídicos para você agir contra o uso indevido.",
+"Posso usar a marca enquanto o pedido está em andamento? Em geral sim, mas o direito pleno só vem com a concessão do registro.",
+"Preciso renovar? Sim. O registro vale por 10 anos, e o pedido de renovação é feito no último ano.",
+"E se o INPI negar o pedido? Dependendo do caso, existe a possibilidade de recurso, e eu analiso cada situação.",
+"O Instagram e o domínio já protegem o meu nome? Eles garantem o perfil e o endereço do site, e o registro de marca é outra proteção.",
+"Mais dúvidas? Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d28",
+"day": 28,
+"week": 4,
+"data": "23/11 · seg",
+"formato": "Reel falado",
+"pilar": "Datas e momentos do negócio",
+"tema": "O que deixar pronto antes de 2027",
+"objetivo": "Gerar conversa de fim de ano com um plano simples.",
+"gancho": "O que deixar pronto no jurídico do seu negócio antes de 2027",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Falta pouco para 2027. O que você pode deixar pronto no jurídico do seu negócio ainda neste ano?<br><br>Confira o registro da marca, revise os contratos, atualize os termos do site e organize as autorizações de imagem de quem aparece no seu conteúdo.<br><br>Quer montar esse plano com apoio? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Quer montar esse plano com apoio? Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Falta pouco para 2027. O que você pode deixar pronto no jurídico do seu negócio ainda neste ano?",
+"5 a 20s · Bloco 1: Comece pela marca: confira se o nome está registrado ou com o pedido feito no INPI, para começar o ano com isso resolvido.",
+"20 a 40s · Bloco 2: Depois, revise os contratos que você usa com clientes e parceiros, porque o negócio muda ao longo do ano e o contrato precisa acompanhar.",
+"40 a 52s · Bloco 3: Atualize também os termos do site e a política de privacidade, e organize as autorizações de uso de imagem de quem aparece no seu conteúdo.",
+"52 a 60s · Convite final: Se quiser montar esse plano com apoio, me chama no WhatsApp, o número está na bio."
+]
+},
+{
+"id": "d29",
+"day": 29,
+"week": 5,
+"data": "24/11 · ter",
+"formato": "Carrossel",
+"pilar": "Contratos e negócio digital",
+"tema": "Black Friday: o que combinar com parceiros",
+"objetivo": "Entregar um checklist útil dois dias antes da Black Friday.",
+"gancho": "Black Friday: o que combinar por escrito com parceiros e influenciadores",
+"visual": "8 slides com a paleta preto, dourado e bege do perfil, uma ideia por slide e pouco texto. Último slide com convite final.",
+"legenda": "Vai trabalhar com influenciadores ou parceiros na Black Friday? Combinar por escrito evita mal-entendidos no meio da campanha.<br><br>Cada parceria tem as suas particularidades. Este carrossel traz os pontos que eu mais reviso.<br><br>Salve e mande para quem está montando a campanha. Quer revisar a sua? Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Salve e mande para quem está montando a campanha. Quer revisar a sua? Me chama no WhatsApp (11) 92133-9502.",
+"slides": [
+"Black Friday: o que combinar por escrito com parceiros e influenciadores.",
+"O que será publicado: quantos posts e em quais datas.",
+"Prazo de permanência: por quanto tempo o conteúdo fica no ar.",
+"Uso de imagem e da marca: onde o conteúdo pode ser usado e se pode virar anúncio.",
+"Pagamento ou comissão: o valor combinado e a data de pagamento.",
+"Exclusividade: se a pessoa pode divulgar marcas concorrentes no mesmo período.",
+"Aviso de publicidade: a divulgação precisa deixar claro que é um anúncio.",
+"Me chama no WhatsApp (11) 92133-9502."
+]
+},
+{
+"id": "d30",
+"day": 30,
+"week": 5,
+"data": "25/11 · qua",
+"formato": "Reel falado",
+"pilar": "Registro de marca",
+"tema": "Por onde começar a proteger a marca",
+"objetivo": "Fechar o ciclo com um passo prático e um convite claro.",
+"gancho": "Por onde começar a proteger a sua marca ainda esta semana",
+"visual": "Beatriz falando direto pra câmera, em vertical, com luz natural, no escritório ou em uma mesa com um café ao lado. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Por onde começar a proteger a sua marca ainda esta semana? Eu separei quatro passos simples.<br><br>Escreva o nome exato da marca, pesquise no banco do INPI, anote em quais produtos ou serviços você usa o nome e reúna os documentos do negócio.<br><br>Com isso na mão, a conversa fica rápida. Me chama no WhatsApp (11) 92133-9502.",
+"cta": "Com isso na mão, a conversa fica rápida. Me chama no WhatsApp (11) 92133-9502.",
+"script": [
+"0 a 5s · Gancho: Por onde começar a proteger a sua marca ainda esta semana? Eu separei quatro passos simples.",
+"5 a 20s · Bloco 1: Passo um: escreva o nome exato da sua marca, como aparece na embalagem, no site e nas redes. Passo dois: pesquise esse nome no banco de marcas do INPI.",
+"20 a 40s · Bloco 2: Passo três: anote em quais produtos ou serviços você usa esse nome, porque o registro é feito por classe. Passo quatro: reúna os documentos do negócio, como o CNPJ e o contrato social, se você tiver.",
+"40 a 52s · Bloco 3: Com isso na mão, a conversa com a advogada fica rápida e você sabe o que perguntar.",
+"52 a 60s · Convite final: Quando estiver com tudo, me chama no WhatsApp, o número está na bio, e a gente dá o próximo passo."
+]
+}
+];
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt.indexOf('Reel')===0) return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          ${(Array.isArray(d.script) && d.script.length) ? `<div class="field"><div class="f-label">Script do vídeo (cerca de 1 minuto, para ler em ritmo natural)</div><div class="f-value">${d.script.map(s=>`<div style="margin-bottom:9px;">${s.replace(/^([^:]+):/,'<b>$1:</b>')}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-beatrizcorreaadv-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
