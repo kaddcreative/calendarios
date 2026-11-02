@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · Camila Porfírio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+    <a href="#stories">Bônus Stories</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @dracamilaporfirio</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o posicionamento da Camila como a nutricionista e doutora em bioquímica que entende a rotina da mulher sobrecarregada e o plano editorial dos próximos 30 dias. O foco é levar mais mulheres acima dos 30 para a consulta e para o acompanhamento de 3 ou 6 meses. O calendário tem carrosséis, mais reels falados, com script de 1 minuto, e poucos reels de 7 segundos, sem posts estáticos. Há também um plano de stories para os mesmos 30 dias. Tudo foi escrito dentro das regras do CRN: sem antes e depois, sem valores, sem promoções e sem promessa de resultado. Cada card é interativo: marque o que já foi produzido e acompanhe o progresso.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Camila Porfírio · VIDA Consultoria</b></span>
+    <span class="chip">Nicho <b>Nutrição para emagrecimento, hipertrofia e saúde da mulher</b></span>
+    <span class="chip">Local <b>Fortaleza · CE (Maraponga) e online</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise do que o perfil comunica hoje, cruzando o briefing com os prints da bio, dos destaques e do grid.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>O perfil tem 2.201 seguidores, 411 posts e 758 seguindo. A Camila aparece com o rosto e o sorriso na foto, e o grid mistura fotos reais de treino, vídeos e carrosséis com textos. Os melhores posts falam direto com a vida da mulher sobrecarregada, como «Caso 1: a mulher que passa o dia esperando ter tempo para treinar», «O treino que você planejou para hoje ficou para amanhã. De novo.» e «Você já está pensando no que vai preparar no Natal?». Entre os fixados, estão a calorimetria indireta, a apresentação da Camila e o post sobre ser mãe de duas filhas, e os três mostram autoridade e proximidade. O briefing pede um tom acolhedor e um pouco descontraído, e o perfil já tem isso. Falta organizar o diferencial, que é raro: doutorado em bioquímica, nutrição esportiva e uma equipe com médico do esporte, tudo com uma mãe que entende a rotina de quem cuida de todo mundo.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>Local pouco claro:</b> a bio diz «Atendimento presencial e online em 4 países», mas não diz onde é o presencial. A cidade, Fortaleza, e o bairro, Maraponga, não aparecem. Vale colocar «Fortaleza (CE)» na nova bio e deixar claro como funciona o online.</li>
+      <li><b>Destaque de localização:</b> os destaques são «Meu atendimento», «VIDA 2 anos», «Feedbacks», «Orientações» e «Caixinhas». Vale conferir se «Meu atendimento» já mostra o endereço da Maraponga e como chegar. Se não mostrar, criar um destaque «Como chegar», com endereço, mapa e formas de contato, e colocá-lo nas primeiras posições.</li>
+      <li><b>Destaques sem identidade:</b> os cinco têm a mesma capa lisa em bege, sem ícone, e os nomes aparecem cortados. Vale trocar por capas com ícones simples, na paleta do perfil, e nomes curtos.</li>
+      <li><b>Autoridade escondida:</b> a bio não cita o doutorado em bioquímica, e não explica o que é a VIDA Consultoria nem que existe um médico do esporte na equipe. Esse conjunto é o grande diferencial e merece estar na primeira tela.</li>
+      <li><b>Feedbacks e as regras do CRN:</b> existe um destaque «Feedbacks». O CRN não permite comparativos de antes e depois, valores de consulta, promoções nem promessa de resultado. Vale confirmar as regras sobre relatos de pacientes e manter só o que estiver de acordo, com autorização por escrito.</li>
+      <li><b>Link na bio:</b> o perfil já usa um linktree, e ele precisa levar direto ao agendamento da consulta, como primeiro item. Vale mantê-lo simples, com poucos botões. Se precisar de ajuda para montar ou reorganizar o linktree, é só chamar a NexusK no WhatsApp, que esse serviço também é feito à parte.</li>
+      <li><b>Visual irregular:</b> os carrosséis e as artes aparecem com estilos diferentes, o que enfraquece o reconhecimento do perfil. Vale padronizar capa, cores e letra dos carrosséis.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Dores visíveis do público</span><ul>
+      <li>"Já fui em vários nutricionistas e não consigo emagrecer."</li>
+      <li>"Não consigo manter o plano na minha rotina."</li>
+      <li>"O meu metabolismo deve ser lento."</li>
+      <li>"Não tenho tempo para treinar."</li></ul></div>
+    <div class="card"><span class="tag">Dores ocultas do público</span><ul>
+      <li>Culpa por se deixar de lado enquanto cuida de todo mundo.</li>
+      <li>Cansaço de tentar de novo e achar que a falha é dela.</li>
+      <li>Medo de começar mais um plano e desistir.</li>
+      <li>Frustração com o corpo e com a falta de energia.</li></ul></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Desejos emocionais</span><ul>
+      <li>Se sentir bem no próprio corpo.</li>
+      <li>Parar de se culpar.</li>
+      <li>Ser acolhida, sem julgamento.</li>
+      <li>Ter energia para a família e para si.</li></ul></div>
+    <div class="card"><span class="tag">Desejos práticos</span><ul>
+      <li>Um plano que caiba na rotina corrida.</li>
+      <li>Treinos curtos e refeições simples.</li>
+      <li>Saber o que comer sem complicação.</li>
+      <li>Acompanhamento próximo, online ou presencial.</li></ul></div>
+  </div>
+
+  <span class="tag">Objeções que seguram a consulta</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item"><div class="o-head"><span>"Já fui em vários nutricionistas e nada funcionou"</span><span class="o-num">01</span></div><p>A lógica por trás: cansaço de tentar e medo de se frustrar de novo. O conteúdo precisa mostrar que o plano é construído com ela, na hora, e acompanhado por 3 ou 6 meses.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Não tenho tempo para treinar nem para cozinhar"</span><span class="o-num">02</span></div><p>A lógica por trás: rotina sobrecarregada de quem cuida da casa, dos filhos e do trabalho. O conteúdo precisa mostrar estratégias simples, treinos curtos e a Camila, mãe de duas, vivendo a mesma rotina.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"O meu metabolismo é lento, então não adianta"</span><span class="o-num">03</span></div><p>A lógica por trás: culpar o corpo pelo insucesso. O conteúdo precisa explicar, com a ciência da doutora em bioquímica, o que influencia o gasto de energia, e apresentar a calorimetria indireta.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Deve ser caro"</span><span class="o-num">04</span></div><p>A lógica por trás: o custo percebido do acompanhamento. Como o CRN não permite divulgar valores, o conteúdo mostra o que o acompanhamento envolve, e o valor é tratado na conversa particular.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Será que online funciona?"</span><span class="o-num">05</span></div><p>A lógica por trás: dúvida sobre a qualidade do atendimento a distância. O conteúdo precisa explicar como funcionam a consulta, os retornos e o contato com a equipe.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de comunicação</span>
+    <p>A Camila tem algo que poucas nutricionistas têm: formação científica forte e uma história parecida com a da paciente. Ela é mãe, trabalha, cuida da casa e aprendeu que a constância vale mais do que o resultado imediato. Os próximos 30 dias transformam isso em conteúdo: identificação com a rotina, explicações simples da ciência, mitos esclarecidos e um convite claro para a consulta. Entram também datas que conversam com o público, como o Dia Mundial do Diabetes, a Black Friday de suplementos e o fim de ano.</p>
+  </div>
+</section>
+
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de comunicação</h2></div>
+  <p class="section-intro">Um eixo claro: nutrição com ciência e acolhimento para mulheres que cuidam de todo mundo e querem cuidar de si.</p>
+  <div class="quote-block">"Nutrição com ciência e acolhimento para a mulher que cuida de todo mundo e agora vai cuidar de si."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card"><h3>Território de marca</h3><p>Nome comercial: Dra Camila Porfírio, VIDA Consultoria. O território é o da mulher acima dos 30 que já tentou muitas coisas e precisa de um plano que caiba na rotina. A voz é acolhedora e descontraída, com a segurança de quem é doutora em bioquímica, nutricionista com especialização em nutrição esportiva e hipertrofia, e mãe de duas filhas. A VIDA conta com um médico do esporte na equipe, quando o caso pede.</p></div>
+    <div class="card"><h3>Arquétipo de marca</h3><p><b>Principal: Cuidadora.</b> Acolhe, entende a rotina e acompanha de perto.<br><b>Secundário: Sábia.</b> Explica a ciência com simplicidade e desmonta os mitos.</p></div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Nova bio estratégica · 122 caracteres, limite de 150</div>
+    <pre>Especialista em emagrecimento e hipertrofia
+Emagrecer após os 30 é possível
+Dra. em bioquímica · Fortaleza (CE) e online</pre>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3>Ajustes de perfil recomendados</h3><ul>
+    <li>Campo Nome: «Dra Camila Porfírio | Nutricionista», que fica fora dos 150 caracteres da bio e ajuda na busca.</li>
+    <li>Localização: Fortaleza (CE) já aparece na nova bio. Vale incluir o bairro Maraponga no destaque «Como chegar».</li>
+    <li>Destaque «Como chegar»: endereço, mapa, estacionamento e formas de contato, nas primeiras posições.</li>
+    <li>Destaque «Como funciona»: com o carrossel do dia 11 e o reel do dia 1.</li>
+    <li>Destaque «Dúvidas»: com o reel das 4 dúvidas do dia 28 e as respostas às caixinhas dos stories.</li>
+    <li>Destaque «Sobre a Camila»: com a formação, a história e a equipe, incluindo o médico do esporte.</li>
+    <li>Capas dos destaques: ícones simples na paleta do perfil, com nomes curtos.</li>
+    <li>Feedbacks: confirmar as regras do CRN sobre relatos de pacientes e manter só o que estiver de acordo, com autorização por escrito.</li>
+    <li>Fixar no topo do grid o reel «Plano feito na hora, junto com você», do dia 1, junto com a apresentação da Camila e o post da calorimetria indireta.</li>
+    <li>Dúvidas de caso concreto são conversadas só na consulta, nunca nos comentários.</li></ul></div>
+</section>
+
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares organizam o mês, da identificação com a rotina até o convite para a consulta.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Emagrecimento que cabe na vida</h4><p>Constância, estratégia e plano flexível, com ciência em linguagem simples.</p><span class="fun">Topo e meio de funil</span></div>
+    <div class="pillar" data-n="02"><h4>Rotina corrida e sobrecarga</h4><p>Marmitas, organização da semana, culpa e o cansaço de quem cuida de todo mundo.</p><span class="fun">Topo de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Treino e hipertrofia</h4><p>Musculação depois dos 30, treinos curtos e alimentação que apoia o treino.</p><span class="fun">Topo e meio de funil</span></div>
+    <div class="pillar" data-n="04"><h4>Ciência e mitos</h4><p>Metabolismo, calorimetria indireta, proteína, sono e perguntas que a doutora em bioquímica responde.</p><span class="fun">Meio de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Como funciona o acompanhamento</h4><p>Plano individual, acompanhamento de 3 ou 6 meses, equipe, online e presencial.</p><span class="fun">Meio e fundo de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Bastidores da Camila e datas</h4><p>A mãe e doutora na rotina, o Dia do Diabetes, a Black Friday e o fim de ano.</p><span class="fun">Meio de funil</span></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels de 7 segundos</h3><p><b>Reel de 7 segundos, um take só.</b> Como fazer: grave uma única cena de cerca de 7 segundos, sem cortes e sem ninguém falando pra câmera. Gancho em texto na tela, escrito como título direto, e música animada. Quem converte é a legenda.<br><br><b>Quer gravar falando?</b> Use o texto da legenda para falar! O texto já foi feito de forma que traga autoridade e converta!</p></div>
+    <div class="card"><h3>Reels falados de 1 minuto</h3><p><b>A Camila fala direto pra câmera, com o script pronto.</b> Como fazer: grave na vertical, com luz natural, em um fundo limpo, como o consultório. O script tem 5 blocos, do gancho ao convite final, e dá cerca de 1 minuto lendo em ritmo natural. Pode gravar em um take ou em poucos cortes. O gancho vai em texto na tela nos primeiros 3 segundos, e as legendas automáticas ficam ligadas. Fale do seu jeito, o script é um guia, e as palavras podem ser as suas. Nos scripts em que a história pessoal aparece, vale confirmar os detalhes e ajustar para a sua história real.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Guias, listas e mitos para salvar, uma ideia por slide, com linguagem simples. Capa padronizada, com a mesma letra e as mesmas cores em todos. Fecha com o convite para a consulta.</p></div>
+    <div class="card"><h3>Stories</h3><p>Três stories por dia, ligados ao post do dia: abertura, interação e convite. A seção 05 traz o roteiro dos 30 dias, com enquetes, quizzes e caixinhas de perguntas.</p></div>
+    <div class="card"><h3>Regras do CRN</h3><p>O conteúdo não mostra antes e depois, não divulga valores, não faz promoção e não promete resultado. Vale confirmar no CRN as regras de publicidade e ajustar o que for preciso antes de publicar.</p></div>
+    <div class="card"><h3>Sem posts estáticos</h3><p>Neste ciclo, o feed usa carrosséis e reels. As frases curtas viram o primeiro slide dos carrosséis e os ganchos dos reels.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do"><h4>Sempre fazer</h4><ul>
+      <li>Falar com acolhimento e leveza, entendendo a rotina da mulher.</li>
+      <li>Usar «pode», «em geral» e «depende de cada caso» no lugar de promessas.</li>
+      <li>Explicar a ciência em linguagem simples, sem termos difíceis.</li>
+      <li>Lembrar que o conteúdo é educativo e não substitui consulta.</li>
+      <li>Alternar o convite entre o número do WhatsApp (85) 98803-9710, o link da bio, o direct e o «salve e siga o perfil», sempre levando para a consulta.</li></ul></div>
+    <div class="rule-dont"><h4>Nunca fazer</h4><ul>
+      <li>Mostrar comparativos de antes e depois, em foto ou em vídeo.</li>
+      <li>Divulgar valores de consulta ou fazer promoções.</li>
+      <li>Prometer resultado, como perder peso em um prazo.</li>
+      <li>Indicar suplemento ou produto de uma marca.</li>
+      <li>Expor paciente sem autorização por escrito.</li></ul></div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Identificação: «é exatamente a minha rotina».</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Confiança: «ela entende o corpo e entende a minha vida».</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Ação: «vou marcar a minha consulta».</p></div>
+  </div>
+</section>
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">15 reels falados com script de 1 minuto, 5 reels de 7 segundos e 10 carrosséis, sem posts estáticos, começando em 03/11/2026. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos reels falados, o script já vem pronto, e nos carrosséis o texto de cada slide também. Os stories diários estão na seção 05. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com 2.201 seguidores e um público que já se identifica com o conteúdo, a meta do ciclo é organizar os posts em uma jornada que leve mais mulheres à consulta. Os números abaixo são uma referência de partida, sem promessa de resultado, e devem ser revistos com os dados de Insights ao fim da primeira semana.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+5%</div><div class="g-lbl">seguidores no ciclo, cerca de 110 novos</div></div>
+      <div class="goal-item"><div class="g-num">15+</div><div class="g-lbl">conversas de WhatsApp vindas do Instagram</div></div>
+      <div class="goal-item"><div class="g-num">3+</div><div class="g-lbl">consultas agendadas</div></div>
+    </div>
+
+
+
+
+<section class="block" id="stories" style="padding-top:60px;">
+  <div class="kicker"><span class="num">05</span><h2>Bônus · Stories diários</h2></div>
+  <p class="section-intro">Um plano de stories para os mesmos 30 dias. São 3 stories por dia, sempre ligados ao post do dia: o primeiro abre o assunto, o segundo faz a pessoa interagir e o terceiro leva a pessoa para uma conversa, pelo direct, por uma resposta ou pelo WhatsApp. O post do dia pode ser compartilhado à parte, quando fizer sentido. Toque em cada dia para ver o roteiro e marque quando publicar.</p>
+  <div class="grid2" style="margin-bottom:24px;">
+    <div class="card"><h3>Como funciona o dia</h3><ul>
+      <li><b>Story 1, abertura:</b> uma imagem ou um vídeo curto de 3 segundos, com uma frase na tela.</li>
+      <li><b>Story 2, interação:</b> um sticker que gera resposta, como enquete, quiz, controle deslizante ou caixinha de perguntas.</li>
+      <li><b>Story 3, conversão:</b> um convite curto para conversar, pelo direct, por uma resposta ao story ou pelo link do WhatsApp (85) 98803-9710.</li>
+      <li>Sugestão de horário: o primeiro story de manhã, o de interação no meio do dia e o de conversão no fim da tarde.</li></ul></div>
+    <div class="card"><h3>Regras para quem grava</h3><ul>
+      <li>Gravar na vertical, com texto curto na tela e a paleta do perfil.</li>
+      <li>Quem aparece precisa autorizar a imagem, e imagens das filhas só com decisão da Camila. Na dúvida, filme o ambiente e deixe a pessoa fora do quadro.</li>
+      <li>Responder cada pergunta recebida e salvar as melhores respostas em um destaque «Dúvidas».</li>
+      <li>Reaproveitar cenas dos reels já gravados, para reduzir o trabalho.</li>
+      <li>Seguir as regras do CRN: sem antes e depois, sem valores de consulta, sem promoções e sem promessa de resultado.</li>
+      <li>Relatos de pacientes só com autorização por escrito e depois de conferir as regras do CRN.</li></ul></div>
+  </div>
+  <div class="progress-wrap" style="position:static;margin:0 0 18px;">
+    <div class="progress-inner">
+      <span class="progress-label">Stories <b id="st-count">0/30</b></span>
+      <div class="progress-track"><div class="progress-fill" id="st-fill"></div></div>
+    </div>
+  </div>
+  <div id="st-container"></div>
+</section>
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{
+"id": "d01",
+"day": 1,
+"week": 1,
+"data": "03/11 · ter",
+"formato": "Reel falado",
+"pilar": "Como funciona o acompanhamento",
+"tema": "Plano feito na hora, junto com você",
+"objetivo": "Abrir o ciclo mostrando como funciona a consulta.",
+"gancho": "Plano feito na hora, junto com você: como funciona a minha consulta",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você já saiu de uma consulta com um plano pronto que não cabia na sua rotina? Aqui o plano nasce junto com você.<br><br>Na VIDA Consultoria, o plano é montado durante a consulta, olhando para a sua rotina, os seus horários e o que você gosta de comer. O acompanhamento é de 3 ou 6 meses.<br><br>Se quiser saber mais, comenta aqui NUTRI, que eu te ajudo a fazer a sua rotina ser mais saudável e palpável pra ti!",
+"cta": "Se quiser saber mais, comenta aqui NUTRI, que eu te ajudo a fazer a sua rotina ser mais saudável e palpável pra ti!",
+"script": [
+"0 a 5s · Gancho: Plano alimentar feito na hora, junto com você. Eu explico como funciona a minha consulta.",
+"5 a 20s · Bloco 1: Eu sou a Camila, nutricionista e doutora em bioquímica. Na minha consulta, o plano é montado ali, na hora, olhando para a sua rotina, os seus horários e o que você gosta de comer.",
+"20 a 40s · Bloco 2: Se você almoça fora, eu levo isso em conta. Se você treina cedo ou à noite, também. O plano precisa caber na sua vida para durar. Depois da consulta, o acompanhamento é de 3 ou 6 meses, com ajustes sempre que for preciso.",
+"40 a 52s · Bloco 3: Eu sou mãe de duas filhas e sei como a rotina de uma mulher pode ser corrida. Por isso, cada detalhe é pensado para ser possível de cumprir na vida real.",
+"52 a 60s · Convite final: Se quiser saber mais, comenta aqui NUTRI, que eu te ajudo a fazer a sua rotina ser mais saudável e palpável pra ti!"
+]
+},
+{
+"id": "d02",
+"day": 2,
+"week": 1,
+"data": "04/11 · qua",
+"formato": "Carrossel",
+"pilar": "Ciência e mitos",
+"tema": "5 mitos sobre emagrecer depois dos 30",
+"objetivo": "Esclarecer ideias comuns e gerar salvamentos.",
+"gancho": "5 mitos sobre emagrecer depois dos 30 anos",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Depois dos 30 aparece muita informação solta sobre o corpo, e boa parte confunde mais do que ajuda.<br><br>Este carrossel esclarece 5 ideias comuns. Cada corpo é único, e quem avalia o seu caso é o profissional que acompanha você.<br><br>Salve este post e siga o perfil para acompanhar mais sobre mitos e verdades sobre emagrecer.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre mitos e verdades sobre emagrecer.",
+"slides": [
+"5 mitos sobre emagrecer depois dos 30 anos.",
+"Mito 1: «Meu metabolismo parou.» O gasto de energia muda com a idade, a massa muscular e outros fatores, e pode ser avaliado com exames como a calorimetria indireta.",
+"Mito 2: «Quanto menos eu comer, melhor.» Comer muito pouco costuma ser difícil de manter e pode cansar o corpo.",
+"Mito 3: «Musculação deixa a mulher grande.» O treino de força traz benefícios para a saúde depois dos 30, e deve ser orientado por um profissional.",
+"Mito 4: «Carboidrato à noite engorda.» O que pesa é o conjunto do dia, e a avaliação individual mostra o que cabe no seu plano.",
+"Mito 5: «Existe uma dieta que serve para todo mundo.» Cada pessoa tem rotina, corpo e histórico diferentes.",
+"Cada caso é único. Este conteúdo é educativo e não substitui consulta.",
+"Salve este post e siga o perfil para acompanhar mais sobre mitos e verdades sobre emagrecer."
+]
+},
+{
+"id": "d03",
+"day": 3,
+"week": 1,
+"data": "05/11 · qui",
+"formato": "Reel falado",
+"pilar": "Rotina corrida e sobrecarga",
+"tema": "Cuida de todo mundo e deixa a si por último",
+"objetivo": "Gerar identificação com a mulher sobrecarregada.",
+"gancho": "Você cuida de todo mundo e deixa a sua alimentação por último?",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Filhos, trabalho, casa, família. E a sua refeição acaba sendo o que sobrou na geladeira.<br><br>Cuidar da própria alimentação não tira nada de ninguém. Com um plano que cabe na rotina, fica mais fácil se incluir na lista.<br><br>Quer um plano pensado para a sua rotina? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Quer um plano pensado para a sua rotina? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"script": [
+"0 a 5s · Gancho: Você cuida de todo mundo e deixa a sua alimentação por último?",
+"5 a 20s · Bloco 1: Eu conheço bem essa rotina. Você acorda, organiza a casa, resolve o trabalho, cuida de filhos, de pais, do marido, e o seu almoço vira o que sobrou ou o que deu tempo de beliscar.",
+"20 a 40s · Bloco 2: No fim do dia, vem a culpa, e ela pesa. Um plano simples, com refeições que você consegue preparar na sua semana, ajuda mais do que qualquer cobrança. Ele não depende de cozinhar duas horas todo dia.",
+"40 a 52s · Bloco 3: Cuidar da sua alimentação também faz bem a quem você ama. Uma mulher com mais energia consegue estar mais presente na vida de todo mundo, inclusive na própria.",
+"52 a 60s · Convite final: Se você quer um plano que caiba na sua rotina, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d04",
+"day": 4,
+"week": 1,
+"data": "06/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Rotina corrida e sobrecarga",
+"tema": "Marmita da semana",
+"objetivo": "Mostrar uma solução prática para a rotina corrida.",
+"gancho": "Marmita pronta é cuidado com você mesma",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mãos organizando marmitas com arroz, legumes e frango em potes de vidro sobre a bancada da cozinha, com luz natural. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Uma tarde organizada pode deixar a semana inteira mais leve.<br><br>Ter refeições prontas ajuda quem tem a agenda cheia a comer com mais calma e menos improviso.<br><br>Quer um plano de refeições para a sua rotina? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer um plano de refeições para a sua rotina? Me chame no direct para agendar a sua consulta."
+},
+{
+"id": "d05",
+"day": 5,
+"week": 1,
+"data": "07/11 · sab",
+"formato": "Reel falado",
+"pilar": "Ciência e mitos",
+"tema": "Metabolismo lento",
+"objetivo": "Explicar o gasto de energia e apresentar a calorimetria indireta.",
+"gancho": "Metabolismo lento: o que realmente influencia o seu gasto de energia",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Metabolismo lento é uma das explicações que mais escuto. Será que é isso mesmo?<br><br>O gasto de energia depende de vários fatores, como massa muscular, sono, idade e hormônios, e pode ser avaliado com um exame, a calorimetria indireta.<br><br>Salve este post e siga o perfil para acompanhar mais sobre nutrição com ciência.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre nutrição com ciência.",
+"script": [
+"0 a 5s · Gancho: Será que o seu metabolismo é lento? Vamos conversar sobre isso.",
+"5 a 20s · Bloco 1: Eu sou doutora em bioquímica, então esse tema é um dos meus preferidos. O gasto de energia do corpo depende de vários fatores: massa muscular, idade, sono, hormônios e a sua rotina de movimento.",
+"20 a 40s · Bloco 2: Olhando no espelho, ninguém consegue saber como está o seu gasto. Existe um exame chamado calorimetria indireta, que mede o quanto o seu corpo gasta em repouso, e ele ajuda a montar o plano com mais segurança.",
+"40 a 52s · Bloco 3: Quando a gente conhece o seu número, o plano deixa de ser um chute. E se houver alguma questão hormonal, a nossa equipe conta com um médico do esporte para acompanhar essa parte.",
+"52 a 60s · Convite final: Salve este vídeo e siga o perfil para acompanhar mais sobre nutrição com ciência."
+]
+},
+{
+"id": "d06",
+"day": 6,
+"week": 1,
+"data": "08/11 · dom",
+"formato": "Carrossel",
+"pilar": "Treino e hipertrofia",
+"tema": "Musculação depois dos 30",
+"objetivo": "Orientar quem quer começar a treinar e gerar salvamentos.",
+"gancho": "Musculação depois dos 30: por onde começar",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Muitas mulheres querem começar a treinar e não sabem por onde.<br><br>Este guia mostra os primeiros passos. Antes de iniciar, procure uma avaliação médica e um profissional de educação física.<br><br>Salve este carrossel e mande para uma amiga que quer começar. Para falar sobre alimentação, agende a sua consulta pelo link da bio.",
+"cta": "Salve este carrossel e mande para uma amiga que quer começar. Para falar sobre alimentação, agende a sua consulta pelo link da bio.",
+"slides": [
+"Musculação depois dos 30: por onde começar.",
+"Passo 1: faça uma avaliação médica antes de começar.",
+"Passo 2: procure um profissional de educação física para montar o seu treino.",
+"Passo 3: comece com 2 ou 3 dias na semana. Constância vale mais do que intensidade.",
+"Passo 4: priorize a técnica antes da carga.",
+"Passo 5: coma o suficiente. A alimentação sustenta o treino e a recuperação.",
+"Passo 6: observe o sono. O corpo se recupera enquanto você descansa.",
+"Treino e alimentação andam juntos. Agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d07",
+"day": 7,
+"week": 1,
+"data": "09/11 · seg",
+"formato": "Reel falado",
+"pilar": "Emagrecimento que cabe na vida",
+"tema": "Dietas muito restritivas",
+"objetivo": "Mostrar por que o plano flexível se sustenta.",
+"gancho": "Por que as dietas muito restritivas costumam durar tão pouco",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você começa animada na segunda e já está cansada na quinta? Isso acontece com muita gente, e o problema costuma estar no plano.<br><br>Planos muito rígidos pedem uma vida que quase ninguém tem. Um plano flexível tem mais chance de ser mantido.<br><br>Quer um plano flexível? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Quer um plano flexível? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"script": [
+"0 a 5s · Gancho: Por que as dietas muito restritivas duram tão pouco?",
+"5 a 20s · Bloco 1: Você começa animada na segunda-feira, segue tudo certinho, e na quinta já está cansada. Aí vem a culpa e a sensação de que faltou força de vontade.",
+"20 a 40s · Bloco 2: Na maior parte das vezes, o problema está no plano. Um cardápio muito rígido pede uma vida que quase ninguém tem: horários fixos, comida pesada de preparar e nenhum espaço para um jantar com a família.",
+"40 a 52s · Bloco 3: Um plano flexível considera o seu dia real. Ele permite escolher, trocar e ajustar. Constância supera qualquer resultado imediatista, e é isso que sustenta o cuidado ao longo do tempo.",
+"52 a 60s · Convite final: Se você quer um plano que caiba na sua vida, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d08",
+"day": 8,
+"week": 2,
+"data": "10/11 · ter",
+"formato": "Carrossel",
+"pilar": "Rotina corrida e sobrecarga",
+"tema": "Refeições da semana em 1 hora",
+"objetivo": "Dar um passo a passo prático e gerar salvamentos.",
+"gancho": "Como organizar as refeições da semana em 1 hora",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Sem organização, a semana vira improviso, e o improviso costuma acabar em pedido de delivery.<br><br>Um passo a passo simples para deixar a base das refeições pronta de uma vez.<br><br>Salve este carrossel para usar no próximo domingo. Para um plano com o seu perfil, me chame no direct para agendar a sua consulta.",
+"cta": "Salve este carrossel para usar no próximo domingo. Para um plano com o seu perfil, me chame no direct para agendar a sua consulta.",
+"slides": [
+"Como organizar as refeições da semana em 1 hora.",
+"Passo 1: escolha 2 fontes de proteína, como frango ou ovos.",
+"Passo 2: escolha 2 acompanhamentos, como arroz ou batata.",
+"Passo 3: escolha 3 legumes e verduras que você gosta.",
+"Passo 4: cozinhe tudo de uma vez e guarde em potes separados.",
+"Passo 5: monte as refeições em combinações diferentes ao longo da semana.",
+"Este é um exemplo geral. O plano ideal considera o seu corpo, a sua rotina e os seus objetivos.",
+"Me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d09",
+"day": 9,
+"week": 2,
+"data": "11/11 · qua",
+"formato": "Reel falado",
+"pilar": "Treino e hipertrofia",
+"tema": "Treino de 30 minutos",
+"objetivo": "Quebrar a objeção de falta de tempo para treinar.",
+"gancho": "Sem tempo para treinar? O que dá para fazer em 30 minutos",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Falta de tempo é o motivo que mais escuto, e eu entendo, porque também sou mãe e tenho uma agenda cheia.<br><br>Treinos curtos e bem planejados podem caber na rotina e fazer diferença na saúde. Procure a orientação de um profissional de educação física.<br><br>Quer alinhar a alimentação com o seu treino? Agende a sua consulta pelo link da bio.",
+"cta": "Quer alinhar a alimentação com o seu treino? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Sem tempo para treinar? Então este vídeo é para você.",
+"5 a 20s · Bloco 1: Eu sou mãe de duas filhas, trabalho, atendo e treino. Sei como o dia passa rápido. Muitas mulheres me dizem que só vão treinar quando tiverem tempo, e esse dia nunca chega.",
+"20 a 40s · Bloco 2: Um treino de 30 minutos, com foco e bem montado, já pode trazer benefícios para a saúde e para a disposição. Converse com um profissional de educação física para montar o seu, de acordo com o seu corpo.",
+"40 a 52s · Bloco 3: A alimentação entra para dar energia ao treino e ajudar na recuperação. Quando as duas partes conversam, a rotina fica mais leve.",
+"52 a 60s · Convite final: Se você quer alinhar a sua alimentação com o treino, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d10",
+"day": 10,
+"week": 2,
+"data": "12/11 · qui",
+"formato": "Reel 7s",
+"pilar": "Treino e hipertrofia",
+"tema": "O treino de hoje",
+"objetivo": "Incentivar a constância com um gesto simples.",
+"gancho": "O treino de hoje não precisa ficar para amanhã",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: um tênis de treino e uma garrafa de água sobre o tapete da sala, com luz do fim de tarde. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Um treino de 20 minutos hoje vale mais do que o treino perfeito que nunca acontece.<br><br>Pequenas ações repetidas ao longo da semana sustentam a rotina de cuidado.<br><br>Salve este post e siga o perfil para acompanhar mais sobre treino e alimentação.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre treino e alimentação."
+},
+{
+"id": "d11",
+"day": 11,
+"week": 2,
+"data": "13/11 · sex",
+"formato": "Carrossel",
+"pilar": "Como funciona o acompanhamento",
+"tema": "Como funciona o acompanhamento",
+"objetivo": "Mostrar o passo a passo do acompanhamento de 3 ou 6 meses.",
+"gancho": "Como funciona o acompanhamento de 3 ou 6 meses na VIDA Consultoria",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Quer saber como é o acompanhamento depois da consulta? Aqui vai o passo a passo.<br><br>Cada etapa considera a sua rotina e pode ser ajustada ao longo do processo.<br><br>Salve este carrossel. Para saber mais, me chame no direct para agendar a sua consulta.",
+"cta": "Salve este carrossel. Para saber mais, me chame no direct para agendar a sua consulta.",
+"slides": [
+"Como funciona o acompanhamento de 3 ou 6 meses na VIDA Consultoria.",
+"Passo 1: consulta inicial, com a avaliação do seu histórico, da sua rotina e dos seus objetivos.",
+"Passo 2: o plano é montado junto com você, na hora.",
+"Passo 3: acompanhamento nos meses seguintes, com ajustes conforme o seu dia a dia.",
+"Passo 4: quando o caso pede, a equipe conta com um médico do esporte para a parte hormonal.",
+"Passo 5: o atendimento pode ser presencial, em Fortaleza, ou online.",
+"Você escolhe o acompanhamento de 3 ou 6 meses conforme a sua necessidade.",
+"Me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d12",
+"day": 12,
+"week": 2,
+"data": "14/11 · sab",
+"formato": "Reel falado",
+"pilar": "Ciência e mitos",
+"tema": "Dia Mundial do Diabetes",
+"objetivo": "Marcar a data com informação responsável.",
+"gancho": "Dia Mundial do Diabetes: alimentação e acompanhamento andam juntos",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Hoje é o Dia Mundial do Diabetes, uma data para lembrar da importância de cuidar da saúde com informação e acompanhamento.<br><br>Quem tem diabetes ou suspeita de alteração na glicemia precisa de acompanhamento médico. A alimentação entra como parte do cuidado, com orientação profissional.<br><br>Quer um acompanhamento nutricional individualizado? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Quer um acompanhamento nutricional individualizado? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"script": [
+"0 a 5s · Gancho: Hoje é o Dia Mundial do Diabetes. Eu quero falar sobre cuidado e informação.",
+"5 a 20s · Bloco 1: O diabetes precisa de acompanhamento médico, com exames regulares. Se você tem diabetes ou suspeita de alguma alteração na glicemia, procure um médico antes de qualquer mudança.",
+"20 a 40s · Bloco 2: A alimentação faz parte do cuidado, e cada pessoa tem necessidades diferentes. Por isso, um plano genérico da internet pode ser inadequado para você.",
+"40 a 52s · Bloco 3: Com acompanhamento individualizado, é possível construir hábitos que respeitem o seu caso e a orientação do seu médico. Informação confiável é uma forma de cuidar de si e de quem você ama.",
+"52 a 60s · Convite final: Se você quer um acompanhamento nutricional individualizado, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d13",
+"day": 13,
+"week": 2,
+"data": "15/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Bastidores da Camila e datas",
+"tema": "Feriado com calma",
+"objetivo": "Gerar identificação num domingo de feriado.",
+"gancho": "Feriado também é tempo de cuidar de você",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: uma mesa posta com café da manhã simples, frutas e pão integral, com luz da manhã entrando pela janela. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Feriado é bom para comer com calma e sem culpa.<br><br>Uma refeição tranquila, em boa companhia, também faz parte de uma relação saudável com a comida.<br><br>Quer construir uma relação mais leve com a comida? Agende a sua consulta pelo link da bio.",
+"cta": "Quer construir uma relação mais leve com a comida? Agende a sua consulta pelo link da bio."
+},
+{
+"id": "d14",
+"day": 14,
+"week": 2,
+"data": "16/11 · seg",
+"formato": "Reel falado",
+"pilar": "Emagrecimento que cabe na vida",
+"tema": "Culpa depois de comer",
+"objetivo": "Aliviar a culpa e mostrar o valor da constância.",
+"gancho": "Comeu algo fora do plano e sentiu culpa? Vamos conversar",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Teve um dia de festa, comeu o que tinha vontade e depois veio a culpa? Isso é mais comum do que parece.<br><br>Uma refeição fora do plano não desfaz o que você construiu. Voltar ao plano na refeição seguinte faz parte do processo.<br><br>Quer um plano que ajuda a lidar com isso? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer um plano que ajuda a lidar com isso? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Comeu algo fora do plano e ficou com culpa? Escute este vídeo.",
+"5 a 20s · Bloco 1: Teve aniversário, jantar com amigos, um domingo em família. Você comeu o que tinha vontade, e depois veio aquela voz dizendo que estragou tudo.",
+"20 a 40s · Bloco 2: Uma refeição fora do plano não desfaz o que você construiu. O que pesa mais é o ciclo da culpa: você se cobra, fica desanimada e acaba largando o plano de vez.",
+"40 a 52s · Bloco 3: O melhor caminho é voltar para a próxima refeição normalmente, sem compensar e sem pular nada. Isso é constância, e ela supera qualquer resultado imediatista.",
+"52 a 60s · Convite final: Se você quer um plano que ajude a lidar com isso, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d15",
+"day": 15,
+"week": 3,
+"data": "17/11 · ter",
+"formato": "Carrossel",
+"pilar": "Ciência e mitos",
+"tema": "Calorimetria indireta",
+"objetivo": "Apresentar o exame que é um diferencial da consulta.",
+"gancho": "Calorimetria indireta: o que ela mostra sobre o seu corpo",
+"visual": "7 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "A calorimetria indireta é um exame que mede o quanto o seu corpo gasta de energia em repouso.<br><br>Ela ajuda a montar o plano com mais precisão. A indicação do exame é feita conforme cada caso.<br><br>Salve este post e siga o perfil para acompanhar mais sobre metabolismo e calorimetria indireta.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre metabolismo e calorimetria indireta.",
+"slides": [
+"Calorimetria indireta: o que ela mostra sobre o seu corpo.",
+"O que é: um exame que mede o gasto de energia do seu corpo em repouso.",
+"Como é feito: você respira em um aparelho, em repouso, e ele mede o oxigênio que o corpo usa.",
+"Para que serve: ajuda a calcular quanto de energia o seu corpo precisa, em vez de usar só estimativas.",
+"Por que importa: o plano fica mais ajustado ao seu corpo.",
+"A indicação é individual. Na consulta, eu explico se faz sentido no seu caso.",
+"Salve este post e siga o perfil para acompanhar mais sobre metabolismo e calorimetria indireta."
+]
+},
+{
+"id": "d16",
+"day": 16,
+"week": 3,
+"data": "18/11 · qua",
+"formato": "Reel falado",
+"pilar": "Ciência e mitos",
+"tema": "Proteína ao longo do dia",
+"objetivo": "Explicar a importância da proteína para a mulher depois dos 30.",
+"gancho": "Proteína ao longo do dia: por que ela importa para a mulher depois dos 30",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muitas mulheres comem pouca proteína no café da manhã e no lanche e deixam tudo para o almoço.<br><br>A proteína contribui para a manutenção da massa muscular e para a saciedade. A quantidade ideal depende de cada pessoa.<br><br>Quer saber a quantidade ideal para você? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Quer saber a quantidade ideal para você? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"script": [
+"0 a 5s · Gancho: Você está comendo proteína suficiente ao longo do dia?",
+"5 a 20s · Bloco 1: Muitas mulheres chegam à consulta com um café da manhã de pão e café e um lanche de fruta. A proteína fica quase toda concentrada no almoço e no jantar.",
+"20 a 40s · Bloco 2: Depois dos 30, manter a massa muscular ganha ainda mais importância, e a proteína é uma peça dessa história. Ela também contribui para a saciedade, e isso ajuda a organizar a fome ao longo do dia.",
+"40 a 52s · Bloco 3: A quantidade ideal muda de pessoa para pessoa, conforme o peso, o treino, a saúde e a rotina. Por isso, eu avalio o seu caso antes de indicar qualquer número.",
+"52 a 60s · Convite final: Se você quer saber a quantidade ideal para você, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d17",
+"day": 17,
+"week": 3,
+"data": "19/11 · qui",
+"formato": "Reel falado",
+"pilar": "Bastidores da Camila e datas",
+"tema": "Dia do Empreendedorismo Feminino",
+"objetivo": "Usar a data de 19/11 para se conectar com a mulher que empreende.",
+"gancho": "Dia Mundial do Empreendedorismo Feminino: quem constrói também precisa se cuidar",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Hoje é o Dia Mundial do Empreendedorismo Feminino. Parabéns a toda mulher que constrói o próprio caminho.<br><br>Quem tem um negócio e uma família muitas vezes deixa a própria saúde para depois. Um plano simples ajuda a mudar isso.<br><br>Quer cuidar de você com um plano que cabe na agenda? Agende a sua consulta pelo link da bio.",
+"cta": "Quer cuidar de você com um plano que cabe na agenda? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Hoje é o Dia Mundial do Empreendedorismo Feminino. Parabéns, mulher que constrói!",
+"5 a 20s · Bloco 1: Eu também tenho a minha consultoria, atendo, estudo e sou mãe de duas filhas. Sei como é tomar decisão o dia inteiro e ainda cuidar da família.",
+"20 a 40s · Bloco 2: Nessa correria, o que costuma ficar para depois é a alimentação, o sono e o treino. A energia cai ao longo do dia, a concentração diminui, e o seu negócio sente.",
+"40 a 52s · Bloco 3: Cuidar de você faz parte de cuidar do que você construiu. Um plano simples, que cabe na sua agenda, ajuda a manter a disposição para tudo que você faz.",
+"52 a 60s · Convite final: Se você quer começar, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d18",
+"day": 18,
+"week": 3,
+"data": "20/11 · sex",
+"formato": "Carrossel",
+"pilar": "Emagrecimento que cabe na vida",
+"tema": "Sinais de que o plano não cabe na rotina",
+"objetivo": "Gerar identificação e salvamentos.",
+"gancho": "5 sinais de que o seu plano alimentar não cabe na sua rotina",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Se o plano exige uma vida diferente da sua, ele tende a ser abandonado.<br><br>Veja os sinais e repense o que precisa ser ajustado. Um bom plano acompanha a sua vida.<br><br>Salve este post e siga o perfil para acompanhar mais sobre planos alimentares que cabem na rotina.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre planos alimentares que cabem na rotina.",
+"slides": [
+"5 sinais de que o seu plano alimentar não cabe na sua rotina.",
+"Sinal 1: você precisa cozinhar por horas todos os dias.",
+"Sinal 2: os alimentos do plano são difíceis de achar ou muito caros.",
+"Sinal 3: você evita convites para não sair do plano.",
+"Sinal 4: você sente culpa quase todo dia.",
+"Sinal 5: você pensa em desistir antes de completar uma semana.",
+"Se você se reconhece, o plano pode ser ajustado. Cada caso é único.",
+"Salve este post e siga o perfil para acompanhar mais sobre planos alimentares que cabem na rotina."
+]
+},
+{
+"id": "d19",
+"day": 19,
+"week": 3,
+"data": "21/11 · sab",
+"formato": "Reel falado",
+"pilar": "Rotina corrida e sobrecarga",
+"tema": "Fim de semana sem tudo ou nada",
+"objetivo": "Dar uma estratégia de constância para o fim de semana.",
+"gancho": "Fim de semana sem pensamento de tudo ou nada: como manter a constância",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Segue o plano a semana inteira e no sábado joga tudo para o alto? Dá para fazer diferente.<br><br>Um plano com espaço para o fim de semana tem mais chance de ser mantido.<br><br>Quer um plano com flexibilidade? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer um plano com flexibilidade? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Fim de semana sem pensamento de tudo ou nada: veja como manter a constância.",
+"5 a 20s · Bloco 1: A semana inteira você segue o plano. Chega o sábado e vem o pensamento de que hoje não conta, e a segunda-feira fica pesada.",
+"20 a 40s · Bloco 2: O que ajuda é combinar com você mesma o que faz parte do fim de semana: aquela refeição que você gosta, o encontro com os amigos, o descanso. Tudo isso entra no plano, com um pouco de atenção.",
+"40 a 52s · Bloco 3: Esse espaço evita o efeito gangorra, e as duas coisas, viver e se cuidar, passam a caber na mesma semana.",
+"52 a 60s · Convite final: Se você quer um plano flexível, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d20",
+"day": 20,
+"week": 3,
+"data": "22/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Emagrecimento que cabe na vida",
+"tema": "Prato simples",
+"objetivo": "Mostrar que comida do dia a dia também é nutritiva.",
+"gancho": "Um prato simples também é um prato completo",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: um prato com arroz, feijão, frango grelhado e salada colorida sobre uma mesa de madeira, com luz natural. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Nem todo prato precisa ser sofisticado para ser nutritivo.<br><br>Montar um prato equilibrado com comida do dia a dia é possível, e um plano individual mostra como.<br><br>Quer aprender a montar o seu? Agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Quer aprender a montar o seu? Agende a sua consulta no WhatsApp (85) 98803-9710."
+},
+{
+"id": "d21",
+"day": 21,
+"week": 3,
+"data": "23/11 · seg",
+"formato": "Reel falado",
+"pilar": "Bastidores da Camila e datas",
+"tema": "A minha história",
+"objetivo": "Aproximar a Camila da mulher que a acompanha.",
+"gancho": "A minha história: por que eu cuido de mulheres como você",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muita gente me pergunta como eu comecei. Hoje eu conto.<br><br>Eu sou nutricionista, doutora em bioquímica, mãe de duas filhas e também passei pelo processo de emagrecer. Isso me ajuda a entender a rotina de quem me procura.<br><br>Quer conversar sobre o seu caso? Agende a sua consulta pelo link da bio.",
+"cta": "Quer conversar sobre o seu caso? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: A minha história: por que eu cuido de mulheres como você.",
+"5 a 20s · Bloco 1: Eu sou a Camila, nutricionista e doutora em bioquímica. Antes de tudo, sou mãe de duas filhas e conheço a rotina de quem divide o tempo entre trabalho, casa e família.",
+"20 a 40s · Bloco 2: Eu também passei pelo processo de emagrecer. Foram 15 quilos, e eu aprendi na prática que um plano precisa caber na rotina para durar. Essa experiência mudou a forma como eu atendo.",
+"40 a 52s · Bloco 3: Hoje eu junto a ciência da bioquímica, a nutrição esportiva e o acolhimento de quem entende a sua realidade. Cada história é única, e eu respeito a sua.",
+"52 a 60s · Convite final: Se você quer conversar sobre o seu caso, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d22",
+"day": 22,
+"week": 4,
+"data": "24/11 · ter",
+"formato": "Carrossel",
+"pilar": "Como funciona o acompanhamento",
+"tema": "A primeira consulta",
+"objetivo": "Reduzir o receio do primeiro passo.",
+"gancho": "O que acontece na primeira consulta",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Tem receio de como é a primeira consulta? Veja como funciona, sem surpresas.<br><br>A consulta é um espaço de conversa. O objetivo é conhecer a sua história e montar o plano junto com você.<br><br>Salve este post e siga o perfil para acompanhar mais sobre como funciona o acompanhamento nutricional.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre como funciona o acompanhamento nutricional.",
+"slides": [
+"O que acontece na primeira consulta com a Camila.",
+"1. Conversa sobre a sua história, a sua rotina e a sua relação com a comida.",
+"2. Avaliação do que faz sentido no seu caso, incluindo exames, quando indicados.",
+"3. Definição dos objetivos, de forma realista e individual.",
+"4. Montagem do plano, na hora, junto com você.",
+"5. Alinhamento do acompanhamento de 3 ou 6 meses e dos canais de contato.",
+"A consulta pode ser presencial, em Fortaleza, ou online.",
+"Salve este post e siga o perfil para acompanhar mais sobre como funciona o acompanhamento nutricional."
+]
+},
+{
+"id": "d23",
+"day": 23,
+"week": 4,
+"data": "25/11 · qua",
+"formato": "Carrossel",
+"pilar": "Bastidores da Camila e datas",
+"tema": "25/11: Ligue 180",
+"objetivo": "Marcar o dia de combate à violência contra a mulher com informação útil.",
+"gancho": "25/11: o Ligue 180 atende mulheres em situação de violência",
+"visual": "6 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Hoje é o Dia Internacional pela Eliminação da Violência contra a Mulher.<br><br>Se você ou alguém que você conhece vive uma situação de violência, ligue 180. Em risco imediato, ligue 190.<br><br>Compartilhe com uma mulher que precisa dessa informação.",
+"cta": "Compartilhe com uma mulher que precisa dessa informação.",
+"slides": [
+"25/11: Dia Internacional pela Eliminação da Violência contra a Mulher.",
+"O Ligue 180 é a Central de Atendimento à Mulher. A ligação é gratuita e o serviço funciona 24 horas por dia.",
+"Em risco imediato, ligue 190.",
+"A violência também pode ser psicológica, moral, patrimonial ou sexual.",
+"Se alguém que você conhece precisa de ajuda, escute com respeito e compartilhe estas informações.",
+"Compartilhe com uma mulher que precisa dessa informação."
+]
+},
+{
+"id": "d24",
+"day": 24,
+"week": 4,
+"data": "26/11 · qui",
+"formato": "Reel falado",
+"pilar": "Ciência e mitos",
+"tema": "Sono e fome",
+"objetivo": "Explicar a relação entre sono e apetite.",
+"gancho": "Dormiu mal e acordou com vontade de doce? A ciência explica",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Noite mal dormida e, no dia seguinte, muita vontade de comer doce? Existe uma explicação.<br><br>O sono pode influenciar hormônios ligados à fome e à saciedade. Se o seu sono está ruim com frequência, procure também um médico.<br><br>Quer olhar a sua rotina de forma completa? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer olhar a sua rotina de forma completa? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Dormiu mal e acordou com muita vontade de doce? Tem uma explicação.",
+"5 a 20s · Bloco 1: Eu sou doutora em bioquímica e esse assunto me fascina. Quando você dorme pouco, hormônios ligados à fome e à saciedade podem se alterar. O resultado costuma ser mais apetite e mais vontade de comer alimentos muito calóricos.",
+"20 a 40s · Bloco 2: Por isso, a minha conversa na consulta passa também pelo seu sono, pelo seu estresse e pela sua rotina. A alimentação é uma parte do quadro, e o quadro inteiro importa.",
+"40 a 52s · Bloco 3: Se o sono ruim é frequente, vale conversar com um médico também. Pequenos ajustes de horário e de jantar podem ajudar algumas pessoas, e cada caso pede avaliação.",
+"52 a 60s · Convite final: Se você quer olhar a sua rotina de forma completa, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d25",
+"day": 25,
+"week": 4,
+"data": "27/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Bastidores da Camila e datas",
+"tema": "Black Friday e suplementos",
+"objetivo": "Orientar sobre compra de suplementos na Black Friday.",
+"gancho": "Black Friday: antes de comprar suplemento, converse com a sua nutricionista",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mãos segurando o celular com um carrinho de compras na tela e um pote fechado ao lado, sem marca visível. Gancho em texto na tela, letra limpa e objetiva, música animada.",
+"legenda": "Promoção grande dá vontade de comprar de tudo, inclusive suplemento.<br><br>Cada pessoa tem uma necessidade, e o suplemento adequado depende de avaliação. Antes de comprar, converse com a sua nutricionista.<br><br>Salve este post e siga o perfil para acompanhar mais sobre suplementação com segurança.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre suplementação com segurança."
+},
+{
+"id": "d26",
+"day": 26,
+"week": 4,
+"data": "28/11 · sab",
+"formato": "Reel falado",
+"pilar": "Treino e hipertrofia",
+"tema": "Musculação e a mulher",
+"objetivo": "Esclarecer o mito do corpo grande e o valor do treino de força.",
+"gancho": "Musculação deixa a mulher grande? Eu respondo",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muita mulher tem medo de ficar grande com a musculação. Vamos conversar sobre isso.<br><br>Ganhar massa muscular exige estímulo, alimentação e tempo, e o treino de força traz benefícios para a saúde da mulher.<br><br>Quer alinhar alimentação e treino? Agende a sua consulta pelo link da bio.",
+"cta": "Quer alinhar alimentação e treino? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Musculação deixa a mulher grande? Eu respondo.",
+"5 a 20s · Bloco 1: Essa é uma das dúvidas que mais escuto. Eu trabalho com hipertrofia e nutrição esportiva, e posso dizer que ganhar massa muscular exige estímulo, alimentação adequada e tempo. Isso não acontece de uma semana para outra.",
+"20 a 40s · Bloco 2: O treino de força traz benefícios importantes para a mulher, como manutenção da massa muscular, saúde dos ossos e disposição. Depois dos 30, ele ganha ainda mais importância.",
+"40 a 52s · Bloco 3: O treino precisa ser montado por um profissional de educação física, e a alimentação precisa acompanhar. Quando as duas partes conversam, o corpo responde melhor.",
+"52 a 60s · Convite final: Se você quer alinhar alimentação e treino, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d27",
+"day": 27,
+"week": 4,
+"data": "29/11 · dom",
+"formato": "Carrossel",
+"pilar": "Emagrecimento que cabe na vida",
+"tema": "Balanço do ano",
+"objetivo": "Convidar a uma reflexão de fim de ano e gerar salvamentos.",
+"gancho": "Balanço do ano: 4 perguntas para fazer a si mesma",
+"visual": "7 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Antes de 2027 chegar, vale olhar para o ano que passou com carinho.<br><br>Responda com calma, de preferência por escrito. Não existe resposta certa.<br><br>Salve para responder com calma. Quando quiser planejar 2027, agende a sua consulta no WhatsApp (85) 98803-9710.",
+"cta": "Salve para responder com calma. Quando quiser planejar 2027, agende a sua consulta no WhatsApp (85) 98803-9710.",
+"slides": [
+"Balanço do ano: 4 perguntas para fazer a si mesma.",
+"1. O que eu fiz por mim em 2026 que me deixa orgulhosa?",
+"2. Que hábito me fez bem e eu quero levar para 2027?",
+"3. Onde a minha rotina pesou mais?",
+"4. De que eu preciso cuidar primeiro no próximo ano?",
+"Guarde as respostas. Elas ajudam a montar um plano que faz sentido para você.",
+"Agende a sua consulta no WhatsApp (85) 98803-9710."
+]
+},
+{
+"id": "d28",
+"day": 28,
+"week": 4,
+"data": "30/11 · seg",
+"formato": "Reel falado",
+"pilar": "Como funciona o acompanhamento",
+"tema": "As 4 dúvidas mais frequentes",
+"objetivo": "Responder às dúvidas e reduzir objeções.",
+"gancho": "As 4 dúvidas que eu mais recebo sobre a consulta nutricional",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Online funciona? Quanto tempo dura o acompanhamento? Preciso treinar? Vai ser uma dieta rígida? Eu respondo.<br><br>Cada caso é único, e a conversa individual esclarece o que não couber aqui.<br><br>Ficou com dúvida? Me chame no direct para agendar a sua consulta.",
+"cta": "Ficou com dúvida? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: As quatro dúvidas que eu mais recebo sobre a consulta nutricional.",
+"5 a 20s · Bloco 1: A primeira: o atendimento online funciona? Sim. Eu atendo presencial, em Fortaleza, e online, inclusive mulheres de outros países. A segunda: quanto tempo dura? O acompanhamento é de 3 ou 6 meses.",
+"20 a 40s · Bloco 2: A terceira: eu preciso treinar? Treinar é opcional. Eu atendo quem treina e quem quer começar, e o plano acompanha o seu momento.",
+"40 a 52s · Bloco 3: A quarta: vai ser uma dieta rígida? O plano é construído junto com você, considerando a sua rotina e o que você gosta de comer, com espaço para flexibilidade.",
+"52 a 60s · Convite final: Ficou com alguma dúvida? me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d29",
+"day": 29,
+"week": 5,
+"data": "01/12 · ter",
+"formato": "Carrossel",
+"pilar": "Rotina corrida e sobrecarga",
+"tema": "Festas de fim de ano",
+"objetivo": "Dar estratégias simples para as festas e gerar salvamentos.",
+"gancho": "Festas de fim de ano sem culpa: 5 estratégias",
+"visual": "8 slides com a paleta do perfil, uma ideia por slide e pouco texto. Capa padronizada com a mesma letra dos outros carrosséis e último slide com o convite final.",
+"legenda": "Fim de ano chega com muita comida, muita gente e muita cobrança.<br><br>Estratégias simples para aproveitar com calma, sem fazer da ceia um motivo de culpa.<br><br>Salve este post e siga o perfil para acompanhar mais sobre alimentação nas festas e no dia a dia.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre alimentação nas festas e no dia a dia.",
+"slides": [
+"Festas de fim de ano sem culpa: 5 estratégias.",
+"1. Evite chegar com muita fome: faça uma refeição leve antes.",
+"2. Escolha com calma: olhe a mesa toda antes de montar o prato.",
+"3. Beba água ao longo do dia.",
+"4. Coma devagar e aproveite a companhia.",
+"5. Se exagerou, volte ao seu plano na refeição seguinte, sem compensar.",
+"Cada pessoa tem um contexto. Para uma orientação individual, converse com a sua nutricionista.",
+"Salve este post e siga o perfil para acompanhar mais sobre alimentação nas festas e no dia a dia."
+]
+},
+{
+"id": "d30",
+"day": 30,
+"week": 5,
+"data": "02/12 · qua",
+"formato": "Reel falado",
+"pilar": "Como funciona o acompanhamento",
+"tema": "Comece por aqui",
+"objetivo": "Fechar o ciclo com um convite claro.",
+"gancho": "Quer chegar em 2027 de outro jeito? Comece por aqui",
+"visual": "Camila falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Durante estes 30 dias eu falei da rotina da mulher e da ciência por trás da alimentação. Se você se reconheceu, este é o próximo passo.<br><br>A consulta é o primeiro passo. A gente olha o seu caso com calma e monta o plano junto com você.<br><br>Vai ser um prazer receber você. Agende a sua consulta pelo link da bio.",
+"cta": "Vai ser um prazer receber você. Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Quer chegar em 2027 de outro jeito? Então comece por aqui.",
+"5 a 20s · Bloco 1: Durante estes 30 dias, eu falei da rotina da mulher que cuida de todo mundo e da ciência por trás da alimentação. Talvez você tenha se reconhecido em alguma dessas conversas.",
+"20 a 40s · Bloco 2: Se sim, o primeiro passo é a consulta. A gente olha o seu caso com calma, conversa sobre a sua rotina e monta o plano junto com você.",
+"40 a 52s · Bloco 3: Depois vem o acompanhamento de 3 ou 6 meses, com ajustes sempre que precisar. Constância supera qualquer resultado imediatista, e eu vou estar com você nesse caminho.",
+"52 a 60s · Convite final: Agende a sua consulta pelo link da bio. Vai ser um prazer receber você."
+]
+}
+];
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt.indexOf('Reel')===0) return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          ${(Array.isArray(d.script) && d.script.length) ? `<div class="field"><div class="f-label">Script do vídeo (cerca de 1 minuto, para ler em ritmo natural)</div><div class="f-value">${d.script.map(s=>`<div style="margin-bottom:9px;">${s.replace(/^([^:]+):/,'<b>$1:</b>')}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-dracamilaporfirio-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+
+<script>
+(function(){
+  const ST_DATA = [{"id": "s01", "day": 1, "data": "03/11 · ter", "tema": "Plano feito na hora", "feed": "Reel falado · Plano feito na hora, junto com você", "f1": "Vídeo de 10 segundos da Camila falando para a câmera: «Hoje começa um mês de conversas sobre rotina, ciência e alimentação. Vem comigo.» Texto na tela: «Rotina mais saudável, sem complicação».", "f2": "Caixinha de perguntas: «Qual é a parte mais difícil da sua rotina para comer bem?». Guarde as respostas, elas viram assunto dos próximos dias.", "f3": "Texto sobre fundo liso: «Quer uma rotina mais saudável e possível? Comenta NUTRI no post de hoje». Sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s02", "day": 2, "data": "04/11 · qua", "tema": "Mito ou verdade", "feed": "Carrossel · 5 mitos sobre emagrecer depois dos 30", "f1": "Quiz: «O metabolismo para depois dos 30: mito ou verdade?». Opções: «Mito» e «Verdade». Resposta certa: mito, porque o gasto de energia muda com vários fatores, e não simplesmente para.", "f2": "Vídeo de 15 segundos da Camila explicando que o gasto de energia depende da idade, da massa muscular, do sono e dos hormônios, e que dá para avaliar com exame. Texto na tela: «Metabolismo tem explicação».", "f3": "Caixinha de perguntas: «Qual mito você quer que eu desmonte amanhã?»."}, {"id": "s03", "day": 3, "data": "05/11 · qui", "tema": "E a sua refeição?", "feed": "Reel falado · Cuida de todo mundo e deixa a si por último", "f1": "Vídeo de 10 segundos da Camila na cozinha: «Você comeu hoje ou só beliscou?». Texto na tela: «A sua refeição também importa».", "f2": "Controle deslizante com emoji de coração: «Quanto você se coloca na lista de prioridades?».", "f3": "Texto: «Uma refeição por dia pensada só para você já é um bom começo». Convite: «Me chama no direct com a palavra ROTINA que eu te mostro por onde começar»."}, {"id": "s04", "day": 4, "data": "06/11 · sex", "tema": "Marmita em andamento", "feed": "Reel 7s · Marmita da semana", "f1": "Vídeo rápido, em timelapse, das marmitas sendo montadas. Texto: «Marmita da semana».", "f2": "Enquete: «Você prepara marmitas?». Opções: «Sim» e «Quero aprender».", "f3": "Foto das marmitas prontas e o texto: «Quer o passo a passo? Responda este story com MARMITA e eu te envio». Responder por direct."}, {"id": "s05", "day": 5, "data": "07/11 · sab", "tema": "Dúvidas sobre metabolismo", "feed": "Reel falado · Metabolismo lento", "f1": "Caixinha de perguntas: «Qual é a sua dúvida sobre metabolismo?».", "f2": "Vídeo de 15 segundos da Camila respondendo a pergunta mais comum que chegou. Texto na tela com a resposta resumida.", "f3": "Foto do consultório e o texto: «Existe um exame que mede o gasto de energia em repouso. Quer saber mais? Me chama no direct»."}, {"id": "s06", "day": 6, "data": "08/11 · dom", "tema": "Treino e alimentação", "feed": "Carrossel · Musculação depois dos 30", "f1": "Foto do tênis e dos halteres do treino do dia. Texto: «Musculação depois dos 30: por onde começar?».", "f2": "Enquete: «Você já treina musculação?». Opções: «Treino» e «Quero começar».", "f3": "Vídeo de 15 segundos: «Antes de começar, faça avaliação médica e procure um profissional de educação física. A alimentação entra para sustentar o treino». Sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s07", "day": 7, "data": "09/11 · seg", "tema": "Segunda de recomeço", "feed": "Reel falado · Dietas muito restritivas", "f1": "Vídeo de 10 segundos da Camila: «Segunda-feira de recomeço? Vamos fazer diferente: um plano flexível, que cabe na sua semana».", "f2": "Enquete: «Os seus planos costumam durar quanto tempo?». Opções: «Até uma semana» e «Mais tempo».", "f3": "Texto sobre fundo liso: «Constância supera qualquer resultado imediatista». Sticker de link da bio com o texto «Quero um plano que cabe na minha vida»."}, {"id": "s08", "day": 8, "data": "10/11 · ter", "tema": "Base da semana", "feed": "Carrossel · Refeições da semana em 1 hora", "f1": "Timelapse da bancada com a base da semana sendo preparada: proteína, acompanhamento e legumes. Texto: «Base da semana em 1 hora».", "f2": "Enquete: «O que facilita mais a sua semana?». Opções: «Deixar a base pronta» e «Cozinhar todo dia».", "f3": "Caixinha de perguntas: «Qual é o seu maior desafio para organizar as refeições?». Responda no dia seguinte."}, {"id": "s09", "day": 9, "data": "11/11 · qua", "tema": "Hoje dá 30 minutos?", "feed": "Reel falado · Treino de 30 minutos", "f1": "Vídeo de 10 segundos da Camila: «Eu sou mãe, atendo e treino. Hoje deu 30 minutos». Texto na tela: «Treino curto também conta».", "f2": "Enquete: «Quanto tempo você consegue treinar hoje?». Opções: «20 minutos» e «30 minutos».", "f3": "Texto: «Treino curto e alimentação que dá energia andam juntos». Sticker de link do WhatsApp (85) 98803-9710 com o texto «Alinhar treino e alimentação»."}, {"id": "s10", "day": 10, "data": "12/11 · qui", "tema": "Mini desafio", "feed": "Reel 7s · O treino de hoje", "f1": "Foto da garrafa de água e do tênis. Texto: «Mini desafio de hoje: 20 minutos de movimento».", "f2": "Enquete: «Você topa o desafio?». Opções: «Topo» e «Amanhã eu faço».", "f3": "Peça para quem fizer marcar a Camila. Compartilhe alguns stories marcados, com autorização."}, {"id": "s11", "day": 11, "data": "13/11 · sex", "tema": "Como funciona o acompanhamento", "feed": "Carrossel · Como funciona o acompanhamento", "f1": "Vídeo de 15 segundos da Camila: «O acompanhamento dura 3 ou 6 meses, e o plano muda junto com a sua rotina».", "f2": "Caixinha de perguntas: «O que você quer saber sobre o acompanhamento?».", "f3": "Vídeo curto da Camila respondendo uma das perguntas recebidas e sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s12", "day": 12, "data": "14/11 · sab", "tema": "Dia Mundial do Diabetes", "feed": "Reel falado · Dia Mundial do Diabetes", "f1": "Texto sobre fundo liso, na paleta do perfil: «14/11, Dia Mundial do Diabetes».", "f2": "Quiz: «Quem deve acompanhar o diabetes?». Opções: «A equipe de saúde» e «Dicas de redes sociais». Resposta certa: a primeira.", "f3": "Vídeo de 15 segundos da Camila: «O diabetes pede acompanhamento médico, e a alimentação entra como parte do cuidado, de forma individual». Convite para o direct."}, {"id": "s13", "day": 13, "data": "15/11 · dom", "tema": "Feriado com calma", "feed": "Reel 7s · Feriado com calma", "f1": "Foto ou vídeo de um café da manhã sem pressa. Texto: «Feriado com calma».", "f2": "Enquete: «Seu feriado tem almoço em família?». Opções: «Tem» e «Vai ser tranquilo».", "f3": "Texto: «Comer com calma também é cuidado». Peça: «Responda este story com CALMA se você quer uma rotina mais leve»."}, {"id": "s14", "day": 14, "data": "16/11 · seg", "tema": "Culpa depois de comer", "feed": "Reel falado · Culpa depois de comer", "f1": "Vídeo de 10 segundos da Camila: «Comeu algo fora do plano? Respira». Texto na tela: «Uma refeição não desfaz o seu cuidado».", "f2": "Controle deslizante com emoji de coração: «Quanto a culpa pesa na sua semana?».", "f3": "Texto: «A próxima refeição é um novo começo». Convite: «Me chama no direct se quiser um plano com flexibilidade»."}, {"id": "s15", "day": 15, "data": "17/11 · ter", "tema": "Calorimetria indireta", "feed": "Carrossel · Calorimetria indireta", "f1": "Foto ou vídeo do aparelho de calorimetria indireta no consultório. Texto: «Você sabe quanto o seu corpo gasta em repouso?».", "f2": "Caixinha de perguntas: «Qual é a sua dúvida sobre a calorimetria indireta?».", "f3": "Vídeo de 15 segundos da Camila respondendo uma das dúvidas e explicando para que o exame serve. Sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s16", "day": 16, "data": "18/11 · qua", "tema": "Proteína ao longo do dia", "feed": "Reel falado · Proteína ao longo do dia", "f1": "Foto de um café da manhã com ovos ou iogurte. Texto: «Proteína no café da manhã?».", "f2": "Enquete: «Você come proteína no café da manhã?». Opções: «Sempre» e «Quase nunca».", "f3": "Texto: «A proteína ao longo do dia contribui para a saciedade, e a quantidade ideal depende de cada pessoa». Sticker de link do WhatsApp (85) 98803-9710 com o texto «Qual é a minha quantidade?»."}, {"id": "s17", "day": 17, "data": "19/11 · qui", "tema": "Empreendedorismo Feminino", "feed": "Reel falado · Dia do Empreendedorismo Feminino", "f1": "Foto da Camila no consultório. Texto: «19/11, Dia Mundial do Empreendedorismo Feminino».", "f2": "Enquete: «Você empreende?». Opções: «Sim» e «Penso em começar».", "f3": "Vídeo curto da Camila agradecendo às mulheres que constroem o próprio caminho e convidando para o direct: «Me conta o que você faz»."}, {"id": "s18", "day": 18, "data": "20/11 · sex", "tema": "Seu plano cabe na rotina?", "feed": "Carrossel · Sinais de que o plano não cabe na rotina", "f1": "Texto sobre fundo liso: «O seu plano cabe na sua rotina?».", "f2": "Quiz: «Qual é um sinal de que o plano precisa de ajuste?». Opções: «Cozinhar por horas todos os dias» e «Comer em horários combinados». Resposta certa: a primeira.", "f3": "Caixinha de perguntas: «Qual parte do seu plano mais pesa?». Responda nos stories do dia seguinte."}, {"id": "s19", "day": 19, "data": "21/11 · sab", "tema": "Sábado também conta", "feed": "Reel falado · Fim de semana sem tudo ou nada", "f1": "Vídeo curto de uma mesa de almoço de sábado. Texto: «Sábado também faz parte do plano».", "f2": "Enquete: «O seu sábado é de cozinhar ou de pedir?». Opções: «Cozinhar» e «Pedir».", "f3": "Texto: «Flexibilidade faz parte da constância». Sticker de link da bio com o texto «Quero um plano flexível»."}, {"id": "s20", "day": 20, "data": "22/11 · dom", "tema": "Prato simples", "feed": "Reel 7s · Prato simples", "f1": "Foto do prato simples e colorido da Camila. Texto: «Prato simples».", "f2": "Enquete: «O que não pode faltar no seu prato?». Opções: «Salada» e «Feijão».", "f3": "Peça: «Mande a foto do seu prato de hoje por direct». Compartilhe alguns nos stories, com autorização de quem enviou."}, {"id": "s21", "day": 21, "data": "23/11 · seg", "tema": "A minha história", "feed": "Reel falado · A minha história", "f1": "Foto ou vídeo da Camila em um momento do dia a dia, com autorização de quem aparecer. Texto: «A minha história».", "f2": "Caixinha de perguntas: «O que você quer saber sobre mim?».", "f3": "Vídeos curtos da Camila respondendo duas ou três perguntas recebidas e sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s22", "day": 22, "data": "24/11 · ter", "tema": "Primeira consulta", "feed": "Carrossel · A primeira consulta", "f1": "Foto do consultório pronto para receber a paciente. Texto: «Primeira consulta».", "f2": "Enquete: «Qual é a sua maior dúvida antes da primeira consulta?». Opções: «O que vou ouvir» e «O que vou comer».", "f3": "Vídeo de 15 segundos da Camila contando como é a conversa inicial e sticker de link do WhatsApp (85) 98803-9710 com o texto «Marcar a minha consulta»."}, {"id": "s23", "day": 23, "data": "25/11 · qua", "tema": "25/11: Ligue 180", "feed": "Carrossel · 25/11: Ligue 180", "f1": "Texto sobre fundo liso: «25/11: Dia Internacional pela Eliminação da Violência contra a Mulher».", "f2": "Texto: «Ligue 180: gratuito, 24 horas por dia, atende mulheres em situação de violência». Sem enquete, por ser um tema delicado.", "f3": "Texto final: «Em risco imediato, ligue 190. Se você conhece alguém que precisa, compartilhe esta informação»."}, {"id": "s24", "day": 24, "data": "26/11 · qui", "tema": "Dormiu bem?", "feed": "Reel falado · Sono e fome", "f1": "Foto da mesa de cabeceira com um copo de água. Texto: «Dormiu bem?».", "f2": "Controle deslizante com emoji de lua: «Como foi o seu sono esta semana?».", "f3": "Vídeo de 15 segundos da Camila: «O sono pode influenciar a fome e a saciedade. Se dorme mal com frequência, converse também com um médico». Convite para o direct."}, {"id": "s25", "day": 25, "data": "27/11 · sex", "tema": "Black Friday", "feed": "Reel 7s · Black Friday e suplementos", "f1": "Texto sobre fundo liso: «Black Friday e suplementos».", "f2": "Enquete: «Você costuma comprar suplemento na Black Friday?». Opções: «Sim» e «Não».", "f3": "Texto: «Antes de comprar suplemento, converse com a sua nutricionista». Convite: «Me chama no direct se tiver dúvida»."}, {"id": "s26", "day": 26, "data": "28/11 · sab", "tema": "Musculação e a mulher", "feed": "Reel falado · Musculação e a mulher", "f1": "Vídeo curto ou foto do treino da Camila. Texto: «Musculação deixa a mulher grande?».", "f2": "Quiz: «O treino de força é indicado para mulheres?». Opções: «Com orientação profissional, sim» e «Nunca é indicado». Resposta certa: a primeira.", "f3": "Caixinha de perguntas: «Qual é a sua dúvida sobre treino de força?» e sticker de link do WhatsApp (85) 98803-9710."}, {"id": "s27", "day": 27, "data": "29/11 · dom", "tema": "Balanço do ano", "feed": "Carrossel · Balanço do ano", "f1": "Texto sobre fundo liso: «O que me deixou orgulhosa em 2026?».", "f2": "Caixinha de perguntas: «Qual é o seu objetivo para 2027?».", "f3": "Vídeo curto da Camila compartilhando o próprio balanço do ano e convidando: «Responda este story com a sua palavra para 2027»."}, {"id": "s28", "day": 28, "data": "30/11 · seg", "tema": "Perguntas e respostas", "feed": "Reel falado · As 4 dúvidas mais frequentes", "f1": "Texto sobre fundo liso: «Perguntas e respostas».", "f2": "Caixinha de perguntas: «Qual é a sua dúvida sobre a consulta nutricional?».", "f3": "Três vídeos curtos da Camila respondendo às perguntas recebidas, com sticker de link do WhatsApp (85) 98803-9710 no último."}, {"id": "s29", "day": 29, "data": "01/12 · ter", "tema": "Festas sem culpa", "feed": "Carrossel · Festas de fim de ano", "f1": "Foto de uma mesa de festa de fim de ano. Texto: «Festas sem culpa».", "f2": "Enquete: «Qual é a sua parte favorita da ceia?». Opções: «Comida» e «Companhia».", "f3": "Três telas curtas com uma dica por tela: «Faça uma refeição leve antes», «Escolha com calma» e «Coma devagar». Convite final para o direct."}, {"id": "s30", "day": 30, "data": "02/12 · qua", "tema": "Comece por aqui", "feed": "Reel falado · Comece por aqui", "f1": "Vídeo curto da Camila convidando: «Quer começar o ano com um plano? Comece por aqui». Texto: «Comece por aqui».", "f2": "Enquete: «Você quer começar o ano com um plano?». Opções: «Quero» e «Quero saber mais».", "f3": "Sticker de link do WhatsApp (85) 98803-9710 com o texto «Agendar a minha consulta»."}];
+  const KEY='nk-cal-dracamilaporfirio-stories-progress';
+  let stState={};
+  try{ const r=localStorage.getItem(KEY); if(r) stState=JSON.parse(r)||{}; }catch(e){}
+  const box=document.getElementById('st-container');
+  function upd(){
+    const n=Object.values(stState).filter(Boolean).length;
+    document.getElementById('st-count').textContent=n+'/30';
+    document.getElementById('st-fill').style.width=Math.round(n/30*100)+'%';
+  }
+  function draw(){
+    box.innerHTML='';
+    ST_DATA.forEach(d=>{
+      const done=!!stState[d.id];
+      const c=document.createElement('div');
+      c.className='day-card'+(done?' done':'');
+      c.id='st-'+d.id;
+      c.innerHTML=`
+        <div class="day-head" data-st="${d.id}">
+          <div class="day-num">D${d.day}</div>
+          <div class="day-meta">
+            <div class="d-top"><span class="fmt-badge estatico">Stories</span><span class="date-label">${d.data}</span></div>
+            <div class="day-title">${d.tema}</div>
+          </div>
+          <button class="check-btn ${done?'checked':''}" data-stc="${d.id}" aria-label="Marcar como feito">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="day-body"><div class="day-body-inner">
+          <div class="field"><div class="f-label">Post do dia no feed</div><div class="f-value">${d.feed}</div></div>
+          <div class="field"><div class="f-label">Story 1 · Abertura</div><div class="f-value">${d.f1}</div></div>
+          <div class="field"><div class="f-label">Story 2 · Interação</div><div class="f-value">${d.f2}</div></div>
+          <div class="field"><div class="f-label">Story 3 · Conversão</div><div class="f-value">${d.f3}</div></div>
+        </div></div>`;
+      box.appendChild(c);
+    });
+    box.querySelectorAll('[data-st]').forEach(h=>h.addEventListener('click',e=>{
+      if(e.target.closest('[data-stc]')) return;
+      document.getElementById('st-'+h.dataset.st).classList.toggle('open');
+    }));
+    box.querySelectorAll('[data-stc]').forEach(b=>b.addEventListener('click',e=>{
+      e.stopPropagation();
+      const id=b.dataset.stc;
+      stState[id]=!stState[id];
+      b.classList.toggle('checked',stState[id]);
+      document.getElementById('st-'+id).classList.toggle('done',stState[id]);
+      try{ localStorage.setItem(KEY,JSON.stringify(stState)); }catch(err){}
+      upd();
+    }));
+    upd();
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
