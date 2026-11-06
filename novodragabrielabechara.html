@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Estratégico & Calendário · Gabriela Bechara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07050c;
+    --bg-1:#0d0916;
+    --bg-2:#140f21;
+    --purple-900:#2b0f52;
+    --purple-700:#5b1fb8;
+    --purple-500:#8b3ff0;
+    --purple-400:#a855f7;
+    --purple-glow:#c084fc;
+    --ink-0:#f4f1fb;
+    --ink-1:#c9c2dc;
+    --ink-2:#8f88a8;
+    --line:rgba(168,85,247,0.18);
+    --card:rgba(255,255,255,0.03);
+    --gold:#e8c874;
+    --ok:#5fe3a1;
+    --radius:18px;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    background:
+      radial-gradient(60% 50% at 12% 0%, rgba(139,63,240,0.20), transparent 60%),
+      radial-gradient(50% 40% at 100% 10%, rgba(168,85,247,0.12), transparent 60%),
+      var(--bg-0);
+    color:var(--ink-1);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--purple-500);color:#fff;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(7,5,12,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:34px;width:34px;border-radius:9px;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text b{font-family:var(--display);font-size:13px;letter-spacing:0.04em;color:var(--ink-0);}
+  .brand-text span{font-size:10px;color:var(--ink-2);letter-spacing:0.06em;}
+  nav{display:none;gap:22px;font-size:13px;}
+  nav a{color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;transition:.2s;}
+  nav a:hover{color:var(--ink-0);border-color:var(--purple-400);}
+  @media(min-width:860px){nav{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;margin:0 auto;padding:64px 24px 40px;text-align:left;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--purple-glow);
+    border:1px solid var(--line);
+    padding:6px 12px;border-radius:100px;
+    background:rgba(139,63,240,0.08);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px var(--purple-glow);}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:1.05;
+    color:var(--ink-0);
+    margin:0 0 18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--purple-glow),var(--purple-400) 60%);-webkit-background-clip:text;background-clip:text;}
+  .hero p.lead{font-size:16px;color:var(--ink-1);max-width:640px;line-height:1.65;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:100px;background:var(--card);}
+  .chip b{color:var(--ink-0);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{max-width:920px;margin:0 auto;padding:70px 24px;border-top:1px solid var(--line);}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .kicker .num{font-family:var(--display);font-size:13px;color:var(--purple-glow);border:1px solid var(--line);width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .kicker h2{font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--ink-0);margin:0;font-weight:600;}
+  .section-intro{color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:680px;margin-bottom:34px;}
+
+  .grid2{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{font-family:var(--display);font-size:16px;color:var(--ink-0);margin:0 0 10px;font-weight:600;}
+  .card p{margin:0;font-size:13.8px;line-height:1.65;color:var(--ink-1);}
+  .card ul{margin:8px 0 0;padding-left:18px;}
+  .card li{font-size:13.8px;line-height:1.7;color:var(--ink-1);margin-bottom:4px;}
+
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);background:rgba(139,63,240,0.1);border:1px solid var(--line);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+
+  .quote-block{border-left:2px solid var(--purple-500);padding:4px 0 4px 20px;margin:28px 0;font-family:var(--display);font-size:19px;color:var(--ink-0);line-height:1.5;font-weight:500;}
+
+  .objecoes{display:flex;flex-direction:column;gap:10px;}
+  .obj-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card);}
+  .obj-item .o-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--display);color:var(--ink-0);font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .obj-item .o-num{color:var(--purple-glow);font-size:12px;}
+  .obj-item p{font-size:13.5px;color:var(--ink-1);line-height:1.6;margin:0;}
+
+  /* bio card */
+  .bio-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;background:linear-gradient(160deg,rgba(139,63,240,0.10),rgba(255,255,255,0.02));
+    margin-top:10px;
+  }
+  .bio-card .bio-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:10px;}
+  .bio-card pre{white-space:pre-wrap;font-family:var(--body);font-size:14.5px;color:var(--ink-0);line-height:1.75;margin:0;}
+
+  /* pillars grid */
+  .pillars{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.pillars{grid-template-columns:1fr 1fr;}}
+  .pillar{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--card);position:relative;overflow:hidden;}
+  .pillar::before{content:attr(data-n);position:absolute;right:14px;top:6px;font-family:var(--display);font-size:44px;color:rgba(168,85,247,0.10);font-weight:700;}
+  .pillar h4{font-family:var(--display);font-size:15px;color:var(--ink-0);margin:0 0 6px;font-weight:600;}
+  .pillar p{font-size:13.3px;color:var(--ink-1);margin:0;line-height:1.6;}
+  .pillar .fun{display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);}
+
+  .rules{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:720px){.rules{grid-template-columns:1fr 1fr;}}
+  .rule-do,.rule-dont{border-radius:16px;padding:18px 20px;border:1px solid var(--line);}
+  .rule-do{background:rgba(95,227,161,0.06);}
+  .rule-dont{background:rgba(255,90,90,0.05);}
+  .rule-do h4{color:var(--ok);} .rule-dont h4{color:#ff8a8a;}
+  .rule-do h4,.rule-dont h4{font-family:var(--display);font-size:14px;margin:0 0 10px;}
+  .rule-do ul,.rule-dont ul{margin:0;padding-left:18px;}
+  .rule-do li,.rule-dont li{font-size:13.3px;color:var(--ink-1);margin-bottom:6px;line-height:1.55;}
+
+  .funnel-strip{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px;}
+  @media(min-width:720px){.funnel-strip{grid-template-columns:1fr 1fr 1fr;}}
+  .funnel-col{border-radius:14px;padding:16px;border:1px solid var(--line);}
+  .funnel-col.topo{background:rgba(168,85,247,0.06);}
+  .funnel-col.meio{background:rgba(168,85,247,0.10);}
+  .funnel-col.fundo{background:rgba(168,85,247,0.16);}
+  .funnel-col h5{font-family:var(--display);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple-glow);margin:0 0 8px;}
+  .funnel-col p{font-size:13px;margin:0;color:var(--ink-1);line-height:1.6;}
+
+  /* ---------- CALENDAR ---------- */
+  .progress-wrap{
+    position:sticky;top:63px;z-index:40;
+    background:rgba(13,9,22,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .progress-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .progress-track{flex:1;height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple-700),var(--purple-glow));border-radius:100px;transition:width .5s ease;}
+  .progress-label{font-size:12px;color:var(--ink-2);white-space:nowrap;font-family:var(--display);}
+  .progress-label b{color:var(--ink-0);}
+  .badge-pill{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;background:rgba(232,200,116,0.06);}
+
+  .week-label{font-family:var(--display);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .week-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .day-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .day-card.done{border-color:rgba(95,227,161,0.45);background:rgba(95,227,161,0.045);}
+  .day-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .day-num{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    width:42px;height:42px;border-radius:12px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--purple-700),var(--purple-500));
+    color:#fff;
+  }
+  .day-card.done .day-num{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);}
+  .day-meta{flex:1;min-width:0;}
+  .day-meta .d-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:3px;}
+  .fmt-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-2);}
+  .fmt-badge.reel{color:#ff9fd6;border-color:rgba(255,159,214,0.3);}
+  .fmt-badge.carrossel{color:#8fd0ff;border-color:rgba(143,208,255,0.3);}
+  .fmt-badge.estatico{color:var(--gold);border-color:rgba(232,200,116,0.3);}
+  .date-label{font-size:11.5px;color:var(--ink-2);}
+  .day-title{font-size:14.5px;color:var(--ink-0);font-weight:600;}
+  .chev{width:20px;height:20px;flex:none;color:var(--ink-2);transition:transform .25s;}
+  .day-card.open .chev{transform:rotate(180deg);}
+  .check-btn{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    border:1.5px solid var(--line);background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:transparent;transition:.2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .check-btn svg{width:16px;height:16px;}
+  .check-btn.checked{background:linear-gradient(150deg,#2f9d6d,#5fe3a1);border-color:transparent;color:#0a1a12;}
+  .day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .day-card.open .day-body{max-height:1600px;}
+  .day-body-inner{padding:0 18px 20px;display:grid;gap:12px;}
+  .field{border-top:1px solid var(--line);padding-top:12px;}
+  .field .f-label{font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:5px;}
+  .field .f-value{font-size:13.6px;color:var(--ink-1);line-height:1.6;}
+  .field .f-value b{color:var(--ink-0);}
+  .cta-tag{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--gold);border:1px solid rgba(232,200,116,0.3);padding:4px 10px;border-radius:100px;}
+
+  .goal-card{
+    margin-top:40px;border-radius:var(--radius);
+    padding:28px;background:linear-gradient(150deg,rgba(139,63,240,0.18),rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .goal-card .tag{margin-bottom:14px;}
+  .goal-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:720px){.goal-grid{grid-template-columns:repeat(3,1fr);}}
+  .goal-item .g-num{font-family:var(--display);font-size:28px;color:var(--ink-0);font-weight:700;}
+  .goal-item .g-lbl{font-size:12px;color:var(--ink-2);margin-top:2px;}
+
+  footer{
+    margin-top:60px;padding:70px 24px 50px;text-align:center;
+    border-top:1px solid var(--line);
+    background:radial-gradient(60% 60% at 50% 0%, rgba(139,63,240,0.14), transparent 70%);
+  }
+  footer img{height:64px;width:64px;border-radius:16px;margin-bottom:18px;}
+  footer .f-title{font-family:var(--display);font-size:15px;color:var(--ink-0);margin-bottom:6px;}
+  footer .f-link{display:inline-block;margin-top:8px;font-size:14px;color:var(--purple-glow);text-decoration:none;border-bottom:1px solid rgba(168,85,247,0.4);padding-bottom:2px;}
+  footer .f-sub{font-size:11.5px;color:var(--ink-2);margin-top:22px;}
+
+  .reset-wrap{max-width:920px;margin:0 auto;padding:0 24px 10px;display:flex;justify-content:flex-end;}
+  .reset-btn{font-size:11.5px;color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  .reset-btn:hover{color:var(--ink-0);border-color:var(--purple-400);}
+
+  .save-toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-0);
+    font-size:12.5px;padding:10px 18px;border-radius:100px;opacity:0;
+    transition:.3s;pointer-events:none;z-index:100;
+  }
+  .save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="data:image/webp;base64,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" alt="NexusK Ads">
+    <div class="brand-text"><b>NEXUS K</b><span>AGÊNCIA DE MARKETING</span></div>
+  </div>
+  <nav>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#editorial">Linha Editorial</a>
+    <a href="#calendario">Calendário</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Portfólio estratégico · Instagram · 2026</span>
+  <h1>Diagnóstico completo e <em>calendário de 30 dias</em> para @dragabrielabechara</h1>
+  <p class="lead">Este documento reúne a análise do perfil, o posicionamento da Dra. Gabriela como a médica que cuida da obesidade com ciência e sem achismo e o plano editorial dos próximos 30 dias. O foco é triplo: aproveitar as pautas do nicho que geram visualizações, preparar o público para o Natal e o recesso e construir autoridade para levar mais mulheres a um plano de acompanhamento, e não apenas a uma consulta avulsa. O calendário tem mais reels falados, com script de 1 minuto, além de carrosséis, poucos reels de 7 segundos e dois posts estáticos. Cada card é interativo: marque o que já foi produzido e acompanhe o progresso.</p>
+  <div class="hero-meta">
+    <span class="chip">Cliente <b>Dra. Gabriela Bechara · Clínica Bechara</b></span>
+    <span class="chip">Nicho <b>Obesidade, lipedema, intestino e prevenção</b></span>
+    <span class="chip">Local <b>Alphaville · Barueri · SP</b></span>
+    <span class="chip">Período <b>30 dias · 2026</b></span>
+  </div>
+</div>
+
+<section class="block" id="diagnostico">
+  <div class="kicker"><span class="num">01</span><h2>Diagnóstico brutal do perfil</h2></div>
+  <p class="section-intro">Análise do que o perfil comunica hoje, cruzando o briefing com os prints da bio, do grid e da aba de reels, incluindo as visualizações.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">Posicionamento atual</span>
+    <p>O perfil tem 2.179 seguidores, 358 posts e 219 seguindo. Nos 25 reels que aparecem na aba de reels, a mediana é de 821 visualizações, cerca de 38% da base de seguidores, e a média dos outros 24 reels, sem o campeão, é de 1.205. O reel «Vamos parar de jogar Mounjaro no lixo?» chegou a 27,9 mil visualizações, mais de 30 vezes a mediana. Em seguida vêm o reel da xícara de café, com 7.795, o das três mulheres sorrindo, com 2.510, o do evento da Nutren Control, com 2.440, o da Dra. Gabriela deitada no sofá, com 2.217, e o do lançamento ao lado de um painel, com 1.393. O que se repete nos campeões: gancho que fala direto com «você» ou provoca com uma pergunta, e a Dra. Gabriela como pessoa na tela, com leveza. Já os reels informativos sobre canetas com título neutro ficam entre 573 e 898: «Mounjaro faz cair cabelo?» (864), «Boca seca» (850), «Desmame da Mounjaro» (605), «A nova medicação x via oral» (898) e «Retatrutida e a maior perda de peso da história» (573). A exceção entre os de canetas é «Você que está em uso de canetinhas emagrecedoras», com 1.207, que também fala com «você». A identidade gráfica forte, com caixas em vinho e letras serifadas, aparece em «A ressaca após as eleições», «Sobre o bolo que levei», «Casos de hoje», «Lp(a)» e «Cabelo é luxo metabólico», e ainda não está em todas as capas.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <span class="tag">O que já existe no perfil e como o calendário aproveita</span>
+    <ul>
+      <li><b>Série «Casos de hoje»</b> (reel com 288 visualizações, com os casos «Obesidade + Lipedema», «Reganho de peso após Mounjaro», «Obesidade + Trombofilia em gestantes» e «Obesidade + Menopausa»): ganha continuação no carrossel do dia 25 e pode virar série semanal.</li>
+      <li><b>«Mounjaro faz cair cabelo?»</b> (864) e <b>«Cabelo é luxo metabólico»</b> (552): o reel do dia 7 aprofunda o tema com exames e remete aos dois posts.</li>
+      <li><b>«Desmame da Mounjaro»</b> (605) e o caso <b>«Reganho de peso após Mounjaro»</b>: base do carrossel do dia 2.</li>
+      <li><b>«Plaquinha» de colesterol</b> (821), o carrossel <b>«Lp(a)»</b>, <b>«Seus exames estão normais. Mas, e você?»</b> (609) e <b>«O risco cardiovascular que você pode ter e não saber»</b> (431): o reel do dia 8 e o carrossel do dia 28 retomam esses temas com um ângulo novo.</li>
+      <li><b>«Retatrutida e a maior perda de peso da história»</b> (573), <b>«A nova medicação x via oral»</b> (898) e <b>«Semana de novidades no tratamento contra obesidade»</b> (880): ficam fora deste ciclo, porque envolvem dados técnicos que a Dra. Gabriela prefere conferir antes de publicar, e podem voltar em um próximo ciclo.</li>
+      <li><b>Eventos e congressos</b> (Nutren Control, Wellnow, «O cuidado é agora» e Conexões Internacionais): autoridade que já existe e merece o destaque «Sobre a Dra. Gabriela».</li>
+      <li><b>Posts de Natal</b> (o «Feliz Natal» e a árvore iluminada): a sazonalidade já faz parte do perfil e sustenta as estratégias de Natal e recesso dos dias 10, 17 e 26.</li>
+      <li><b>«Faça isso se você precisar DESESTRESSAR»</b> (586): estresse e fome viram o reel do dia 5.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:32px;">
+    <span class="tag">Pontos críticos de bloqueio</span>
+    <ul>
+      <li><b>Categoria do perfil:</b> o Instagram mostra «Criador de conteúdo digital» acima da bio, e isso não combina com uma médica. Vale deixar a categoria oculta, pelas configurações de perfil profissional, para que o rótulo não apareça.</li>
+      <li><b>Bio com pouca informação:</b> a bio tem a frase «Médica,mulher, mãe,muitas.», sem espaço depois das vírgulas, e o trecho «GB| health•» não explica o que é. Faltam a cidade, Alphaville em Barueri, e uma chamada para a ação, e a última linha, «Certificado Internacional em M.E.V pelo IBLM», aparece cortada.</li>
+      <li><b>Gancho sem padrão:</b> os reels que passam de mil visualizações falam com «você» ou fazem uma pergunta, e os que ficam abaixo de 900 usam títulos neutros, como «Desmame da Mounjaro» e «Retatrutida e a maior perda de peso da história». Vale escrever todo título de reel como pergunta ou como frase dirigida à paciente.</li>
+      <li><b>Capas difíceis de ler:</b> em reels como o da xícara de café e o do desmame, o texto da capa é pequeno e fica por cima do rosto, o que prejudica a leitura na grade. As capas com caixa vinho e letra serifada, como «A ressaca após as eleições» e «Sobre o bolo que levei», são o melhor modelo do perfil.</li>
+      <li><b>Feed que mistura temas:</b> entre os posts de ciência aparecem foto na praia, flores, árvore de Natal e uma festa com balões verdes e amarelos. Esse lado pessoal aproxima, mas diluído demais enfraquece a autoridade. Vale manter a proporção de cerca de 1 post pessoal para cada 4 posts profissionais.</li>
+      <li><b>Séries que aparecem uma vez só:</b> «Casos de hoje» e «Semana de novidades no tratamento contra obesidade» são boas séries, mas surgem de forma isolada. Transformar as duas em rotina semanal ajuda o público a esperar o próximo conteúdo.</li>
+      <li><b>Conversão pouco guiada:</b> a maior parte dos reels termina sem um convite claro, e o link da bio leva para um linktree. Vale deixar o agendamento da consulta e do plano de acompanhamento como o primeiro item do linktree. Se precisar de ajuda para montar ou reorganizar o linktree, é só chamar a NexusK no WhatsApp, que esse serviço também é feito à parte.</li>
+      <li><b>Destaques ausentes:</b> os prints não mostram destaques no perfil. Eles são a vitrine para quem chega pela primeira vez. Vale criar sete destaques, com capas em vinho e creme: «Plano de acompanhamento», «Canetas», «Lipedema», «Exames», «Intestino», «Sobre a Dra. Gabriela» e «Como chegar».</li>
+      <li><b>Mudança de oferta:</b> o briefing pede a migração das consultas avulsas para planos de acompanhamento de doenças crônicas. O perfil ainda não explica esse produto. O carrossel do dia 19 e o reel do dia 30 foram escritos para apresentar essa proposta.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Dores visíveis do público</span><ul>
+      <li>"Já tentei de tudo e o peso volta."</li>
+      <li>"As minhas pernas não emagrecem."</li>
+      <li>"Os meus exames estão normais e eu me sinto mal."</li>
+      <li>"Perdi cabelo depois que emagreci."</li></ul></div>
+    <div class="card"><span class="tag">Dores ocultas do público</span><ul>
+      <li>Medo de depender de um remédio para sempre.</li>
+      <li>Desconfiança das informações da internet e dos perfis que prometem muito.</li>
+      <li>Cansaço de consultas rápidas, em que ninguém explica o porquê.</li>
+      <li>Culpa por não conseguir sustentar o próprio peso.</li></ul></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="card"><span class="tag">Desejos emocionais</span><ul>
+      <li>Ser ouvida e levada a sério.</li>
+      <li>Ter segurança na escolha do tratamento.</li>
+      <li>Parar de se culpar pelo corpo.</li>
+      <li>Confiar em uma médica que explica.</li></ul></div>
+    <div class="card"><span class="tag">Desejos práticos</span><ul>
+      <li>Um plano de acompanhamento com metas e reavaliações.</li>
+      <li>Entender o resultado dos próprios exames.</li>
+      <li>Saber o que é verdade nas notícias sobre canetas.</li>
+      <li>Atendimento próximo, em Alphaville.</li></ul></div>
+  </div>
+
+  <span class="tag">Objeções que seguram a consulta</span>
+  <div class="objecoes" style="margin-bottom:32px;">
+    <div class="obj-item"><div class="o-head"><span>"Já tentei de tudo e nada funcionou"</span><span class="o-num">01</span></div><p>A lógica por trás: cansaço e medo de se frustrar de novo. O conteúdo precisa mostrar que a obesidade é uma doença crônica, que o tratamento tem fases e que o acompanhamento é o que dá continuidade.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Tenho medo de usar caneta e depender dela"</span><span class="o-num">02</span></div><p>A lógica por trás: informação confusa e histórias de reganho de peso. O conteúdo precisa explicar indicação, efeitos colaterais, manutenção e retirada planejada, sempre com a decisão compartilhada entre médica e paciente.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Já comprei pela internet, está mais barato"</span><span class="o-num">03</span></div><p>A lógica por trás: busca por preço e falta de informação sobre risco. O conteúdo precisa mostrar os cuidados com produto sem registro e o valor de ter avaliação, exames e acompanhamento.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"A consulta deve ser cara, será que vale a pena?"</span><span class="o-num">04</span></div><p>A lógica por trás: a paciente de alto nível compara entrega e investimento. Como o CFM não permite divulgar valores, o conteúdo mostra a profundidade da avaliação e o que o plano de acompanhamento inclui, e o investimento é tratado na conversa particular.</p></div>
+    <div class="obj-item"><div class="o-head"><span>"Tem médico demais nas redes falando modinha"</span><span class="o-num">05</span></div><p>A lógica por trás: desconfiança do público bem informado. O conteúdo precisa mostrar método, diretrizes, fontes e a clareza de dizer quando algo ainda não tem evidência.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="tag">Oportunidade de comunicação</span>
+    <p>O briefing da Dra. Gabriela é claro: ela é «bem formada tecnicamente, estuda muito e não usa achismo», atende mulheres de 35 e 40 anos ou mais, de nível social e intelectual alto, e quer que a entrega seja equivalente à cobrança. O perfil já tem o que sustenta isso: reels que ultrapassam 27 mil e 7 mil visualizações, uma série de casos, presença em congressos e uma imagem gráfica própria. O que falta é organizar esse material em um caminho que leve a pessoa da curiosidade ao plano de acompanhamento. O calendário faz isso em três frentes: temas que o público já mostrou querer, como queda de cabelo, desmame e colesterol, escolhidos com a Dra. Gabriela, como emagrecer rápido demais, manter o peso e lipedema, e a preparação para o Natal e o recesso, que é a época de maior risco para quem está em tratamento. Cada peça fecha com um convite claro para a consulta e para o plano de acompanhamento.</p>
+  </div>
+</section>
+
+<section class="block" id="posicionamento">
+  <div class="kicker"><span class="num">02</span><h2>Posicionamento de comunicação</h2></div>
+  <p class="section-intro">Um eixo claro: medicina baseada em evidência, com acolhimento, para a mulher que quer cuidar da saúde sem achismo.</p>
+  <div class="quote-block">"Obesidade se cuida com ciência, acompanhamento e uma médica que explica cada passo."</div>
+
+  <div class="grid2" style="margin-bottom:10px;">
+    <div class="card"><h3>Território de marca</h3><p>Nome comercial: Dra. Gabriela Bechara, Clínica Bechara, GB health. O território é o da obesidade tratada como doença crônica, com atenção ao risco cardiometabólico, ao lipedema, ao intestino e à saúde da mulher depois dos 35. A voz é elegante, realista e próxima, de quem estuda muito, não usa achismo e explica com calma. A entrega precisa estar à altura do que a paciente investe, e por isso o conteúdo mostra método, reavaliação e metas.</p></div>
+    <div class="card"><h3>Arquétipo de marca</h3><p><b>Principal: Sábio.</b> Explica a ciência com clareza, cita as fontes e admite o que ainda não se sabe.<br><b>Secundário: Cuidador.</b> Acolhe, escuta e acompanha de perto, como médica, mulher e mãe.</p></div>
+  </div>
+
+  <div class="bio-card">
+    <div class="bio-label">Nova bio estratégica · 133 caracteres, limite de 150</div>
+    <pre>Médica · Nutrologia e Medicina do Estilo de Vida
+Cuido da obesidade para além do peso
+CRM-SP 133.447 · Alphaville, Barueri 👇 Agende</pre>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3>Ajustes de perfil recomendados</h3><ul>
+    <li>Categoria: deixar o rótulo «Criador de conteúdo digital» oculto, pelas configurações de perfil profissional.</li>
+    <li>Campo Nome: «Dra. Gabriela Bechara | Nutrologia», que fica fora dos 150 caracteres da bio e ajuda na busca.</li>
+    <li>Localização: Alphaville, Barueri, já aparece na nova bio. Vale criar o destaque «Como chegar», com endereço, mapa e formas de contato.</li>
+    <li>Número do RQE: conferir as regras do CFM e incluir o RQE da especialidade junto ao CRM nas peças e no perfil, quando for exigido.</li>
+    <li>Destaques: «Plano de acompanhamento», «Canetas», «Lipedema», «Exames», «Intestino», «Sobre a Dra. Gabriela» e «Como chegar», com capas em vinho e creme.</li>
+    <li>Fixar no topo do grid o carrossel do dia 19 («Como funciona um plano de acompanhamento»), o reel do dia 29 («O que 19 anos de medicina me ensinaram sobre cuidar de mulheres») e o reel do dia 3 («Lipedema: o que ajuda e o que não ajuda de verdade»).</li>
+    <li>Linktree: o agendamento da consulta e do plano de acompanhamento como primeiro item. Se precisar de ajuda para montar ou reorganizar, é só chamar a NexusK no WhatsApp, que esse serviço é feito à parte.</li>
+    <li>Capas dos reels: modelo único, com título curto em serifada sobre caixa vinho, no estilo dos posts «Lp(a)» e «Cabelo é luxo metabólico».</li>
+    <li>Dúvidas de caso concreto são conversadas só na consulta, nunca nos comentários.</li></ul></div>
+</section>
+
+<section class="block" id="editorial">
+  <div class="kicker"><span class="num">03</span><h2>Linha editorial e comunicação</h2></div>
+  <p class="section-intro">Seis pilares organizam o mês, equilibrando as pautas quentes que geram alcance e os conteúdos que constroem autoridade.</p>
+
+  <div class="pillars" style="margin-bottom:36px;">
+    <div class="pillar" data-n="01"><h4>Assuntos que o público procura</h4><p>Temas de alta busca e alto alcance, como queda de cabelo, estresse, fome emocional e chás emagrecedores, explicados com ciência.</p><span class="fun">Topo de funil · alcance</span></div>
+    <div class="pillar" data-n="02"><h4>Obesidade como doença crônica</h4><p>Diretrizes, manutenção, reganho de peso, massa muscular e como funciona o plano de acompanhamento.</p><span class="fun">Meio e fundo de funil</span></div>
+    <div class="pillar" data-n="03"><h4>Risco cardiometabólico e exames</h4><p>Colesterol, marcadores de risco, glicose e check-up, em linguagem simples.</p><span class="fun">Meio de funil · autoridade</span></div>
+    <div class="pillar" data-n="04"><h4>Lipedema, hormônios e saúde da mulher</h4><p>Lipedema, celulite, menopausa e as mudanças do corpo depois dos 40.</p><span class="fun">Topo e meio de funil</span></div>
+    <div class="pillar" data-n="05"><h4>Intestino e suplementos</h4><p>Quando investigar, o que pedir de exame e como escolher suplementos com segurança.</p><span class="fun">Topo e meio de funil</span></div>
+    <div class="pillar" data-n="06"><h4>Autoridade e bastidores</h4><p>A médica, mulher e mãe, a formação, o método e as datas do mês.</p><span class="fun">Meio de funil · confiança</span></div>
+  </div>
+
+  <span class="tag">Pautas quentes usadas neste mês</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Pautas do mês</h3><ul>
+      <li><b>27/11:</b> Black Friday de suplementos (dia 23).</li>
+      <li><b>Natal e recesso:</b> estratégias de planejamento, da ceia e dos dias de folga (dias 10, 17 e 26).</li>
+      <li><b>Temas escolhidos com a Dra. Gabriela:</b> emagrecer rápido demais, manter o peso perdido e lipedema (dias 1, 2 e 3).</li>
+      <li><b>Assuntos de alto alcance:</b> estresse e fome, fome emocional, músculo depois dos 40 e chás e shots emagrecedores (dias 5, 12, 14 e 20).</li>
+      <li><b>Temas que o perfil já mostrou ter demanda:</b> queda de cabelo, colesterol e desmame (dias 7, 8 e 2).</li></ul></div>
+    <div class="card"><h3>Como reagir a uma pauta quente</h3><ul>
+      <li>Publicar em até 48 horas, porque o assunto perde força rápido.</li>
+      <li>Citar a fonte oficial no próprio vídeo ou na legenda.</li>
+      <li>Conferir os dados na fonte antes de gravar, porque as notícias mudam rápido.</li>
+      <li>Explicar o que a notícia significa na prática e o que ainda não está decidido.</li>
+      <li>Fechar com o convite para a consulta ou para o plano de acompanhamento.</li>
+      <li>Se surgir uma notícia nova no mês, ela pode substituir um card do calendário.</li></ul></div>
+  </div>
+
+  <span class="tag">Tom por formato</span>
+  <div class="grid2" style="margin:12px 0 32px;">
+    <div class="card"><h3>Reels de 7 segundos</h3><p><b>Reel de 7 segundos, um take só.</b> Como fazer: grave uma única cena de cerca de 7 segundos, sem cortes e sem ninguém falando pra câmera. Gancho em texto na tela, escrito como título direto, e música suave. Quem converte é a legenda.<br><br><b>Quer gravar falando?</b> Use o texto da legenda para falar! O texto já foi feito de forma que traga autoridade e converta!</p></div>
+    <div class="card"><h3>Reels falados de 1 minuto</h3><p><b>A Dra. Gabriela fala direto pra câmera, com o script pronto.</b> Como fazer: grave na vertical, com luz natural, em um fundo limpo, como o consultório. O script tem 5 blocos, do gancho ao convite final, e dá cerca de 1 minuto lendo em ritmo natural. Nas pautas quentes, grave no mesmo dia da notícia. O gancho vai em texto na tela nos primeiros 3 segundos, com a capa no modelo vinho e creme, e as legendas automáticas ficam ligadas. Fale do seu jeito, o script é um guia, e as palavras podem ser as suas.</p></div>
+    <div class="card"><h3>Carrossel</h3><p>Guias, listas e perguntas para salvar, uma ideia por slide, com linguagem simples. Capa padronizada em vinho e creme, com letra serifada. Fecha com o convite para a consulta.</p></div>
+    <div class="card"><h3>Estático</h3><p>Frase curta e forte sobre fundo creme, com fio fino vinho e a assinatura GB health. Serve para fixar uma ideia de posicionamento, e a legenda aprofunda.</p></div>
+    <div class="card"><h3>Regras do CFM</h3><p>O conteúdo não mostra antes e depois, não divulga valores, não faz promoção e não promete resultado. Ao falar de medicamentos, o conteúdo é informativo, com indicação, riscos e a necessidade de prescrição individual. Vale conferir as regras de publicidade médica do CFM antes de publicar.</p></div>
+    <div class="card"><h3>Casos clínicos</h3><p>Os perfis do carrossel do dia 25 são ilustrativos e não identificam ninguém. Para citar uma paciente real, é preciso autorização por escrito e conferência das regras do CFM.</p></div>
+  </div>
+
+  <div class="rules" style="margin-bottom:32px;">
+    <div class="rule-do"><h4>Sempre fazer</h4><ul>
+      <li>Explicar a ciência com calma, citando a fonte e o limite do que se sabe.</li>
+      <li>Usar «pode», «em geral» e «depende de cada caso» no lugar de promessas.</li>
+      <li>Lembrar que o conteúdo é educativo e não substitui consulta.</li>
+      <li>Falar de acompanhamento com metas e reavaliações, para mostrar o valor do plano.</li>
+      <li>Alternar o convite entre o número do WhatsApp (11) 97579-2310, o link da bio, o direct e o «salve e siga o perfil», sempre levando para a consulta.</li></ul></div>
+    <div class="rule-dont"><h4>Nunca fazer</h4><ul>
+      <li>Mostrar comparativos de antes e depois, em foto ou em vídeo.</li>
+      <li>Divulgar valores de consulta ou fazer promoções.</li>
+      <li>Prometer resultado, como perder peso em um prazo.</li>
+      <li>Estimular o uso de medicamento ou indicar uma marca como solução.</li>
+      <li>Expor paciente sem autorização por escrito.</li></ul></div>
+  </div>
+
+  <span class="tag">Paleta de sentimentos por etapa de funil</span>
+  <div class="funnel-strip">
+    <div class="funnel-col topo"><h5>Topo</h5><p>Curiosidade: «preciso entender essa notícia».</p></div>
+    <div class="funnel-col meio"><h5>Meio</h5><p>Confiança: «ela estuda, explica e não usa achismo».</p></div>
+    <div class="funnel-col fundo"><h5>Fundo</h5><p>Ação: «vou marcar a minha consulta e o meu plano».</p></div>
+  </div>
+</section>
+<!-- ================= CALENDÁRIO ================= -->
+<section class="block" id="calendario" style="padding-bottom:0;">
+  <div class="kicker"><span class="num">04</span><h2>Calendário de 30 dias</h2></div>
+  <p class="section-intro">16 reels falados com script de 1 minuto, 4 reels de 7 segundos, 8 carrosséis e 2 estáticos, começando em 05/11/2026. Algumas pautas são quentes e pedem gravação no mesmo dia da notícia. Toque em cada card pra abrir o roteiro completo, e marque o check quando publicar. Nos reels falados, o script já vem pronto, e nos carrosséis o texto de cada slide também. Seu progresso fica salvo automaticamente.</p>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso <b id="progress-count">0/30</b></span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="badge-pill" id="badge-pill">Bronze</span>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" id="reset-btn">Reiniciar checklist</button>
+</div>
+
+<section class="block" style="padding-top:20px;" id="days-container"></section>
+
+<div class="block" id="meta-mensal-wrap">
+  <div class="goal-card">
+    <span class="tag">Meta mensal</span>
+    <h3 style="font-family:var(--display);color:var(--ink-0);font-size:20px;margin:0 0 8px;">Meta de crescimento pra este ciclo de 30 dias</h3>
+    <p style="font-size:13.8px;color:var(--ink-1);line-height:1.65;max-width:640px;">Com 2.179 seguidores e reels que já passaram de 27 mil visualizações, a meta do ciclo é transformar alcance em consultas e em planos de acompanhamento. Os números abaixo são uma referência de partida, sem promessa de resultado, e devem ser revistos com os dados de Insights ao fim da primeira semana.</p>
+    <div class="goal-grid">
+      <div class="goal-item"><div class="g-num">+8%</div><div class="g-lbl">seguidores no ciclo, cerca de 175 novos</div></div>
+      <div class="goal-item"><div class="g-num">15+</div><div class="g-lbl">conversas de WhatsApp vindas do Instagram</div></div>
+      <div class="goal-item"><div class="g-num">4+</div><div class="g-lbl">consultas agendadas, com foco em planos de acompanhamento</div></div>
+    </div>
+
+
+
+<footer>
+  <img src="data:image/webp;base64,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" alt="NexusK Ads">
+  <div class="f-title">Produzido por NexusK Ads</div>
+  <a class="f-link" href="https://www.instagram.com/nexusk.ads/" target="_blank" rel="noopener">@nexusk.ads</a>
+  <div class="f-sub">Estratégia · Criatividade · Conexão · Resultados</div>
+</footer>
+
+<div class="save-toast" id="save-toast">Progresso salvo</div>
+
+<script>
+const CAL_DATA = [
+{
+"id": "d01",
+"day": 1,
+"week": 1,
+"data": "05/11 · qui",
+"formato": "Reel falado",
+"pilar": "Obesidade como doença crônica",
+"tema": "Emagrecer rápido demais",
+"objetivo": "Mostrar autoridade e alertar sobre os riscos de perder peso rápido demais.",
+"gancho": "Você quer emagrecer rápido? Veja o que o seu corpo pode pagar por isso",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Perder peso rápido demais parece vitória na balança, mas o corpo pode cobrar a conta depois.<br><br>Perda de massa muscular, queda de cabelo, cansaço e reganho de peso estão entre as consequências possíveis. O ritmo certo depende de cada pessoa e precisa de acompanhamento médico.<br><br>Quer emagrecer com cuidado? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Quer emagrecer com cuidado? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"script": [
+"0 a 5s · Gancho: Emagrecer rápido demais parece vitória na balança, mas o corpo pode cobrar a conta. Eu explico.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. Quando o peso cai rápido demais, uma parte importante do que sai pode ser massa muscular e água, e não apenas gordura. Menos músculo significa gasto de energia menor e mais fraqueza.",
+"20 a 40s · Bloco 2: Também podem aparecer queda de cabelo, cansaço, irritação, alterações no ciclo menstrual, falta de nutrientes e até pedra na vesícula, que é mais comum quando a perda de peso é acelerada.",
+"40 a 52s · Bloco 3: E tem mais um ponto: quanto mais radical é o método, mais difícil é sustentá-lo, e o peso tende a voltar. O ritmo precisa respeitar o seu corpo, com avaliação e acompanhamento médico, e a meta de cada pessoa é individual.",
+"52 a 60s · Convite final: Se você quer emagrecer com cuidado e segurança, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d02",
+"day": 2,
+"week": 1,
+"data": "06/11 · sex",
+"formato": "Carrossel",
+"pilar": "Obesidade como doença crônica",
+"tema": "Manter o peso perdido",
+"objetivo": "Orientar sobre a fase de manutenção e gerar salvamentos.",
+"gancho": "Como manter o peso perdido depois de emagrecer",
+"visual": "9 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Perder peso é uma etapa. Manter o peso é outra, e merece o mesmo cuidado.<br><br>Veja 5 pilares da fase de manutenção. A conduta é individual e definida pelo seu médico.<br><br>Salve este post e siga o perfil para acompanhar mais sobre como manter o peso perdido.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre como manter o peso perdido.",
+"slides": [
+"Como manter o peso perdido depois de emagrecer.",
+"Manter o peso é uma fase do tratamento, e ela também exige cuidado e acompanhamento.",
+"1. Proteja a massa muscular: treino de força orientado e proteína nas refeições.",
+"2. Cuide do sono, porque dormir mal aumenta a fome.",
+"3. Acompanhe o peso e as medidas com regularidade, para corrigir o rumo cedo.",
+"4. Tenha refeições previsíveis, que reduzem as decisões tomadas no impulso.",
+"5. Combine com o seu médico o plano de manutenção, sem interromper o tratamento por conta própria.",
+"Obesidade é uma doença crônica, e a manutenção também é acompanhada com reavaliações.",
+"Salve este post e siga o perfil para acompanhar mais sobre como manter o peso perdido."
+]
+},
+{
+"id": "d03",
+"day": 3,
+"week": 1,
+"data": "07/11 · sab",
+"formato": "Reel falado",
+"pilar": "Lipedema, hormônios e saúde da mulher",
+"tema": "Lipedema: o que ajuda e o que não ajuda",
+"objetivo": "Esclarecer o que tem indicação no lipedema e mostrar autoridade.",
+"gancho": "Lipedema: o que ajuda e o que não ajuda de verdade",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muita mulher com lipedema tenta de tudo e se frustra, porque ninguém explicou o que realmente costuma ajudar.<br><br>O tratamento é individual e costuma envolver mais de uma frente. Os pontos abaixo são orientações gerais, e o diagnóstico precisa de avaliação médica.<br><br>Suspeita de lipedema? Agende a sua consulta pelo link da bio.",
+"cta": "Suspeita de lipedema? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Lipedema: o que ajuda e o que não ajuda de verdade? Vamos separar mito de fato.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. O lipedema é uma doença do tecido gorduroso, que costuma afetar pernas e quadril de forma simétrica, com dor e sensibilidade. A gordura dele costuma responder pouco à dieta.",
+"20 a 40s · Bloco 2: O que costuma ajudar: atividade física regular, de baixo impacto, como caminhada e natação, treino de força orientado, controle do peso quando existe obesidade junto, alimentação anti-inflamatória e, em alguns casos, compressão e drenagem linfática para aliviar os sintomas.",
+"40 a 52s · Bloco 3: O que costuma não ajudar: dieta muito restritiva, jejum prolongado, cremes redutores e treinos exaustivos sem orientação. Além de não resolverem a doença, eles geram frustração e culpa.",
+"52 a 60s · Convite final: Se você suspeita de lipedema, o primeiro passo é uma avaliação médica, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d04",
+"day": 4,
+"week": 1,
+"data": "08/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Intestino e suplementos",
+"tema": "Intestino e a semana corrida",
+"objetivo": "Gerar identificação com queixas intestinais comuns.",
+"gancho": "Seu intestino também sente a sua semana",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: um copo de água, um prato com mamão e uma tigela de aveia sobre uma bancada clara, com luz da manhã. Gancho em texto na tela, letra limpa e objetiva, música suave.",
+"legenda": "Intestino preso, inchaço e gases no fim da semana são queixas muito comuns entre as mulheres.<br><br>Se acontece com frequência, vale investigar com um médico. Alimentação, água, fibras e rotina fazem parte da avaliação.<br><br>Quer investigar o seu caso? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer investigar o seu caso? Me chame no direct para agendar a sua consulta."
+},
+{
+"id": "d05",
+"day": 5,
+"week": 1,
+"data": "09/11 · seg",
+"formato": "Reel falado",
+"pilar": "Assuntos que o público procura",
+"tema": "Estresse e fome",
+"objetivo": "Falar de um tema de alto alcance e gerar identificação.",
+"gancho": "Você come mais quando está estressada? Entenda o que acontece",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Dia difícil, trabalho puxado, e de repente a vontade é de comer doce. Isso tem explicação.<br><br>O estresse e o sono ruim mexem com o apetite e com a escolha dos alimentos. Estratégias simples ajudam a atravessar esses dias, e cada caso precisa de avaliação.<br><br>Quer olhar para a sua rotina de forma completa? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Quer olhar para a sua rotina de forma completa? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"script": [
+"0 a 5s · Gancho: Você come mais quando está estressada? Isso tem explicação.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. Em dias de estresse, o corpo fica em estado de alerta, e isso pode aumentar o apetite e a vontade de alimentos doces e gordurosos. Isso tem a ver com a resposta do organismo ao estresse, e a força de vontade tem pouca relação com o assunto.",
+"20 a 40s · Bloco 2: O sono ruim piora esse quadro, porque também mexe com os hormônios da fome e da saciedade. Por isso, muita gente come mais justamente quando dorme mal e está sobrecarregada.",
+"40 a 52s · Bloco 3: O que costuma ajudar: refeições regulares com proteína, para a fome não chegar de uma vez, uma pausa de poucos minutos antes de abrir a geladeira, movimento e um horário fixo para dormir. E se isso é frequente, vale investigar com um médico.",
+"52 a 60s · Convite final: Se você quer olhar para a sua rotina com calma, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d06",
+"day": 6,
+"week": 1,
+"data": "10/11 · ter",
+"formato": "Carrossel",
+"pilar": "Obesidade como doença crônica",
+"tema": "Além do IMC",
+"objetivo": "Educar sobre risco e gerar salvamentos.",
+"gancho": "Além do IMC: 5 medidas que ajudam a entender o seu risco",
+"visual": "8 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Duas pessoas com o mesmo peso podem ter riscos muito diferentes para a saúde.<br><br>Este guia mostra 5 medidas que complementam o IMC na avaliação.<br><br>Salve este post e siga o perfil para acompanhar mais sobre como entender o seu risco além do IMC.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre como entender o seu risco além do IMC.",
+"slides": [
+"Além do IMC: 5 medidas que ajudam a entender o seu risco.",
+"1. Relação entre cintura e altura. Acima de 0,5 já merece atenção.",
+"2. Circunferência abdominal, medida com fita no ponto certo.",
+"3. Composição corporal: quanto é massa muscular e quanto é gordura.",
+"4. Exames metabólicos, como glicemia, hemoglobina glicada e perfil de gorduras no sangue.",
+"5. Pressão arterial, sono e doenças associadas.",
+"O IMC é um ponto de partida. A avaliação completa mostra o quadro inteiro.",
+"Salve este post e siga o perfil para acompanhar mais sobre como entender o seu risco além do IMC."
+]
+},
+{
+"id": "d07",
+"day": 7,
+"week": 1,
+"data": "11/11 · qua",
+"formato": "Reel falado",
+"pilar": "Assuntos que o público procura",
+"tema": "Queda de cabelo ao emagrecer",
+"objetivo": "Tratar uma dúvida muito buscada pelo público.",
+"gancho": "Perdendo cabelo depois que começou a emagrecer? Entenda por que acontece",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Queda de cabelo é uma das queixas mais frequentes de quem emagrece rápido, com caneta ou sem ela.<br><br>Em geral, ela está ligada à perda de peso acelerada e à falta de nutrientes, como proteína, ferro e vitaminas. Vale investigar com exames e ajustar a alimentação.<br><br>Quer investigar a causa? Agende a sua consulta pelo link da bio.",
+"cta": "Quer investigar a causa? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Está perdendo cabelo depois que começou a emagrecer? Vamos conversar sobre isso.",
+"5 a 20s · Bloco 1: A queda de cabelo é uma queixa frequente em quem perde peso rápido, com caneta ou sem. O fio é um dos primeiros lugares em que o corpo economiza quando a ingestão cai muito.",
+"20 a 40s · Bloco 2: Na maioria das vezes, existe relação com pouca proteína, falta de ferro, vitamina D ou outros nutrientes, além do estresse da própria mudança. Por isso, eu peço exames antes de qualquer suplemento, em vez de comprar o que viu na rede.",
+"40 a 52s · Bloco 3: O ritmo da perda de peso também conta. Quando o acompanhamento é próximo, a gente ajusta a alimentação e o plano ao longo do caminho. A queda costuma ser temporária, mas cada caso precisa de avaliação.",
+"52 a 60s · Convite final: Se você está nessa situação, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d08",
+"day": 8,
+"week": 2,
+"data": "12/11 · qui",
+"formato": "Reel falado",
+"pilar": "Risco cardiometabólico e exames",
+"tema": "Colesterol normal e o coração",
+"objetivo": "Trazer autoridade com um tema de risco cardiovascular.",
+"gancho": "Colesterol normal e risco no coração: o que o exame de rotina pode não mostrar",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muita gente recebe o colesterol normal e fica tranquila. Mas o exame de rotina nem sempre conta a história inteira.<br><br>Existem marcadores que ajudam a refinar o risco cardiovascular, como a apolipoproteína B e a lipoproteína(a), e a indicação deles é individual.<br><br>Quer entender o seu risco? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer entender o seu risco? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: O seu colesterol veio normal. Isso significa que o seu coração está protegido?",
+"5 a 20s · Bloco 1: Nem sempre. O exame de rotina mede o colesterol total, o LDL e o HDL, e isso é importante. Mas existem marcadores que refinam o risco cardiovascular, como a apolipoproteína B e a lipoproteína(a).",
+"20 a 40s · Bloco 2: A lipoproteína(a) é em grande parte determinada pela genética, e costuma ser pedida uma vez na vida. Quem tem histórico de infarto na família, por exemplo, pode se beneficiar dessa avaliação.",
+"40 a 52s · Bloco 3: Peso, pressão, glicemia, circunferência abdominal e histórico familiar também entram na conta. O risco cardiovascular se avalia como um conjunto, e a indicação de cada exame é individual.",
+"52 a 60s · Convite final: Se você quer entender o seu risco, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d09",
+"day": 9,
+"week": 2,
+"data": "13/11 · sex",
+"formato": "Carrossel",
+"pilar": "Lipedema, hormônios e saúde da mulher",
+"tema": "Lipedema: 6 sinais",
+"objetivo": "Gerar identificação e salvamentos no tema lipedema.",
+"gancho": "Lipedema ou gordura comum? 6 sinais para observar",
+"visual": "9 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Muitas mulheres passam anos tentando emagrecer as pernas e se culpando por isso.<br><br>O lipedema é uma doença do tecido gorduroso, e reconhecer os sinais é o primeiro passo para buscar avaliação.<br><br>Salve este carrossel e mande para uma amiga. Para uma avaliação, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Salve este carrossel e mande para uma amiga. Para uma avaliação, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"slides": [
+"Lipedema ou gordura comum? 6 sinais para observar.",
+"Sinal 1: aumento de gordura nas pernas e no quadril, e às vezes nos braços, de forma simétrica.",
+"Sinal 2: tronco mais fino do que a parte de baixo do corpo.",
+"Sinal 3: dor ou sensibilidade ao toque na região.",
+"Sinal 4: hematomas com facilidade.",
+"Sinal 5: pés e mãos costumam ficar poupados.",
+"Sinal 6: a gordura da região responde pouco à dieta e ao exercício.",
+"Estes sinais não fecham diagnóstico. O lipedema precisa ser avaliado por médico, e o tratamento costuma envolver mais de uma frente.",
+"Agende a sua consulta no WhatsApp (11) 97579-2310."
+]
+},
+{
+"id": "d10",
+"day": 10,
+"week": 2,
+"data": "14/11 · sab",
+"formato": "Reel falado",
+"pilar": "Autoridade e bastidores",
+"tema": "Natal: planeje antes de a ceia chegar",
+"objetivo": "Antecipar o Natal com estratégias de planejamento e gerar autoridade.",
+"gancho": "Natal chegando: o plano que evita comer demais começa agora",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Faltam poucas semanas para o Natal, e quem se planeja agora chega à ceia com muito mais tranquilidade.<br><br>O planejamento começa antes da ceia: decidir o que vale a pena, manter a rotina nos dias anteriores e evitar o jejum para compensar.<br><br>Salve este post e siga o perfil para acompanhar mais sobre estratégias para as festas de fim de ano.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre estratégias para as festas de fim de ano.",
+"script": [
+"0 a 5s · Gancho: Faltam poucas semanas para o Natal. Quem se planeja agora chega à ceia com muito mais tranquilidade.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. A primeira estratégia é pensar na ceia antes da ceia. Decida o que realmente vale a pena para você, aquilo que você só come no Natal, e combine consigo mesma o que pode ficar de fora.",
+"20 a 40s · Bloco 2: Mantenha a rotina nos dias anteriores: treino, sono e refeições regulares. E evite o jejum para compensar a ceia, porque chegar com muita fome é o caminho mais curto para exagerar.",
+"40 a 52s · Bloco 3: Na semana do Natal, vale combinar com a família o que cada um leva, para ter opções leves na mesa, e já planejar o dia seguinte, com uma refeição organizada e sem culpa.",
+"52 a 60s · Convite final: Salve este vídeo e siga o perfil para acompanhar mais sobre estratégias para as festas de fim de ano."
+]
+},
+{
+"id": "d11",
+"day": 11,
+"week": 2,
+"data": "15/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Autoridade e bastidores",
+"tema": "Feriado e rotina",
+"objetivo": "Gerar identificação num domingo de feriado.",
+"gancho": "Feriado também é dia de cuidar da sua saúde",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: uma xícara de café e uma tigela de frutas sobre uma mesa, com luz da manhã e um livro ao lado. Gancho em texto na tela, letra limpa e objetiva, música suave.",
+"legenda": "Feriado é um bom dia para desacelerar sem abandonar os hábitos.<br><br>Sono, hidratação e uma refeição organizada ajudam o corpo a manter o ritmo, sem rigidez.<br><br>Quer um plano de cuidado para o ano todo? Agende a sua consulta pelo link da bio.",
+"cta": "Quer um plano de cuidado para o ano todo? Agende a sua consulta pelo link da bio."
+},
+{
+"id": "d12",
+"day": 12,
+"week": 2,
+"data": "16/11 · seg",
+"formato": "Reel falado",
+"pilar": "Assuntos que o público procura",
+"tema": "Fome ou vontade de comer",
+"objetivo": "Ensinar a diferenciar fome física de vontade de comer.",
+"gancho": "Fome de verdade ou vontade de comer? Aprenda a diferenciar",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Você abre a geladeira sem fome e depois se pergunta o motivo? Isso é muito comum.<br><br>Aprender a reconhecer os sinais do corpo ajuda a fazer escolhas com mais calma. Se a vontade de comer é frequente e difícil de controlar, vale uma avaliação.<br><br>Quer entender o seu padrão? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer entender o seu padrão? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Fome de verdade ou só vontade de comer? Vou te ensinar a diferenciar.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. A fome física vem aos poucos, aceita vários alimentos e passa quando você come. A vontade de comer, em geral, aparece de repente, pede um alimento específico, como doce, e costuma vir junto com uma emoção: tédio, ansiedade ou cansaço.",
+"20 a 40s · Bloco 2: Uma pergunta simples ajuda: eu comeria uma fruta ou um prato de comida agora? Se a resposta for sim, provavelmente existe fome. Se só um alimento específico resolve, vale pausar e observar o que você está sentindo.",
+"40 a 52s · Bloco 3: Beber água, esperar uns minutos e fazer outra coisa, como caminhar, pode ajudar. Comer sem pressa e com atenção também. Mas, se a vontade é frequente e difícil de controlar, isso merece uma avaliação médica, sem culpa.",
+"52 a 60s · Convite final: Se você quer entender o seu padrão, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d13",
+"day": 13,
+"week": 2,
+"data": "17/11 · ter",
+"formato": "Carrossel",
+"pilar": "Obesidade como doença crônica",
+"tema": "5 perguntas antes da caneta",
+"objetivo": "Gerar confiança e salvamentos com um guia de decisão.",
+"gancho": "5 perguntas para fazer ao seu médico antes de começar uma caneta",
+"visual": "9 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Começar uma caneta é uma decisão médica, e você tem o direito de perguntar tudo.<br><br>Salve estas 5 perguntas e leve para a sua consulta.<br><br>Para fazer essas perguntas comigo, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Para fazer essas perguntas comigo, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"slides": [
+"5 perguntas para fazer ao seu médico antes de começar uma caneta.",
+"1. Eu tenho indicação? Peça para revisar o seu IMC, as suas doenças associadas e os seus exames.",
+"2. Quais são os efeitos colaterais mais comuns e como lidar com eles?",
+"3. Como eu protejo a minha massa muscular durante o tratamento?",
+"4. Existe meta, e quando vamos reavaliar a resposta?",
+"5. Qual é o plano para a fase de manutenção?",
+"Gestação, amamentação e planos de engravidar precisam ser conversados antes.",
+"A decisão é compartilhada e individual. Este conteúdo é informativo.",
+"Agende a sua consulta no WhatsApp (11) 97579-2310."
+]
+},
+{
+"id": "d14",
+"day": 14,
+"week": 2,
+"data": "18/11 · qua",
+"formato": "Reel falado",
+"pilar": "Obesidade como doença crônica",
+"tema": "Músculo depois dos 40",
+"objetivo": "Mostrar autoridade e a importância da massa muscular.",
+"gancho": "Depois dos 40, o músculo some mais rápido? O que fazer",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Com o passar dos anos, a massa muscular tende a diminuir se ela não for estimulada, e isso afeta o metabolismo e a saúde.<br><br>Treino de força, proteína adequada e sono ajudam a proteger a massa muscular. A orientação precisa ser individual.<br><br>Quer um acompanhamento que olhe para isso? Agende a sua consulta pelo link da bio.",
+"cta": "Quer um acompanhamento que olhe para isso? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Depois dos 40, o músculo diminui mais rápido? Vamos conversar sobre isso.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. Com o passar dos anos, a massa muscular tende a diminuir, principalmente se ela não é estimulada, e nas mulheres isso se acentua em torno da menopausa. O músculo é um órgão ativo, que ajuda no gasto de energia, no controle da glicose e na mobilidade.",
+"20 a 40s · Bloco 2: Por isso, treinar força faz tanta diferença nessa fase. Com a orientação de um profissional de educação física, o treino de força ajuda a manter e até a ganhar massa muscular, além de cuidar dos ossos.",
+"40 a 52s · Bloco 3: A alimentação entra na conta: ter proteína ao longo do dia e comer o suficiente, sem restrições exageradas. O sono também conta, porque é nele que o corpo se recupera.",
+"52 a 60s · Convite final: Se você quer um acompanhamento que olhe para isso, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d15",
+"day": 15,
+"week": 3,
+"data": "19/11 · qui",
+"formato": "Estático",
+"pilar": "Obesidade como doença crônica",
+"tema": "Balança e composição corporal",
+"objetivo": "Fixar uma ideia de posicionamento.",
+"gancho": "A balança mostra o peso. A composição corporal mostra a saúde.",
+"visual": "Arte estática na paleta vinho, creme e grafite do perfil, com letra serifada e pouco texto: frase principal em letra serifada sobre fundo creme, com um fio fino em vinho e a assinatura GB health.",
+"legenda": "Peso igual, composição diferente, risco diferente.<br><br>A avaliação da composição corporal ajuda a acompanhar massa muscular, gordura e distribuição, e orienta o plano.<br><br>Salve este post e siga o perfil para acompanhar mais sobre composição corporal e saúde.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre composição corporal e saúde."
+},
+{
+"id": "d16",
+"day": 16,
+"week": 3,
+"data": "20/11 · sex",
+"formato": "Reel falado",
+"pilar": "Intestino e suplementos",
+"tema": "Intestino: quando investigar",
+"objetivo": "Trazer autoridade e orientar sobre sinais de alerta.",
+"gancho": "Intestino preso e inchaço: quando é hora de investigar",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Constipação e inchaço são queixas comuns, mas algumas situações pedem investigação.<br><br>Sangue nas fezes, perda de peso sem explicação, anemia, dor persistente ou mudança brusca do hábito intestinal precisam de avaliação médica sem demora.<br><br>Quer investigar com cuidado? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer investigar com cuidado? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Intestino preso e barriga inchada: quando isso merece investigação?",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. Constipação e inchaço são queixas muito comuns, principalmente entre as mulheres. Na rotina, a alimentação, a água, as fibras, o sono e o estresse entram na avaliação.",
+"20 a 40s · Bloco 2: Mas existem sinais de alerta que pedem investigação sem demora: sangue nas fezes, perda de peso sem explicação, anemia, dor persistente e mudança brusca do hábito intestinal, principalmente depois dos 40.",
+"40 a 52s · Bloco 3: Nesses casos, o primeiro passo é uma avaliação médica, antes de qualquer suplemento. Cada pessoa precisa de um caminho próprio, que pode envolver exames, ajuste alimentar e acompanhamento.",
+"52 a 60s · Convite final: Se você convive com esses sintomas, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d17",
+"day": 17,
+"week": 3,
+"data": "21/11 · sab",
+"formato": "Reel falado",
+"pilar": "Autoridade e bastidores",
+"tema": "Natal: estratégias na hora da ceia",
+"objetivo": "Dar estratégias práticas para a noite da ceia.",
+"gancho": "Noite de Natal: como aproveitar a ceia sem exagerar",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Na noite da ceia, pequenas decisões fazem toda a diferença entre aproveitar e passar do ponto.<br><br>Comer algo leve antes, escolher com calma, comer devagar e alternar a bebida com água ajudam a manter o equilíbrio.<br><br>Quer chegar às festas com um plano? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Quer chegar às festas com um plano? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"script": [
+"0 a 5s · Gancho: Chegou a noite da ceia. O que fazer para aproveitar sem exagerar?",
+"5 a 20s · Bloco 1: Antes de sair de casa, faça uma refeição leve, com proteína, para não chegar com muita fome. Olhe a mesa toda antes de montar o prato e escolha o que realmente vale a pena.",
+"20 a 40s · Bloco 2: Comece por saladas e proteínas, coma devagar e faça pausas entre uma rodada e outra. A saciedade leva alguns minutos para chegar, e ir devagar ajuda a perceber.",
+"40 a 52s · Bloco 3: Se vai beber, alterne com água, porque o álcool aumenta o apetite e soma muitas calorias. E se exagerou, a refeição seguinte é um novo começo, sem jejum e sem culpa.",
+"52 a 60s · Convite final: Se você quer chegar às festas com um plano, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d18",
+"day": 18,
+"week": 3,
+"data": "22/11 · dom",
+"formato": "Reel 7s",
+"pilar": "Intestino e suplementos",
+"tema": "Exame antes do suplemento",
+"objetivo": "Orientar sobre o uso consciente de suplementos.",
+"gancho": "Antes de comprar suplemento, peça o exame",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: um pote de suplemento fechado, sem marca visível, ao lado de um pedido de exames sobre uma mesa clara. Gancho em texto na tela, letra limpa e objetiva, música suave.",
+"legenda": "Suplemento sem necessidade comprovada gasta dinheiro e ainda pode atrapalhar.<br><br>Exames mostram o que falta de verdade, e a reposição é individual.<br><br>Salve este post e siga o perfil para acompanhar mais sobre suplementos com base em evidência.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre suplementos com base em evidência."
+},
+{
+"id": "d19",
+"day": 19,
+"week": 3,
+"data": "23/11 · seg",
+"formato": "Carrossel",
+"pilar": "Obesidade como doença crônica",
+"tema": "Como funciona o plano de acompanhamento",
+"objetivo": "Apresentar o produto de acompanhamento e converter.",
+"gancho": "Como funciona um plano de acompanhamento para obesidade e doenças crônicas",
+"visual": "9 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Uma consulta avulsa resolve uma dúvida. Um plano de acompanhamento cuida de uma doença crônica ao longo do tempo.<br><br>Veja como funcionam as etapas do acompanhamento na Clínica Bechara.<br><br>Salve este carrossel. Para conhecer o plano, agende a sua consulta pelo link da bio.",
+"cta": "Salve este carrossel. Para conhecer o plano, agende a sua consulta pelo link da bio.",
+"slides": [
+"Como funciona um plano de acompanhamento para obesidade e doenças crônicas.",
+"Etapa 1: consulta inicial, com histórico, exame físico, composição corporal e exames.",
+"Etapa 2: definição de metas realistas, junto com você.",
+"Etapa 3: plano individual, com alimentação, atividade física, sono e, quando indicado, medicação.",
+"Etapa 4: reavaliações periódicas e ajustes no caminho.",
+"Etapa 5: fase de manutenção, para sustentar o cuidado ao longo do tempo.",
+"Obesidade é uma doença crônica. O acompanhamento é o que dá continuidade ao cuidado.",
+"Cada plano é individual. Este conteúdo é informativo.",
+"Agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d20",
+"day": 20,
+"week": 3,
+"data": "24/11 · ter",
+"formato": "Reel falado",
+"pilar": "Intestino e suplementos",
+"tema": "Chá e shot emagrecedor",
+"objetivo": "Falar de um tema muito buscado e mostrar autoridade.",
+"gancho": "Chá, shot e detox emagrecedor: funciona mesmo?",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Chás, shots e detox prometem emagrecer rápido e aparecem toda hora nas redes.<br><br>Esses produtos podem causar efeito laxante, desidratação e outros incômodos, e não substituem alimentação, sono e movimento. Antes de usar, converse com o seu médico.<br><br>Quer uma orientação individual? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer uma orientação individual? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Chá, shot e detox emagrecedor: funciona mesmo? Eu respondo.",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara, e esse é um dos assuntos que mais aparecem nas redes. Esses produtos prometem emagrecer rápido, mas a perda que se vê na balança costuma ser de líquido, por efeito diurético ou laxante.",
+"20 a 40s · Bloco 2: Esse efeito pode causar desidratação, perda de sais minerais e desconforto intestinal, e a gordura do corpo segue ali. Além disso, o peso tende a voltar assim que você para, e fica a frustração.",
+"40 a 52s · Bloco 3: O que sustenta a saúde de verdade é um conjunto: alimentação adequada, sono, movimento e, quando necessário, acompanhamento médico. Se você gosta de um chá, ele pode fazer parte da rotina como hidratação, sem a promessa de milagre.",
+"52 a 60s · Convite final: Se você quer uma orientação individual, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d21",
+"day": 21,
+"week": 3,
+"data": "25/11 · qua",
+"formato": "Carrossel",
+"pilar": "Lipedema, hormônios e saúde da mulher",
+"tema": "Celulite: o que a ciência diz",
+"objetivo": "Gerar salvamentos e compartilhamentos com um tema muito buscado.",
+"gancho": "Celulite: o que a ciência diz",
+"visual": "8 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Celulite é uma das queixas que mais incomodam e que mais geram promessas milagrosas.<br><br>Veja o que a ciência diz sobre as causas e o que ajuda.<br><br>Salve este carrossel. Para uma avaliação, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Salve este carrossel. Para uma avaliação, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"slides": [
+"Celulite: o que a ciência diz.",
+"A celulite é muito comum entre as mulheres e depende de hormônios, genética e estrutura da pele.",
+"Ela aparece até em mulheres magras e em quem treina.",
+"O que ajuda: manter a massa muscular, ter hábitos regulares, dormir bem, comer de forma equilibrada e controlar o peso quando há excesso.",
+"Tratamentos estéticos podem ajudar, e a escolha depende de cada caso e de avaliação profissional.",
+"Promessas de solução rápida ou de sumiço total merecem desconfiança.",
+"Quando a gordura nas pernas é dolorida e desproporcional, vale investigar também o lipedema.",
+"Este conteúdo é informativo e não substitui consulta. Agende a sua consulta no WhatsApp (11) 97579-2310."
+]
+},
+{
+"id": "d22",
+"day": 22,
+"week": 4,
+"data": "26/11 · qui",
+"formato": "Reel falado",
+"pilar": "Lipedema, hormônios e saúde da mulher",
+"tema": "Menopausa e peso",
+"objetivo": "Falar com a mulher 40+ sobre as mudanças do corpo.",
+"gancho": "Menopausa e ganho de peso: o que muda no seu metabolismo",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Muitas mulheres percebem que o corpo mudou na perimenopausa, mesmo sem mudar a rotina.<br><br>A queda do estrogênio se relaciona com mudança na distribuição da gordura, perda de massa muscular e alteração do sono e do humor. A avaliação deve ser individual.<br><br>Quer uma avaliação completa? Agende a sua consulta pelo link da bio.",
+"cta": "Quer uma avaliação completa? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Menopausa e ganho de peso: o que realmente muda no corpo?",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. Na perimenopausa e na menopausa, a queda do estrogênio se relaciona com mudanças importantes: a gordura tende a se concentrar mais na região do abdômen, e a massa muscular diminui com mais facilidade.",
+"20 a 40s · Bloco 2: O sono também costuma piorar, e o sono ruim aumenta a fome e dificulta a regulação do peso. Por isso, muitas mulheres sentem que o corpo mudou, mesmo mantendo a mesma rotina.",
+"40 a 52s · Bloco 3: A boa notícia é que existe o que fazer: treino de força, proteína adequada, cuidado com o sono e, em alguns casos, a avaliação de terapia hormonal, que é sempre uma decisão individual, junto com o seu médico.",
+"52 a 60s · Convite final: Se você está nessa fase e quer um acompanhamento, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d23",
+"day": 23,
+"week": 4,
+"data": "27/11 · sex",
+"formato": "Reel 7s",
+"pilar": "Intestino e suplementos",
+"tema": "Black Friday e suplementos",
+"objetivo": "Orientar sobre suplementos na Black Friday.",
+"gancho": "Black Friday: antes de comprar suplemento, converse com o seu médico",
+"visual": "Vídeo de cerca de 7 segundos, take único, sem ninguém falando pra câmera: mãos segurando o celular com um carrinho de compras na tela e um pote fechado ao lado, sem marca visível. Gancho em texto na tela, letra limpa e objetiva, música suave.",
+"legenda": "Promoção grande dá vontade de comprar de tudo, inclusive suplemento.<br><br>O que o corpo precisa depende de avaliação e de exames. Suplemento sem indicação gasta dinheiro e pode atrapalhar.<br><br>Salve este post e siga o perfil para acompanhar mais sobre suplementação com segurança.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre suplementação com segurança."
+},
+{
+"id": "d24",
+"day": 24,
+"week": 4,
+"data": "28/11 · sab",
+"formato": "Estático",
+"pilar": "Obesidade como doença crônica",
+"tema": "Doença crônica pede acompanhamento",
+"objetivo": "Reforçar o posicionamento do plano de acompanhamento.",
+"gancho": "Obesidade é uma doença crônica. Doença crônica merece acompanhamento.",
+"visual": "Arte estática na paleta vinho, creme e grafite do perfil, com letra serifada e pouco texto: frase principal em letra serifada sobre fundo creme, com um fio fino em vinho e a assinatura GB health.",
+"legenda": "Obesidade merece o mesmo cuidado que qualquer outra doença crônica.<br><br>Acompanhamento médico regular, com metas e reavaliações, é o que dá continuidade ao tratamento.<br><br>Quer conhecer o plano de acompanhamento? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer conhecer o plano de acompanhamento? Me chame no direct para agendar a sua consulta."
+},
+{
+"id": "d25",
+"day": 25,
+"week": 4,
+"data": "29/11 · dom",
+"formato": "Carrossel",
+"pilar": "Obesidade como doença crônica",
+"tema": "Casos de hoje: 4 perfis, 4 planos",
+"objetivo": "Mostrar a individualização do cuidado.",
+"gancho": "Casos de hoje: 4 perfis ilustrativos, 4 planos diferentes",
+"visual": "8 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "Duas pessoas com a mesma doença raramente precisam do mesmo plano.<br><br>Quatro perfis ilustrativos, criados para mostrar como o plano muda conforme cada caso.<br><br>Salve este carrossel. Para o seu plano, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Salve este carrossel. Para o seu plano, agende a sua consulta no WhatsApp (11) 97579-2310.",
+"slides": [
+"Casos de hoje: 4 perfis ilustrativos, 4 planos diferentes.",
+"Perfil 1: mulher de 45 anos com obesidade e suspeita de lipedema. O plano combina avaliação do tecido gorduroso, alimentação e treino orientado.",
+"Perfil 2: mulher de 50 anos que recuperou o peso depois de interromper o tratamento. O plano foca em manutenção e reavaliações.",
+"Perfil 3: mulher de 40 anos com colesterol normal e histórico familiar de infarto. O plano inclui exames que refinam o risco cardiovascular.",
+"Perfil 4: mulher de 48 anos na perimenopausa, com piora do sono e perda de massa muscular. O plano inclui treino de força e avaliação hormonal.",
+"Mesma doença, planos diferentes. A individualização é o que sustenta o cuidado.",
+"Os perfis são ilustrativos, sem pacientes reais, e não representam resultado garantido para ninguém.",
+"Agende a sua consulta no WhatsApp (11) 97579-2310."
+]
+},
+{
+"id": "d26",
+"day": 26,
+"week": 4,
+"data": "30/11 · seg",
+"formato": "Reel falado",
+"pilar": "Autoridade e bastidores",
+"tema": "Recesso: manter a rotina",
+"objetivo": "Dar estratégias para os dias de folga do fim de ano.",
+"gancho": "Recesso de fim de ano chegando: como manter a rotina nos dias de folga",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "No recesso, os horários mudam, as refeições ficam soltas e a gente come mais por ocasião do que por fome.<br><br>Horários de âncora, refeições planejadas e movimento diário ajudam a atravessar o recesso com mais leveza.<br><br>Quer um plano para o recesso? Agende a sua consulta pelo link da bio.",
+"cta": "Quer um plano para o recesso? Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Recesso de fim de ano chegando. Como manter a rotina e voltar em janeiro sem peso na consciência?",
+"5 a 20s · Bloco 1: Eu sou a Dra. Gabriela Bechara. No recesso, os horários mudam, as refeições ficam soltas e a gente come mais por ocasião do que por fome. O primeiro passo é manter âncoras: um horário fixo para acordar e para a primeira refeição.",
+"20 a 40s · Bloco 2: Planeje as refeições dos dias de folga como você planeja os dias de trabalho. Deixe frutas, proteínas e opções simples em casa, porque o que está à vista é o que a gente come.",
+"40 a 52s · Bloco 3: Reserve um tempo diário para se movimentar, nem que seja uma caminhada, e mantenha um sono regular. Combine também com você mesma quais ocasiões são especiais, sem transformar todo dia em festa.",
+"52 a 60s · Convite final: Se você quer um plano para o recesso, agende a sua consulta pelo link da bio."
+]
+},
+{
+"id": "d27",
+"day": 27,
+"week": 4,
+"data": "01/12 · ter",
+"formato": "Reel falado",
+"pilar": "Autoridade e bastidores",
+"tema": "Ressaca metabólica das festas",
+"objetivo": "Usar a chegada de dezembro com um conteúdo útil.",
+"gancho": "Ressaca metabólica das festas: como retomar sem castigo",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Dezembro chega com confraternização, álcool, doces e noites mal dormidas.<br><br>Retomar com calma, sem jejum compensatório e sem dieta radical, ajuda o corpo a voltar ao ritmo.<br><br>Quer chegar bem a 2027? Me chame no direct para agendar a sua consulta.",
+"cta": "Quer chegar bem a 2027? Me chame no direct para agendar a sua consulta.",
+"script": [
+"0 a 5s · Gancho: Dezembro chegou, e com ele a ressaca metabólica das festas. Veja como retomar sem castigo.",
+"5 a 20s · Bloco 1: Entre confraternizações, álcool, doces e noites mal dormidas, o corpo sente. O sono ruim aumenta a fome, o álcool desidrata, e o excesso de açúcar mexe com a glicemia.",
+"20 a 40s · Bloco 2: A reação mais comum é compensar: pular refeições, fazer jejum longo, começar uma dieta radical na segunda-feira. Isso costuma aumentar a fome e o descontrole nos dias seguintes.",
+"40 a 52s · Bloco 3: O que ajuda é retomar com calma: beber água, fazer refeições com proteína e fibras, dormir bem e voltar a se movimentar, sem castigo e sem culpa.",
+"52 a 60s · Convite final: Se você quer chegar a 2027 com um plano de cuidado, me chame no direct para agendar a sua consulta."
+]
+},
+{
+"id": "d28",
+"day": 28,
+"week": 4,
+"data": "02/12 · qua",
+"formato": "Carrossel",
+"pilar": "Risco cardiometabólico e exames",
+"tema": "Check-up de fim de ano",
+"objetivo": "Gerar salvamentos com uma lista para a consulta.",
+"gancho": "Check-up de fim de ano: o que conversar com o seu médico",
+"visual": "9 slides com a paleta vinho, creme e grafite do perfil, uma ideia por slide e pouco texto. Capa padronizada e último slide com o convite final.",
+"legenda": "O fim do ano é uma boa hora para olhar para a saúde com calma.<br><br>Uma lista para levar à consulta e conversar sobre o que faz sentido no seu caso.<br><br>Salve este post e siga o perfil para acompanhar mais sobre check-up e prevenção.",
+"cta": "Salve este post e siga o perfil para acompanhar mais sobre check-up e prevenção.",
+"slides": [
+"Check-up de fim de ano: o que conversar com o seu médico.",
+"1. Peso, circunferência abdominal e composição corporal.",
+"2. Pressão arterial, em consultório ou monitorada em casa.",
+"3. Glicemia e hemoglobina glicada.",
+"4. Perfil de gorduras no sangue, com marcadores adicionais quando indicado.",
+"5. Vitaminas e minerais, de acordo com a sua história e os seus sintomas.",
+"6. Rastreamentos conforme idade e histórico, como mamografia e colonoscopia, quando indicados.",
+"Cada pessoa precisa de uma lista própria. Este conteúdo é informativo.",
+"Salve este post e siga o perfil para acompanhar mais sobre check-up e prevenção."
+]
+},
+{
+"id": "d29",
+"day": 29,
+"week": 5,
+"data": "03/12 · qui",
+"formato": "Reel falado",
+"pilar": "Autoridade e bastidores",
+"tema": "19 anos de medicina",
+"objetivo": "Construir autoridade e conexão pessoal.",
+"gancho": "O que 19 anos de medicina me ensinaram sobre cuidar de mulheres",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Depois de 19 anos de medicina, existem duas lições que eu repito em quase todas as consultas.<br><br>Eu conto aqui o que eu aprendi sobre cuidar de mulheres, como médica, mulher e mãe.<br><br>Quer cuidar de si com acompanhamento? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"cta": "Quer cuidar de si com acompanhamento? Agende a sua consulta no WhatsApp (11) 97579-2310.",
+"script": [
+"0 a 5s · Gancho: O que 19 anos de medicina me ensinaram sobre cuidar de mulheres.",
+"5 a 20s · Bloco 1: A primeira lição: a mulher quase sempre se coloca por último. Cuida de filhos, do trabalho, da casa, e deixa os exames para depois. Eu sou médica, mulher e mãe, e conheço bem essa rotina.",
+"20 a 40s · Bloco 2: Por isso, quando uma paciente chega, eu olho para a pessoa inteira: hormônios, sono, intestino, estresse e risco cardiovascular. O peso é uma parte da história, e raramente a única.",
+"40 a 52s · Bloco 3: A segunda lição: constância vale mais do que intensidade. Um acompanhamento regular, com metas reais e reavaliações, protege a sua saúde mais do que qualquer solução rápida.",
+"52 a 60s · Convite final: Se você quer cuidar de si com acompanhamento, agende a sua consulta no WhatsApp. O número está na legenda."
+]
+},
+{
+"id": "d30",
+"day": 30,
+"week": 5,
+"data": "04/12 · sex",
+"formato": "Reel falado",
+"pilar": "Obesidade como doença crônica",
+"tema": "Comece por aqui",
+"objetivo": "Fechar o ciclo com um convite claro.",
+"gancho": "Quer chegar em 2027 com um plano de cuidado? Comece por aqui",
+"visual": "Dra. Gabriela falando direto pra câmera, em vertical, com luz natural e um fundo limpo, como o consultório. Gancho em texto na tela nos primeiros 3 segundos, capa no modelo vinho e creme e legendas automáticas ligadas. Duração de cerca de 1 minuto.",
+"legenda": "Durante estes 30 dias eu conversei com você sobre as novidades no tratamento da obesidade e sobre como cuidar da saúde com ciência.<br><br>Se você se reconheceu, o próximo passo é uma consulta, e depois um plano de acompanhamento pensado para o seu caso.<br><br>Vai ser um prazer cuidar de você. Agende a sua consulta pelo link da bio.",
+"cta": "Vai ser um prazer cuidar de você. Agende a sua consulta pelo link da bio.",
+"script": [
+"0 a 5s · Gancho: Quer chegar em 2027 com um plano de cuidado? Comece por aqui.",
+"5 a 20s · Bloco 1: Durante estes 30 dias, eu conversei com você sobre as novidades no tratamento da obesidade e sobre como cuidar da saúde com ciência, sem achismo.",
+"20 a 40s · Bloco 2: Se você se reconheceu em alguma dessas conversas, o primeiro passo é a consulta. Nela, eu avalio o seu histórico, os seus exames e a sua rotina, e a gente define juntos as metas.",
+"40 a 52s · Bloco 3: Depois vem o plano de acompanhamento, com reavaliações e ajustes ao longo do tempo. Obesidade é uma doença crônica, e o cuidado precisa ter continuidade.",
+"52 a 60s · Convite final: Agende a sua consulta pelo link da bio. Vai ser um prazer cuidar de você."
+]
+}
+];
+
+const container = document.getElementById('days-container');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const badgePill = document.getElementById('badge-pill');
+const toast = document.getElementById('save-toast');
+
+let state = {};
+
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+
+function fmtClass(fmt){
+  if(fmt.indexOf('Reel')===0) return 'reel';
+  if(fmt==='Carrossel') return 'carrossel';
+  return 'estatico';
+}
+
+function render(){
+  container.innerHTML = '';
+  let currentWeek = null;
+  CAL_DATA.forEach((d, idx)=>{
+    if(d.week !== currentWeek){
+      currentWeek = d.week;
+      const wl = document.createElement('div');
+      wl.className='week-label';
+      wl.textContent = 'Semana ' + d.week;
+      container.appendChild(wl);
+    }
+    const done = !!state[d.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done?' done':'');
+    card.id = 'card-'+d.id;
+    card.innerHTML = `
+      <div class="day-head" data-toggle="${d.id}">
+        <div class="day-num">D${d.day}</div>
+        <div class="day-meta">
+          <div class="d-top">
+            <span class="fmt-badge ${fmtClass(d.formato)}">${d.formato}</span>
+            <span class="date-label">${d.data}</span>
+          </div>
+          <div class="day-title">${d.tema}</div>
+        </div>
+        <button class="check-btn ${done?'checked':''}" data-check="${d.id}" aria-label="Marcar como feito">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="field"><div class="f-label">Pilar · Objetivo estratégico</div><div class="f-value"><b>${d.pilar}</b> · ${d.objetivo}</div></div>
+          <div class="field"><div class="f-label">${d.formato==='Carrossel' ? 'Título do carrossel' : 'Gancho na tela'}</div><div class="f-value">${d.gancho}</div></div>
+          <div class="field"><div class="f-label">Sugestão visual</div><div class="f-value">${d.visual}</div></div>
+          ${(d.formato==='Carrossel' && Array.isArray(d.slides) && d.slides.length) ? `<div class="field"><div class="f-label">Texto de cada slide (copiar e colar)</div><div class="f-value">${d.slides.map((s,i)=>`<div style="margin-bottom:7px;"><b>Slide ${i+1}:</b> ${s}</div>`).join('')}</div></div>` : ''}
+          ${(Array.isArray(d.script) && d.script.length) ? `<div class="field"><div class="f-label">Script do vídeo (cerca de 1 minuto, para ler em ritmo natural)</div><div class="f-value">${d.script.map(s=>`<div style="margin-bottom:9px;">${s.replace(/^([^:]+):/,'<b>$1:</b>')}</div>`).join('')}</div></div>` : ''}
+          <div class="field"><div class="f-label">Legenda</div><div class="f-value">${d.legenda}</div></div>
+          <div class="field"><div class="f-label">CTA</div><div class="f-value"><span class="cta-tag">${d.cta}</span></div></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  container.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-check]')) return;
+      const card = document.getElementById('card-'+el.dataset.toggle);
+      card.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-check]').forEach(el=>{
+    el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.check;
+      state[id] = !state[id];
+      el.classList.toggle('checked', state[id]);
+      document.getElementById('card-'+id).classList.toggle('done', state[id]);
+      await persist(id, state[id]);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = CAL_DATA.length;
+  const doneCount = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((doneCount/total)*100);
+  progressFill.style.width = pct + '%';
+  progressCount.innerHTML = doneCount + '/' + total;
+  let badge = 'Bronze';
+  if(pct >= 90) badge = 'Ouro';
+  else if(pct >= 50) badge = 'Prata';
+  badgePill.textContent = badge;
+}
+
+const STORAGE_KEY = 'nk-cal-dragabrielabechara-progress';
+
+function persist(id, value){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast();
+  }catch(err){
+    console.error('Erro ao salvar progresso', err);
+  }
+}
+
+function loadState(){
+  state = {};
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      state = JSON.parse(raw);
+    }
+  }catch(err){
+    console.error('Erro ao carregar progresso', err);
+  }
+  render();
+}
+
+document.getElementById('reset-btn').addEventListener('click', ()=>{
+  if(!confirm('Reiniciar todo o checklist do calendário?')) return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  state = {};
+  render();
+});
+
+loadState();
+</script>
+
+</body>
+</html>
